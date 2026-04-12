@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { CollabEditor } from "../services/collabService.svelte";
+	import { _L } from "@/utils/localization";
 
 	let {
 		reportId,
@@ -39,14 +40,14 @@
 
 <div class="editor-header">
 	<span class="report-title">
-		{reportId ? "Edit Report" : "Create New Report"}
+		{reportId ? _L("reports.editorHeader.editReport") : _L("reports.editorHeader.createReport")}
 	</span>
 
 	{#if collabActive}
 		<div class="collab-section">
 			<div class="collab-live-badge" class:has-others={collabEditors.length > 0}>
 				<span class="live-dot"></span>
-				<span class="live-text">{collabEditors.length > 0 ? 'Live Editing' : 'Connected'}</span>
+				<span class="live-text">{collabEditors.length > 0 ? _L("reports.editorHeader.liveEditing") : _L("reports.editorHeader.connected")}</span>
 			</div>
 			<div class="collab-avatars">
 				{#if myName && myColor}
@@ -56,7 +57,7 @@
 						onmouseenter={() => hoveredAvatar = '__me__'}
 						onmouseleave={() => hoveredAvatar = null}
 					>
-						You
+						{_L("reports.editorHeader.you")}
 						{#if hoveredAvatar === '__me__'}
 							<div class="avatar-tooltip">{myName}</div>
 						{/if}
@@ -83,20 +84,20 @@
 		{#if reportId && onDelete}
 			{#if showDeleteConfirm}
 				<span class="delete-confirm-group">
-					<span class="delete-confirm-text">Delete?</span>
+					<span class="delete-confirm-text">{_L("reports.editorHeader.delete")}?</span>
 					<button
 						class="action-btn delete-confirm-btn"
 						onclick={() => { showDeleteConfirm = false; onDelete(); }}
 						type="button"
 					>
-						Yes
+						{_L("reports.editorHeader.yes")}
 					</button>
 					<button
 						class="action-btn cancel-btn"
 						onclick={() => (showDeleteConfirm = false)}
 						type="button"
 					>
-						No
+						{_L("reports.editorHeader.no")}
 					</button>
 				</span>
 			{:else}
@@ -107,7 +108,7 @@
 					type="button"
 					aria-label="Delete report"
 				>
-					Delete
+					{_L("reports.editorHeader.delete")}
 				</button>
 			{/if}
 		{/if}
@@ -118,7 +119,7 @@
 			type="button"
 			aria-label="Cancel report editing"
 		>
-			Cancel
+			{_L("reports.editorHeader.cancel")}
 		</button>
 		<button
 			class="action-btn save-btn"
@@ -127,7 +128,7 @@
 			type="button"
 			aria-label={isSaving ? "Saving report" : "Save report"}
 		>
-			{isSaving ? "Saving..." : "Save Report"}
+			{isSaving ? _L("reports.editorHeader.saving") : _L("reports.editorHeader.save")}
 		</button>
 	</div>
 </div>
