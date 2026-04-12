@@ -2,6 +2,7 @@
 	import { onMount, onDestroy } from "svelte";
 	import { isEnvBrowser } from "../utils/misc";
 	import { GetParentResourceName } from "../utils/fivem";
+	import { _L } from "@/utils/localization";
 
 	let visible = $state(false);
 	let zoomLevel = $state(1.0);
@@ -24,7 +25,7 @@
 		if (action === "showMugshotCamera") {
 			visible = true;
 			zoomLevel = 1.0;
-			citizenName = data?.name || "SUBJECT";
+			citizenName = data?.name || _L("mugshotCamera.subject");
 			flashActive = false;
 		} else if (action === "hideMugshotCamera") {
 			visible = false;
@@ -122,12 +123,12 @@
 			<div class="status-left">
 				<span class="rec-indicator">
 					<span class="rec-dot"></span>
-					REC
+					{_L("mugshotCamera.rec")}
 				</span>
 				<span class="timestamp">{timestamp}</span>
 			</div>
 			<div class="status-center">
-				<span class="subject-label">MUGSHOT - {citizenName}</span>
+				<span class="subject-label">{_L("mugshotCamera.mugshot")} - {citizenName}</span>
 			</div>
 			<div class="status-right">
 				<span class="dept-label">LSPD</span>
@@ -148,7 +149,7 @@
 					</button>
 					<span class="zoom-display">
 						<span class="material-icons zoom-icon">search</span>
-						{zoomDisplay} ZOOM
+						{_L("mugshotCamera.zoom", ["zoom", zoomDisplay])}
 					</span>
 					<button class="zoom-btn" onclick={zoomIn} disabled={zoomLevel >= 5.0}>
 						<span class="material-icons">add</span>
@@ -156,7 +157,7 @@
 				</div>
 			</div>
 			<div class="status-right">
-				<span class="hint">SCROLL to zoom</span>
+				<span class="hint">{_L("mugshotCamera.hint")}</span>
 			</div>
 		</div>
 
