@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { VICTIM_TYPES, OFFICER_TYPES } from "../constants";
+	import { _L } from "@/utils/localization";
 	import type { Report } from "../interfaces/IReportEditor";
 
 	export let report: Report;
@@ -37,13 +37,13 @@
 </script>
 
 <section class="involved-persons" aria-label="Involved persons">
-	<h3 class="section-title">Involved Persons</h3>
+	<h3 class="section-title">{_L("involvedPersons.title")}</h3>
 
 	<!-- Suspects Section -->
 	<div class="person-section">
 		<div class="person-header">
 			<h4 class="person-title">
-				Suspects ({report.involved.suspects.length})
+				{_L("involvedPersons.suspects", ["count", report.involved.suspects.length.toString()])}
 			</h4>
 			<button
 				type="button"
@@ -52,7 +52,7 @@
 				aria-expanded={showSuspectSearch}
 				aria-controls="suspect-search"
 			>
-				{showSuspectSearch ? "Cancel" : "Add Suspect"}
+				{showSuspectSearch ? _L("involvedPersons.cancel") : _L("involvedPersons.addSuspect")}
 			</button>
 		</div>
 
@@ -64,7 +64,7 @@
 				aria-label="Add suspect"
 			>
 				<!-- Search component would go here -->
-				<p class="search-placeholder">Suspect search interface</p>
+				<p class="search-placeholder">{_L("involvedPersons.suspectSearch")}</p>
 			</div>
 		{/if}
 
@@ -75,7 +75,7 @@
 						<div class="person-info">
 							<div class="person-name">{suspect.fullName}</div>
 							<div class="person-details">
-								Notes: {suspect.notes}
+								{_L("involvedPersons.notes", ["notes", suspect.notes])}
 							</div>
 						</div>
 						<button
@@ -84,13 +84,13 @@
 							class="remove-person-btn"
 							aria-label="Remove suspect {suspect.fullName}"
 						>
-							Remove
+							{_L("involvedPersons.remove")}
 						</button>
 					</div>
 				{/each}
 			</div>
 		{:else}
-			<p class="no-persons">No suspects added</p>
+			<p class="no-persons">{_L("involvedPersons.noSuspects")}</p>
 		{/if}
 	</div>
 
@@ -98,7 +98,7 @@
 	<div class="person-section">
 		<div class="person-header">
 			<h4 class="person-title">
-				Victims ({report.involved.victims.length})
+				{_L("involvedPersons.victims", ["count", report.involved.victims.length.toString()])}
 			</h4>
 			<button
 				type="button"
@@ -107,7 +107,7 @@
 				aria-expanded={showVictimSearch}
 				aria-controls="victim-search"
 			>
-				{showVictimSearch ? "Cancel" : "Add Victim"}
+				{showVictimSearch ? _L("involvedPersons.cancel") : _L("involvedPersons.addVictim")}
 			</button>
 		</div>
 
@@ -119,7 +119,7 @@
 				aria-label="Add victim"
 			>
 				<!-- Search component would go here -->
-				<p class="search-placeholder">Victim search interface</p>
+				<p class="search-placeholder">{_L("involvedPersons.victimSearch")}</p>
 			</div>
 		{/if}
 
@@ -130,7 +130,7 @@
 						<div class="person-info">
 							<div class="person-name">{victim.fullName}</div>
 							<div class="person-details">
-								Type: {victim.type}
+								{_L("involvedPersons.type", ["type", victim.type])}
 							</div>
 						</div>
 						<button
@@ -139,13 +139,13 @@
 							class="remove-person-btn"
 							aria-label="Remove victim {victim.fullName}"
 						>
-							Remove
+							{_L("involvedPersons.remove")}
 						</button>
 					</div>
 				{/each}
 			</div>
 		{:else}
-			<p class="no-persons">No victims added</p>
+			<p class="no-persons">{_L("involvedPersons.noVictims")}</p>
 		{/if}
 	</div>
 
@@ -153,7 +153,7 @@
 	<div class="person-section">
 		<div class="person-header">
 			<h4 class="person-title">
-				Officers ({report.involved.officers.length})
+				{_L("involvedPersons.officers", ["count", report.involved.officers.length.toString()])}
 			</h4>
 			<button
 				type="button"
@@ -162,7 +162,7 @@
 				aria-expanded={showOfficerSearch}
 				aria-controls="officer-search"
 			>
-				{showOfficerSearch ? "Cancel" : "Add Officer"}
+				{showOfficerSearch ? _L("involvedPersons.cancel") : _L("involvedPersons.addOfficer")}
 			</button>
 		</div>
 
@@ -174,7 +174,7 @@
 				aria-label="Add officer"
 			>
 				<!-- Search component would go here -->
-				<p class="search-placeholder">Officer search interface</p>
+				<p class="search-placeholder">{_L("involvedPersons.officerSearch")}</p>
 			</div>
 		{/if}
 
@@ -185,7 +185,7 @@
 						<div class="person-info">
 							<div class="person-name">{officer.fullName}</div>
 							<div class="person-details">
-								Type: {officer.type} | Badge: {officer.badgeId}
+								{_L("involvedPersons.type", ["type", officer.type])} | {_L("involvedPersons.badgeId", ["badgeId", officer.badgeId])}
 							</div>
 						</div>
 						<button
@@ -194,13 +194,13 @@
 							class="remove-person-btn"
 							aria-label="Remove officer {officer.fullName}"
 						>
-							Remove
+							{_L("involvedPersons.remove")}
 						</button>
 					</div>
 				{/each}
 			</div>
 		{:else}
-			<p class="no-persons">No officers added</p>
+			<p class="no-persons">{_L("involvedPersons.noOfficers")}</p>
 		{/if}
 	</div>
 </section>
