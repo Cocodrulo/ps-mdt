@@ -1,18 +1,15 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { fetchNui } from "../utils/fetchNui";
-	import { NUI_EVENTS } from "../constants/nuiEvents";
 	import {
 		DEFAULT_TIME,
 		DEFAULT_DATE,
-		TIME_FORMAT_OPTIONS,
-		DATE_FORMAT_OPTIONS,
 		TIMING,
 		APP_INFO,
 	} from "../constants";
 
 	let info = $derived(APP_INFO[authService.jobType] || APP_INFO.leo);
 	import type { AuthService } from "../services/authService.svelte";
+	import { getLocalizedDate, getLocalizedTime } from "@/utils/localization";
 
 	interface Props {
 		authService: AuthService;
@@ -63,8 +60,8 @@
 	onMount(() => {
 		const timeInterval = setInterval(() => {
 			const now = new Date();
-			currentTime = now.toLocaleTimeString("en-US", TIME_FORMAT_OPTIONS);
-			currentDate = now.toLocaleDateString("en-US", DATE_FORMAT_OPTIONS);
+			currentTime = getLocalizedTime(now);
+			currentDate = getLocalizedDate(now);
 		}, TIMING.timeUpdateInterval);
 
 		return () => {
