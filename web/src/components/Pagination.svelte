@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { _L } from "@/utils/localization";
+
 	interface Props {
 		currentPage: number;
 		totalItems: number;
@@ -66,13 +68,13 @@
 			{#if totalItems > 0}
 				{rangeStart}–{rangeEnd} of {totalItems}
 			{:else}
-				0 entries
+				{_L("pagination.noEntries")}
 			{/if}
 		</span>
 		{#if onPerPageChange}
 			<div class="per-page-dropdown">
 				<button class="per-page-trigger" onclick={toggleDropdown}>
-					{perPage} / page
+					{_L("pagination.perPage", ["perPage", perPage.toString()])}
 					<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
 						<polyline points={dropdownOpen ? "18 15 12 9 6 15" : "6 9 12 15 18 9"}/>
 					</svg>
@@ -84,7 +86,7 @@
 								class="per-page-option"
 								class:active={opt === perPage}
 								onclick={() => selectPerPage(opt)}
-							>{opt} / page</button>
+							>{_L("pagination.perPage", ["perPage", opt.toString()])}</button>
 						{/each}
 					</div>
 				{/if}
@@ -94,10 +96,10 @@
 
 	{#if totalPages > 1}
 		<div class="pagination-center">
-			<button class="page-btn" disabled={currentPage <= 1} onclick={() => goToPage(1)} title="First page">
+			<button class="page-btn" disabled={currentPage <= 1} onclick={() => goToPage(1)} title={_L("pagination.firstPage")}>
 				<span class="material-icons" style="font-size:14px">first_page</span>
 			</button>
-			<button class="page-btn" disabled={currentPage <= 1} onclick={() => goToPage(currentPage - 1)} title="Previous page">
+			<button class="page-btn" disabled={currentPage <= 1} onclick={() => goToPage(currentPage - 1)} title={_L("pagination.previousPage")}>
 				<span class="material-icons" style="font-size:14px">chevron_left</span>
 			</button>
 
@@ -109,10 +111,10 @@
 				>{p}</button>
 			{/each}
 
-			<button class="page-btn" disabled={currentPage >= totalPages} onclick={() => goToPage(currentPage + 1)} title="Next page">
+			<button class="page-btn" disabled={currentPage >= totalPages} onclick={() => goToPage(currentPage + 1)} title={_L("pagination.nextPage")}>
 				<span class="material-icons" style="font-size:14px">chevron_right</span>
 			</button>
-			<button class="page-btn" disabled={currentPage >= totalPages} onclick={() => goToPage(totalPages)} title="Last page">
+			<button class="page-btn" disabled={currentPage >= totalPages} onclick={() => goToPage(totalPages)} title={_L("pagination.lastPage")}>
 				<span class="material-icons" style="font-size:14px">last_page</span>
 			</button>
 		</div>
