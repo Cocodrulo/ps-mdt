@@ -1,0 +1,99 @@
+{
+    "config": {
+        "locale": "en",
+        "dateLocale": "en-US",
+        "timeLocale": "en-US"
+    },
+    "translations": {
+        "tags": {
+            "title": "Tags",
+            "addTag": "Add tag",
+            "addTagPlaceholder": "Add tag...",
+            "addTagButton": "Add",
+            "tagInstructions": "Press Enter or click Add button to add a new tag. Click the X button to remove tags.",
+            "noTags": "No tags added",
+            "suggestedTags": "Suggested tags",
+            "addSuggestedTag": "Add suggested tag: {{tag}}"
+        },
+        "sopa": {
+            "agreement": {
+                "title": "Standard Operating Procedures",
+                "subtitle": "Review the following before accessing the terminal",
+                "missionStatement": "Mission Statement",
+                "termsOfAccess": "Terms of Access",
+                "agreeToTerms": "I have read, understand, and agree to abide by the Standard Operating Procedures",
+                "acknowledgeAndContinue": "Acknowledge & Continue",
+                "processing": "Processing...",
+                "introSectionDefault": "The Standard Operating Procedures have been updated. By acknowledging below, you confirm that you have read, understand, and agree to comply with all department policies and procedures."
+            }
+        },
+        "reports": {
+            "metadata": {
+                "reportId": "Report ID",
+                "officer": "Officer",
+                "type": "Type",
+                "created": "Created",
+                "lastUpdated": "Last Updated"
+            },
+            "editorHeader": {
+                "you": "You",
+                "createReport": "Create New Report",
+                "editReport": "Edit Report",
+                "liveEditing": "Live Editing",
+                "connected": "Connected",
+                "saving": "Saving...",
+                "delete": "Delete",
+                "yes": "Yes",
+                "no": "No",
+                "cancel": "Cancel",
+                "save": "Save Report"
+            }
+        },
+        "pagination": {
+            "noEntries": "0 entries",
+            "perPage": "{{perPage}} / page",
+            "firstPage": "First page",
+            "previousPage": "Previous page",
+            "nextPage": "Next page",
+            "lastPage": "Last page"
+        },
+        "mugshotCamera": {
+            "subject": "SUBJECT",
+            "mugshot": "MUGSHOT",
+            "rec": "REC",
+            "hint": "SCROLL to zoom",
+            "zoom": "{{zoom}} ZOOM"
+        },
+        "loginOverlay": {
+            "authenticating": "Authenticating",
+            "verifyingCredentials": "Verifying credentials...",
+            "accessDenied": "Access Denied",
+            "restrictedAccess": "This terminal is restricted to authorized personnel",
+            "offDuty": "Off Duty",
+            "mustBeOnDuty": "You must be on duty to access the MDT system",
+            "authenticationError": "Authentication Error",
+            "closeTerminal": "Close Terminal",
+            "goOnDuty": "Go On Duty"
+        },
+        "involvedPersons": {
+            "title": "Involved Persons",
+            "suspects": "Suspects ({{count}})",
+            "victims": "Victims ({{count}})",
+            "officers": "Officers ({{count}})",
+            "addSuspect": "Add Suspect",
+            "addVictim": "Add Victim",
+            "addOfficer": "Add Officer",
+            "cancel": "Cancel",
+            "remove": "Remove",
+            "noSuspects": "No suspects added",
+            "noVictims": "No victims added",
+            "noOfficers": "No officers added",
+            "suspectSearch": "Suspect search interface",
+            "victimSearch": "Victim search interface",
+            "officerSearch": "Officer search interface",
+            "notes": "Notes: {{notes}}",
+            "type": "Type: {{type}}",
+            "badgeId": "Badge: {{badgeId}}"            
+        }
+    }
+}
