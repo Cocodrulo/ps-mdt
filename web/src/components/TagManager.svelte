@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { _L } from "@/utils/localization";
+
 	export let tags: string[];
 	export let availableTags: string[];
 	export let onAddTag: (tag: string) => void;
@@ -27,15 +29,15 @@
 
 <section class="tag-manager" aria-label="Report tags">
 	<div class="tag-header">
-		<h3 class="tag-title">Tags</h3>
+		<h3 class="tag-title">{_L("tags.title")}</h3>
 		<div class="tag-input-group">
-			<label for="new-tag-input" class="sr-only">Add new tag</label>
+			<label for="new-tag-input" class="sr-only">{_L("tags.addTag")}</label>
 			<input
 				id="new-tag-input"
 				type="text"
 				bind:value={newTag}
 				on:keydown={handleKeydown}
-				placeholder="Add tag..."
+				placeholder={_L("tags.addTagPlaceholder")}
 				class="tag-input"
 				aria-describedby="tag-instructions"
 			/>
@@ -44,16 +46,15 @@
 				on:click={addTag}
 				disabled={!newTag.trim()}
 				class="add-tag-btn"
-				aria-label="Add tag"
+				aria-label={_L("tags.addTag")}
 			>
-				Add
+				{_L("tags.addTagButton")}
 			</button>
 		</div>
 	</div>
 
 	<div id="tag-instructions" class="sr-only">
-		Press Enter or click Add button to add a new tag. Click the X button to
-		remove tags.
+		{_L("tags.tagInstructions")}
 	</div>
 
 	{#if tags.length > 0}
@@ -73,12 +74,12 @@
 			{/each}
 		</div>
 	{:else}
-		<p class="no-tags">No tags added</p>
+		<p class="no-tags">{_L("tags.noTags")}</p>
 	{/if}
 
 	{#if availableTags.length > 0}
 		<div class="suggested-tags">
-			<h4 class="suggested-title">Suggested Tags</h4>
+			<h4 class="suggested-title">{_L("tags.suggestedTags")}</h4>
 			<div
 				class="suggested-container"
 				role="list"
@@ -90,7 +91,7 @@
 						on:click={() => onAddTag(tag)}
 						class="suggested-tag"
 						disabled={tags.includes(tag)}
-						aria-label="Add suggested tag: {tag}"
+						aria-label={_L("tags.addSuggestedTag", ["tag", tag])}
 					>
 						{tag}
 					</button>
