@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { REPORT_TYPES } from "../constants";
 	import type { Report } from "../interfaces/IReportEditor";
+	import { _L } from "@/utils/localization";
 
 	export let report: Report;
 	export let formatDate: (timestamp: number) => string;
@@ -10,17 +11,17 @@
 <section class="report-metadata" aria-label="Report information">
 	<div class="metadata-row">
 		<div class="metadata-item">
-			<label for="report-id" class="metadata-label">Report ID</label>
+			<label for="report-id" class="metadata-label">{_L("reports.metadata.reportId")}</label>
 			<span id="report-id" class="metadata-value">{report.reportId}</span>
 		</div>
 		<div class="metadata-item">
-			<label for="report-officer" class="metadata-label">Officer</label>
+			<label for="report-officer" class="metadata-label">{_L("reports.metadata.officer")}</label>
 			<span id="report-officer" class="metadata-value"
 				>{report.officer}</span
 			>
 		</div>
 		<div class="metadata-item">
-			<label for="report-type" class="metadata-label">Type</label>
+			<label for="report-type" class="metadata-label">{_L("reports.metadata.type")}</label>
 			<select
 				id="report-type"
 				bind:value={report.type}
@@ -33,7 +34,7 @@
 			</select>
 		</div>
 		<div class="metadata-item">
-			<label for="report-created" class="metadata-label">Created</label>
+			<label for="report-created" class="metadata-label">{_L("reports.metadata.created")}</label>
 			<span id="report-created" class="metadata-value">
 				{formatDate(report.created)}
 				{formatTime(report.created)}
@@ -41,7 +42,7 @@
 		</div>
 		<div class="metadata-item">
 			<label for="report-updated" class="metadata-label"
-				>Last Updated</label
+				>{_L("reports.metadata.lastUpdated")}</label
 			>
 			<span id="report-updated" class="metadata-value">
 				{formatDate(report.lastUpdated)}
