@@ -1,5 +1,6 @@
 <script lang="ts">
-	import type { Editor } from "@tiptap/core";
+	import { _L } from "@/utils/localization";
+import type { Editor } from "@tiptap/core";
 
 	interface Props {
 		editor: Editor;
@@ -15,7 +16,7 @@
 			class="toolbar-btn"
 			onclick={() => editor.chain().focus().toggleBold().run()}
 			class:active={editor.isActive("bold")}
-			title="Bold (Ctrl+B)"
+			title={_L("reportEditorToolbar.bold", ["shortcut", " (Ctrl+B)"])}
 		>
 			<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
 				<path
@@ -29,7 +30,7 @@
 			class="toolbar-btn"
 			onclick={() => editor.chain().focus().toggleItalic().run()}
 			class:active={editor.isActive("italic")}
-			title="Italic (Ctrl+I)"
+			title={_L("reportEditorToolbar.italic", ["shortcut", " (Ctrl+I)"])}
 		>
 			<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
 				<path d="M10 4v3h2.21l-3.42 8H6v3h8v-3h-2.21l3.42-8H18V4z" />
@@ -41,7 +42,7 @@
 			class="toolbar-btn"
 			onclick={() => editor.chain().focus().toggleUnderline().run()}
 			class:active={editor.isActive("underline")}
-			title="Underline (Ctrl+U)"
+			title={_L("reportEditorToolbar.underline", ["shortcut", " (Ctrl+U)"])}
 		>
 			<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
 				<path
@@ -55,7 +56,7 @@
 			class="toolbar-btn"
 			onclick={() => editor.chain().focus().toggleHighlight().run()}
 			class:active={editor.isActive("highlight")}
-			title="Highlight"
+			title={_L("reportEditorToolbar.highlight")}
 		>
 			<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
 				<path
@@ -71,7 +72,7 @@
 			class="toolbar-btn"
 			onclick={() => editor.chain().focus().setTextAlign("left").run()}
 			class:active={editor.isActive({ textAlign: "left" })}
-			title="Align Left"
+			title={_L("reportEditorToolbar.alignLeft")}
 		>
 			<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
 				<path
@@ -85,7 +86,7 @@
 			class="toolbar-btn"
 			onclick={() => editor.chain().focus().setTextAlign("center").run()}
 			class:active={editor.isActive({ textAlign: "center" })}
-			title="Align Center"
+			title={_L("reportEditorToolbar.alignCenter")}
 		>
 			<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
 				<path
@@ -99,7 +100,7 @@
 			class="toolbar-btn"
 			onclick={() => editor.chain().focus().setTextAlign("right").run()}
 			class:active={editor.isActive({ textAlign: "right" })}
-			title="Align Right"
+			title={_L("reportEditorToolbar.alignRight")}
 		>
 			<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
 				<path
@@ -115,7 +116,7 @@
 			class="toolbar-btn"
 			onclick={() => editor.chain().focus().toggleBulletList().run()}
 			class:active={editor.isActive("bulletList")}
-			title="Bullet List"
+			title={_L("reportEditorToolbar.bulletList")}
 		>
 			<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
 				<path
@@ -129,7 +130,7 @@
 			class="toolbar-btn"
 			onclick={() => editor.chain().focus().toggleOrderedList().run()}
 			class:active={editor.isActive("orderedList")}
-			title="Numbered List"
+			title={_L("reportEditorToolbar.numberedList")}
 		>
 			<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
 				<path
@@ -146,7 +147,7 @@
 			onclick={() =>
 				editor.chain().focus().toggleHeading({ level: 1 }).run()}
 			class:active={editor.isActive("heading", { level: 1 })}
-			title="Heading 1"
+			title={_L("reportEditorToolbar.heading1")}
 		>
 			H1
 		</button>
@@ -157,7 +158,7 @@
 			onclick={() =>
 				editor.chain().focus().toggleHeading({ level: 2 }).run()}
 			class:active={editor.isActive("heading", { level: 2 })}
-			title="Heading 2"
+			title={_L("reportEditorToolbar.heading2")}
 		>
 			H2
 		</button>
@@ -168,7 +169,7 @@
 			onclick={() =>
 				editor.chain().focus().toggleHeading({ level: 3 }).run()}
 			class:active={editor.isActive("heading", { level: 3 })}
-			title="Heading 3"
+			title={_L("reportEditorToolbar.heading3")}
 		>
 			H3
 		</button>
