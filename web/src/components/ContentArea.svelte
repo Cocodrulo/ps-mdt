@@ -35,6 +35,7 @@
 	import LegalDocuments from "../pages/doj/LegalDocuments.svelte";
 	import type { createInstanceStateService } from "../services/instanceStateService.svelte";
 	import type { createTabService } from "../services/tabService.svelte";
+	import { _L } from "@/utils/localization";
 
 	interface Props {
 		authService: AuthService;
@@ -171,14 +172,13 @@
 			<div class="denied-overlay">
 				<div class="denied-card">
 					<span class="material-icons denied-icon">lock</span>
-					<span class="denied-title">Permission Denied</span>
+					<span class="denied-title">{_L("contentArea.permissionDenied")}</span>
 					<span class="denied-desc">
-						You do not have permission to access <strong>{getPageLabel(activeComponent)}</strong>.
-						Contact a supervisor to request access.
+						{_L("contentArea.permissionDeniedDesc", ["page", getPageLabel(activeComponent)])}
 					</span>
 					<button class="denied-btn" onclick={() => tabService.setActiveTab("Dashboard")}>
 						<span class="material-icons denied-btn-icon">arrow_back</span>
-						Back to Dashboard
+						{_L("contentArea.backToDashboard")}
 					</button>
 				</div>
 			</div>
@@ -242,7 +242,7 @@
 		{:else}
 			<PlaceholderContent
 				componentId={activeComponent}
-				message="Component not found"
+				message={_L("contentArea.componentNotFound")}
 			/>
 		{/if}
 		{/if}
