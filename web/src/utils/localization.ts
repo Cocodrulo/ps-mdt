@@ -25,6 +25,13 @@ export const getLocalizedTime = (date: Date, options?: Intl.DateTimeFormatOption
 	});
 };
 
+export const getLocalizedCurrency = (value: number) => {
+	return new Intl.NumberFormat(config.locale, {
+		style: "currency",
+		currency: "USD",
+	}).format(value);
+};
+
 export const _L = (key: string, ...replacements: [string, string|number][]) => {
 	const steps = key.split(".");
 	let current: ITranslations | string = translations;
