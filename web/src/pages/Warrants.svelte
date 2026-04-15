@@ -7,6 +7,7 @@
 	import { openReportInEditor } from "../stores/reportsStore";
 	import type { createTabService } from "../services/tabService.svelte";
 	import { globalNotifications } from "../services/notificationService.svelte";
+	import { _L, getLocalizedDate } from "@/utils/localization";
 
 	let { tabService }: { tabService: ReturnType<typeof createTabService> } = $props();
 
@@ -38,11 +39,7 @@
 		if (!value) return "Unknown";
 		const date = new Date(value);
 		if (Number.isNaN(date.getTime())) return value;
-		return date.toLocaleDateString("en-US", {
-			month: "2-digit",
-			day: "2-digit",
-			year: "numeric",
-		});
+		return getLocalizedDate(date);
 	}
 
 	function openReport(reportId: number | string) {
@@ -104,7 +101,7 @@
 	<div class="topbar">
 		<input
 			type="text"
-			placeholder="Search by name, ID, or report..."
+			placeholder={_L("warrants.searchPlaceholder")}
 			bind:value={searchQuery}
 			class="search-input"
 		/>
@@ -115,26 +112,26 @@
 				onclick={loadWarrants}
 				disabled={isLoading}
 			>
-				{isLoading ? "Loading..." : "Refresh"}
+				{isLoading ? _L("warrants.loading") : _L("warrants.refresh")}
 			</button>
 			<button
 				class="btn-primary"
 				onclick={createWarrantReport}
 			>
-				New Warrant
+				{_L("warrants.newWarrant")}
 			</button>
 		</div>
 	</div>
 
 	<div class="list-panel">
 		<div class="table-header">
-			<span>Name</span>
-			<span>Citizen ID</span>
-			<span>Report</span>
-			<span>Felonies</span>
-			<span>Misdemeanors</span>
-			<span>Infractions</span>
-			<span>Expires</span>
+			<span>{_L("warrants.name")}</span>
+			<span>{_L("warrants.citizenId")}</span>
+			<span>{_L("warrants.report")}</span>
+			<span>{_L("warrants.felonies")}</span>
+			<span>{_L("warrants.misdemeanors")}</span>
+			<span>{_L("warrants.infractions")}</span>
+			<span>{_L("warrants.expires")}</span>
 			<span></span>
 		</div>
 
@@ -142,15 +139,15 @@
 			{#if isLoading && warrants.length === 0}
 				<div class="empty-state">
 					<div class="loading-spinner"></div>
-					<p>Loading warrants...</p>
+					<p>{_L("warrants.loading")}</p>
 				</div>
 			{:else if filteredWarrants.length === 0}
 				<div class="empty-state">
-					<p class="empty-title">No Warrants Found</p>
+					<p class="empty-title">{_L("warrants.noWarrantsFound")}</p>
 					<p class="empty-sub">
 						{searchQuery
-							? "No warrants match your search criteria."
-							: "No active warrants available."}
+							? _L("warrants.noWarrantsMatchSearch")
+							: _L("warrants.noActiveWarrants")}
 					</p>
 				</div>
 			{:else}
