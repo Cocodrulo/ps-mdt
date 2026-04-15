@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { _L } from "@/utils/localization";
 	import type { TagInfo } from "../../services/tagService.svelte";
 
 	interface Props {
@@ -45,17 +46,17 @@
 
 <div class="metadata-section">
 	<div class="section-title">
-		<span class="section-label">TAGS</span>
+		<span class="section-label">{_L("tagsManager.title")}</span>
 		<div class="dropdown-container">
 			<button
 				class="add-btn"
 				onclick={openTagDropdown}
 				title="Add Tag"
 				aria-label="Add Tag"
-			>+ Add</button>
+			>+ {_L("tagsManager.add")}</button>
 			{#if showTagDropdown}
 				<div class="dropdown">
-					<div class="dropdown-header">Available Tags</div>
+					<div class="dropdown-header">{_L("tagsManager.availableTags")}</div>
 					{#each filteredTags as tag}
 						<button
 							class="dropdown-item"
@@ -66,7 +67,7 @@
 						</button>
 					{/each}
 					{#if filteredTags.length === 0}
-						<div class="dropdown-empty">No more tags available</div>
+						<div class="dropdown-empty">{_L("tagsManager.noTagsAvailable")}</div>
 					{/if}
 				</div>
 			{/if}
