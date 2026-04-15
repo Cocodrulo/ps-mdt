@@ -3,6 +3,7 @@
 	import PersonnelSection from "./PersonnelSection.svelte";
 	import PersonnelCard from "./PersonnelCard.svelte";
 	import { VICTIM_TYPES } from "../../constants";
+	import { _L } from "@/utils/localization";
 
 	interface Props {
 		victims: Victim[];
@@ -12,7 +13,7 @@
 		title?: string;
 	}
 
-	let { victims, onAdd, onRemove, onUpdate, title = "Victims" }: Props = $props();
+	let { victims, onAdd, onRemove, onUpdate, title = _L("victimsManager.title") }: Props = $props();
 
 	function updateVictim(id: string, field: string, value: any) {
 		const victim = victims.find((v) => v.id === id);
