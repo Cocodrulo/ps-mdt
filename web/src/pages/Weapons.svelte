@@ -5,6 +5,7 @@
 	import { NUI_EVENTS } from "../constants/nuiEvents";
 	import { globalNotifications } from "../services/notificationService.svelte";
 	import Pagination from "../components/Pagination.svelte";
+	import { _L } from "@/utils/localization";
 
 	interface Weapon {
 		id: number;
@@ -153,7 +154,7 @@
 		<div class="topbar">
 			<button class="back-btn" onclick={closeWeapon}>
 				<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
-				Back
+				{_L("weapons.back")}
 			</button>
 			<div class="topbar-info">
 				<span class="topbar-name">{selectedWeapon.name}</span>
@@ -161,7 +162,7 @@
 			</div>
 			<div class="topbar-flags">
 				{#if selectedWeapon.scratched}
-					<span class="pill pill-red">Scratched</span>
+					<span class="pill pill-red">{_L("weapons.scratched")}</span>
 				{/if}
 				{#each selectedWeapon.flags as flag}
 					<span class={getFlagClass(flag)}>{flag}</span>
@@ -181,30 +182,30 @@
 						{/if}
 					</div>
 					<div class="info-card-body">
-						<span class="info-card-label">Owner</span>
+						<span class="info-card-label">{_L("weapons.owner")}</span>
 						<span class="info-card-value">{selectedWeapon.owner}</span>
 					</div>
 				</div>
-				<div class="info-item"><span class="info-label">Serial</span><span class="info-value mono">{selectedWeapon.serial}</span></div>
-				<div class="info-item"><span class="info-label">Name</span><span class="info-value">{selectedWeapon.name}</span></div>
-				<div class="info-item"><span class="info-label">Class</span><span class="info-value">{selectedWeapon.weaponClass}</span></div>
-				<div class="info-item"><span class="info-label">Type</span><span class="info-value">{selectedWeapon.type}</span></div>
-				<div class="info-item"><span class="info-label">Tint</span><span class="info-value">{selectedWeapon.tint || 'Default'}</span></div>
-				<div class="info-item"><span class="info-label">Reports</span><span class="info-value">{selectedWeapon.seenIn}</span></div>
-				<div class="info-item"><span class="info-label">Scratched</span><span class="info-value" class:accent-red={selectedWeapon.scratched}>{selectedWeapon.scratched ? 'Yes' : 'No'}</span></div>
-				<div class="info-item"><span class="info-label">Model</span><span class="info-value mono">{selectedWeapon.weaponModel}</span></div>
+				<div class="info-item"><span class="info-label">{_L("weapons.serial")}</span><span class="info-value mono">{selectedWeapon.serial}</span></div>
+				<div class="info-item"><span class="info-label">{_L("weapons.name")}</span><span class="info-value">{selectedWeapon.name}</span></div>
+				<div class="info-item"><span class="info-label">{_L("weapons.class")}</span><span class="info-value">{selectedWeapon.weaponClass}</span></div>
+				<div class="info-item"><span class="info-label">{_L("weapons.type")}</span><span class="info-value">{selectedWeapon.type}</span></div>
+				<div class="info-item"><span class="info-label">{_L("weapons.tint")}</span><span class="info-value">{selectedWeapon.tint || 'Default'}</span></div>
+				<div class="info-item"><span class="info-label">{_L("weapons.reports")}</span><span class="info-value">{selectedWeapon.seenIn}</span></div>
+				<div class="info-item"><span class="info-label">{_L("weapons.scratched")}</span><span class="info-value" class:accent-red={selectedWeapon.scratched}>{selectedWeapon.scratched ? 'Yes' : 'No'}</span></div>
+				<div class="info-item"><span class="info-label">{_L("weapons.model")}</span><span class="info-value mono">{selectedWeapon.weaponModel}</span></div>
 			</div>
 
 			{#if selectedWeapon.information}
 				<div class="section">
-					<div class="section-title">Information</div>
+					<div class="section-title">{_L("weapons.information")}</div>
 					<p class="section-text">{selectedWeapon.information}</p>
 				</div>
 			{/if}
 
 			{#if selectedWeapon.flags && selectedWeapon.flags.length}
 				<div class="section">
-					<div class="section-title">Flags</div>
+					<div class="section-title">{_L("weapons.flags")}</div>
 					<div class="flags-row">
 						{#each selectedWeapon.flags as flag}
 							<span class={getFlagClass(flag)}>{flag}</span>
@@ -214,17 +215,17 @@
 			{/if}
 
 			<div class="section">
-				<div class="section-title">Ownership History</div>
+				<div class="section-title">{_L("weapons.ownershipHistory")}</div>
 				{#if historyLoading}
-					<div class="section-empty">Loading history...</div>
+					<div class="section-empty">{_L("weapons.loadingHistory")}</div>
 				{:else if weaponHistory.length === 0}
-					<div class="section-empty">No ownership history found.</div>
+					<div class="section-empty">{_L("weapons.noHistory")}</div>
 				{:else}
 					<div class="history-list">
 						{#each weaponHistory as entry}
 							<div class="history-item">
 								<div class="history-item-main">
-									<span class="history-owner">{entry.owner || 'Unknown'}</span>
+									<span class="history-owner">{entry.owner || _L("weapons.unknown")}</span>
 									<span class="history-meta">
 										{entry.weapon_model || ''}
 										{entry.weapon_class ? ` · ${entry.weapon_class}` : ''}
@@ -252,31 +253,31 @@
 				<input type="text" bind:value={searchQuery} placeholder="Search by name, serial, owner, class, tint or type..." />
 			</div>
 			<button class="refresh-btn" onclick={refreshWeapons} disabled={loading}>
-				{loading ? "Loading..." : "Refresh"}
+				{loading ? _L("weapons.loading") : _L("weapons.refresh")}
 			</button>
 		</div>
 
 		<div class="list-panel">
 			<div class="list-header">
-				<span class="col-name">Weapon</span>
-				<span class="col-serial">Serial</span>
-				<span class="col-owner">Owner</span>
-				<span class="col-class">Class</span>
-				<span class="col-type">Type</span>
-				<span class="col-tint">Tint</span>
-				<span class="col-flags">Flags</span>
+				<span class="col-name">{_L("weapons.name")}</span>
+				<span class="col-serial">{_L("weapons.serial")}</span>
+				<span class="col-owner">{_L("weapons.owner")}</span>
+				<span class="col-class">{_L("weapons.class")}</span>
+				<span class="col-type">{_L("weapons.type")}</span>
+				<span class="col-tint">{_L("weapons.tint")}</span>
+				<span class="col-flags">{_L("weapons.flags")}</span>
 			</div>
 			<div class="list-body">
 				{#if loading}
-					<div class="empty-state">Loading weapons...</div>
+					<div class="empty-state">{_L("weapons.loading")}</div>
 				{:else if filteredWeapons.length === 0}
-					<div class="empty-state">{searchQuery ? "No weapons match your search." : "No weapons found."}</div>
+					<div class="empty-state">{searchQuery ? _L("weapons.noWeaponsMatchSearch") : _L("weapons.noWeaponsFound")}</div>
 				{:else}
 					{#each filteredWeapons as weapon}
 						<button class="weapon-row" onclick={() => viewWeapon(weapon.id)}>
 							<span class="col-name">
 								{weapon.name}
-								{#if weapon.scratched}<span class="scratched-badge">Scratched</span>{/if}
+								{#if weapon.scratched}<span class="scratched-badge">{_L("weapons.scratched")}</span>{/if}
 							</span>
 							<span class="col-serial mono">{weapon.serial}</span>
 							<span class="col-owner">{weapon.owner}</span>
