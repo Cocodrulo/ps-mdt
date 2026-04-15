@@ -25,7 +25,7 @@ export const getLocalizedTime = (date: Date, options?: Intl.DateTimeFormatOption
 	});
 };
 
-export const _L = (key: string, ...replacements: [string, string][]) => {
+export const _L = (key: string, ...replacements: [string, string|number][]) => {
 	const steps = key.split(".");
 	let current: ITranslations | string = translations;
 	for (const step of steps) {
@@ -35,7 +35,7 @@ export const _L = (key: string, ...replacements: [string, string][]) => {
 	if (replacements) {
 		for (const replacement of replacements) {
 			const [key, value] = replacement;
-			current = (current as string).replace(`{{${key}}}`, value);
+			current = (current as string).replace(`{{${key}}}`, value.toString());
 		}
 	}
 
