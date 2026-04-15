@@ -7,6 +7,7 @@
 	import { NUI_EVENTS } from "../constants/nuiEvents";
 	import { globalNotifications } from "../services/notificationService.svelte";
 	import type { AuthService } from "../services/authService.svelte";
+	import { _L } from "@/utils/localization";
 
 	let { authService, tabService }: { authService?: AuthService; tabService?: any } = $props();
 
@@ -532,12 +533,12 @@
 					officers[idx].callsign = editCallsign.trim();
 					officers[idx].badgeNumber = editCallsign.trim();
 				}
-				globalNotifications.success(response.message || `Callsign updated to ${editCallsign.trim()}`);
+				globalNotifications.success(response.message || _L("roster.callsignUpdated", ["callsign", editCallsign.trim()]));
 			} else {
-				globalNotifications.error(response?.message || "Failed to update callsign");
+				globalNotifications.error(response?.message || _L("roster.failedToUpdateCallsign"));
 			}
 		} catch {
-			globalNotifications.error("Failed to update callsign");
+			globalNotifications.error(_L("roster.failedToUpdateCallsign"));
 		} finally {
 			isSavingBoss = false;
 		}
@@ -553,14 +554,14 @@
 	<div class="topbar">
 		<input
 			type="text"
-			placeholder="Search by callsign, name or rank..."
+			placeholder={_L("roster.searchPlaceholder")}
 			bind:value={searchQuery}
 			class="search-input"
 		/>
 		<div class="topbar-right">
 			<span class="result-count">{filteredOfficers.length} officer{filteredOfficers.length !== 1 ? "s" : ""}</span>
 			<button class="btn-secondary" onclick={refreshData} disabled={isLoading}>
-				{isLoading ? "Loading..." : "Refresh"}
+				{isLoading ? _L("roster.loading") : _L("roster.refresh")}
 			</button>
 		</div>
 	</div>
@@ -568,28 +569,28 @@
 	<div class="content-area">
 		<div class="list-panel">
 			<div class="table-header">
-				<button class="col-header sortable" onclick={() => handleSort("status")}>Status{getSortIndicator("status")}</button>
-				<button class="col-header sortable" onclick={() => handleSort("callsign")}>Call Sign{getSortIndicator("callsign")}</button>
-				<button class="col-header sortable" onclick={() => handleSort("name")}>Name{getSortIndicator("name")}</button>
-				<span class="col-header">Radio Ch.</span>
-				<button class="col-header sortable" onclick={() => handleSort("rank")}>Rank{getSortIndicator("rank")}</button>
-				<span class="col-header">Dept</span>
-				<span class="col-header">Certifications</span>
+				<button class="col-header sortable" onclick={() => handleSort("status")}>{_L("roster.status")}{getSortIndicator("status")}</button>
+				<button class="col-header sortable" onclick={() => handleSort("callsign")}>{_L("roster.callsign")}{getSortIndicator("callsign")}</button>
+				<button class="col-header sortable" onclick={() => handleSort("name")}>{_L("roster.name")}{getSortIndicator("name")}</button>
+				<span class="col-header">{_L("roster.radioCh")}</span>
+				<button class="col-header sortable" onclick={() => handleSort("rank")}>{_L("roster.rank")}{getSortIndicator("rank")}</button>
+				<span class="col-header">{_L("roster.dept")}</span>
+				<span class="col-header">{_L("roster.certifications")}</span>
 			</div>
 
 			<div class="table-body">
 				{#if isLoading}
 					<div class="empty-state">
 						<div class="loading-spinner"></div>
-						<p>Loading roster...</p>
+						<p>{_L("roster.loadingRoster")}</p>
 					</div>
 				{:else if filteredOfficers.length === 0}
 					<div class="empty-state">
-						<p class="empty-title">No Officers Found</p>
+						<p class="empty-title">{_L("roster.noOfficersFound")}</p>
 						<p class="empty-sub">
 							{searchQuery
-								? "No officers match your search criteria."
-								: "No officers are currently in the roster."}
+								? _L("roster.noOfficersFound")
+								: _L("roster.noOfficersFound")}
 						</p>
 					</div>
 				{:else}
@@ -632,12 +633,12 @@
 
 		<div class="units-panel">
 			<div class="units-header">
-				<span class="units-label">Active Units</span>
+				<span class="units-label">{_L("roster.activeUnits")}</span>
 				<span class="units-count">{activeUnits.length}</span>
 			</div>
 
 			{#if activeUnits.length === 0}
-				<div class="units-empty">No units active</div>
+				<div class="units-empty">{_L("roster.noUnitsActive")}</div>
 			{:else}
 				<div class="units-list">
 					{#each activeUnits as unit (unit.id)}
@@ -660,7 +661,7 @@
 		<div class="modal-container" onclick={(e) => e.stopPropagation()}>
 			<div class="modal-header">
 				<div class="modal-title-area">
-					<span class="modal-title">Manage Certifications</span>
+					<span class="modal-title">{_L("roster.manageCertifications")}</span>
 					<span class="modal-subtitle">{selectedOfficer.firstName} {selectedOfficer.lastName} - {selectedOfficer.callsign}</span>
 				</div>
 				<button class="modal-close" onclick={closeCertModal}>
@@ -672,8 +673,8 @@
 				{#if availableTags.length === 0}
 					<div class="no-tags">
 						<span class="material-icons no-tags-icon">label_off</span>
-						<p>No certifications available.</p>
-						<p class="no-tags-hint">Create officer tags in Management &gt; Tags</p>
+						<p>{_L("roster.noCertsAvailable")}</p>
+						<p class="no-tags-hint">{_L("roster.createCertsHint")}</p>
 					</div>
 				{:else}
 					<div class="cert-grid">
@@ -700,13 +701,13 @@
 			</div>
 
 			<div class="modal-footer">
-				<button class="btn-cancel" onclick={closeCertModal}>Cancel</button>
+				<button class="btn-cancel" onclick={closeCertModal}>{_L("roster.cancel")}</button>
 				<button
 					class="btn-save"
 					onclick={saveCertifications}
 					disabled={isSavingCerts || availableTags.length === 0}
 				>
-					{isSavingCerts ? "Saving..." : "Save"}
+					{isSavingCerts ? _L("roster.saving") : _L("roster.save")}
 				</button>
 			</div>
 		</div>
