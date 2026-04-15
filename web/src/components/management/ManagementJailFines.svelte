@@ -3,6 +3,7 @@
 	import { fetchNui } from "../../utils/fetchNui";
 	import { isEnvBrowser } from "../../utils/misc";
 	import { NUI_EVENTS } from "../../constants/nuiEvents";
+	import { _L } from "@/utils/localization";
 
 	interface JailFinesConfig {
 		reductionOffers: number[];
@@ -48,7 +49,7 @@
 
 	async function saveConfig() {
 		if (isEnvBrowser()) {
-			showStatus("Settings saved");
+			showStatus(_L("managementJailFines.settingsSaved"));
 			return;
 		}
 		try {
@@ -59,13 +60,13 @@
 				{ success: false },
 			);
 			if (result?.success) {
-				showStatus("Jail & Fines settings saved");
+				showStatus(_L("managementJailFines.settingsSaved"));
 			} else {
-				showStatus(result?.message || "Failed to save settings", "error");
+				showStatus(result?.message || _L("managementJailFines.failedToSave"), "error");
 			}
 		} catch (error) {
 			console.error("Failed to save jail/fines config:", error);
-			showStatus("Failed to save settings", "error");
+			showStatus(_L("managementJailFines.failedToSave"), "error");
 		} finally {
 			isSaving = false;
 		}
@@ -74,11 +75,11 @@
 	function addOffer() {
 		const val = parseInt(newOfferValue, 10);
 		if (!val || val < 1 || val > 100) {
-			showStatus("Enter a value between 1 and 100", "error");
+			showStatus(_L("managementJailFines.enterValueBetween1And100"), "error");
 			return;
 		}
 		if (config.reductionOffers.includes(val)) {
-			showStatus("That percentage already exists", "error");
+			showStatus(_L("managementJailFines.percentageAlreadyExists"), "error");
 			return;
 		}
 		config.reductionOffers = [...config.reductionOffers, val].sort((a, b) => a - b);
@@ -103,21 +104,21 @@
 
 <div class="jf-page">
 	<div class="jf-card">
-		<span class="card-label">Jail & Fines Configuration</span>
-		<p class="card-subtitle">Configure reduction offers and fine limits. Changes apply department-wide.</p>
+		<span class="card-label">{_L("managementJailFines.title")}</span>
+		<p class="card-subtitle">{_L("managementJailFines.subtitle")}</p>
 
 		{#if isLoading}
 			<div class="jf-loading">
 				<div class="loading-spinner"></div>
-				<p>Loading settings...</p>
+				<p>{_L("managementJailFines.loadingSettings")}</p>
 			</div>
 		{:else}
 			<div class="jf-scroll">
 				<!-- Reduction Offers -->
 				<div class="setting-group">
 					<div class="setting-group-header">
-						<span class="group-label">Reduction Offers</span>
-						<span class="group-desc">Percentage options shown when offering a reduction on charges</span>
+						<span class="group-label">{_L("managementJailFines.reductionOffers")}</span>
+						<span class="group-desc">{_L("managementJailFines.reductionOffersDesc")}</span>
 					</div>
 
 					<div class="offers-list">
@@ -130,7 +131,7 @@
 							</div>
 						{/each}
 						{#if config.reductionOffers.length === 0}
-							<span class="no-offers">No reduction offers configured</span>
+							<span class="no-offers">{_L("managementJailFines.noReductionOffers")}</span>
 						{/if}
 					</div>
 
@@ -145,15 +146,15 @@
 							onkeydown={handleOfferKeydown}
 						/>
 						<span class="offer-input-suffix">%</span>
-						<button class="add-offer-btn" onclick={addOffer}>Add</button>
+						<button class="add-offer-btn" onclick={addOffer}>{_L("managementJailFines.add")}</button>
 					</div>
 				</div>
 
 				<!-- Max Fine Amount -->
 				<div class="setting-group">
 					<div class="setting-group-header">
-						<span class="group-label">Maximum Fine Amount</span>
-						<span class="group-desc">The highest fine amount that can be processed through the MDT</span>
+						<span class="group-label">{_L("managementJailFines.maximumFineAmount")}</span>
+						<span class="group-desc">{_L("managementJailFines.maximumFineAmountDesc")}</span>
 					</div>
 
 					<div class="fine-input-row">
@@ -174,7 +175,7 @@
 		<div class="save-bar">
 			<button class="btn-save" onclick={saveConfig} disabled={isSaving}>
 				<span class="material-icons btn-save-icon">save</span>
-				{isSaving ? "Saving..." : "Save Settings"}
+				{isSaving ? _L("managementJailFines.saving") : _L("managementJailFines.saveSettings")}
 			</button>
 			{#if statusMsg}
 				<span class="save-status {statusMsg.type}">{statusMsg.text}</span>
