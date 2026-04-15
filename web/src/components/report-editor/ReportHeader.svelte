@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { _L } from "@/utils/localization";
+
 	export let isEditing: boolean;
 	export let isSaving: boolean;
 	export let isLoading: boolean;
@@ -8,7 +10,7 @@
 
 <header class="editor-header">
 	<h1 class="editor-title">
-		{isEditing ? "Edit Report" : "Create New Report"}
+		{isEditing ? _L("reportHeader.editReport") : _L("reportHeader.createReport")}
 	</h1>
 	<div class="header-actions">
 		<button
@@ -20,7 +22,7 @@
 				? "Cancel editing report"
 				: "Cancel creating report"}
 		>
-			Cancel
+			{_L("reportHeader.cancel")}
 		</button>
 		<button
 			class="btn btn-primary"
@@ -29,7 +31,7 @@
 			type="button"
 			aria-label={isSaving ? "Saving report..." : "Save report"}
 		>
-			{isSaving ? "Saving..." : "Save Report"}
+			{isSaving ? _L("reportHeader.saving") : _L("reportHeader.save")}
 		</button>
 	</div>
 </header>
