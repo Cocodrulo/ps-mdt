@@ -76,7 +76,7 @@
 				<input
 					bind:this={inputRef}
 					type="text"
-					placeholder="Search by name or ID..."
+					placeholder={_L("personSearchModal.searchPlaceholder")}
 					bind:value={localQuery}
 					oninput={handleInput}
 					class="search-input"
@@ -93,9 +93,9 @@
 								>
 								<span class="result-details">
 									{#if person.badgeId}
-										Badge: {person.badgeId} | {person.rank}
+										{_L("personSearchModal.badge", ["badgeId", person.badgeId], ["rank", person.rank])}
 									{:else if person.citizenid}
-										ID: {person.citizenid}
+										{_L("personSearchModal.id", ["citizenid", person.citizenid])}
 									{/if}
 								</span>
 							</div>
