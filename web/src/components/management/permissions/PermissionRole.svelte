@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { PermissionRole as Role } from "@/services/managementService.svelte";
+	import { _L } from "@/utils/localization";
 
 	let {
 		role,
@@ -39,12 +40,12 @@
 	<div class="role-header">
 		<span class="role-name">{role.label}</span>
 		{#if isBoss}
-			<span class="boss-tag">All</span>
+			<span class="boss-tag">{_L("managementPermissions.all")}</span>
 		{/if}
 	</div>
 	<div class="permission-list">
 		{#if permissions.length === 0}
-			<div class="empty-perm">No permissions</div>
+			<div class="empty-perm">{_L("managementPermissions.noPermissions")}</div>
 		{/if}
 		{#each permissions as permission}
 			<label class="permission-row">
