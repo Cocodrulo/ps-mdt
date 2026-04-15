@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { _L } from "@/utils/localization";
 	import { EVIDENCE_TYPES } from "../constants";
 	import type { Report, Evidence } from "../interfaces/IReportEditor";
 
@@ -67,7 +68,7 @@
 
 <section class="evidence-manager" aria-label="Evidence management">
 	<div class="evidence-header">
-		<h3 class="section-title">Evidence ({report.evidence.length})</h3>
+		<h3 class="section-title">_L("evidence.title") ({report.evidence.length})</h3>
 		<button
 			type="button"
 			on:click={toggleEvidenceForm}
@@ -75,7 +76,7 @@
 			aria-expanded={showEvidenceForm}
 			aria-controls="evidence-form"
 		>
-			{showEvidenceForm ? "Cancel" : "Add Evidence"}
+			{showEvidenceForm ? _L("evidence.cancel") : _L("evidence.addEvidence")}
 		</button>
 	</div>
 
@@ -90,7 +91,7 @@
 			<div class="form-row">
 				<div class="form-field">
 					<label for="evidence-title" class="form-label"
-						>Title *</label
+						>_L("evidence.title") *</label
 					>
 					<input
 						id="evidence-title"
@@ -101,12 +102,12 @@
 						aria-describedby="evidence-title-help"
 					/>
 					<div id="evidence-title-help" class="sr-only">
-						Enter a descriptive title for the evidence
+						_L("evidence.titleHelp")
 					</div>
 				</div>
 
 				<div class="form-field">
-					<label for="evidence-type" class="form-label">Type *</label>
+					<label for="evidence-type" class="form-label">_L("evidence.type") *</label>
 					<select
 						id="evidence-type"
 						bind:value={newEvidence.type}
@@ -114,13 +115,13 @@
 						required
 						aria-describedby="evidence-type-help"
 					>
-						<option value="">Select type...</option>
+						<option value="">_L("evidence.selectType")</option>
 						{#each EVIDENCE_TYPES as type}
 							<option value={type}>{type}</option>
 						{/each}
 					</select>
 					<div id="evidence-type-help" class="sr-only">
-						Select the type of evidence
+						_L("evidence.typeHelp")
 					</div>
 				</div>
 			</div>
@@ -128,7 +129,7 @@
 			<div class="form-row">
 				<div class="form-field">
 					<label for="evidence-serial" class="form-label"
-						>Serial Number</label
+						>_L("evidence.serial")</label
 					>
 					<input
 						id="evidence-serial"
@@ -138,13 +139,13 @@
 						aria-describedby="evidence-serial-help"
 					/>
 					<div id="evidence-serial-help" class="sr-only">
-						Enter serial number if applicable
+						_L("evidence.serialHelp")
 					</div>
 				</div>
 			</div>
 
 			<div class="form-field">
-				<label for="evidence-notes" class="form-label">Notes</label>
+				<label for="evidence-notes" class="form-label">_L("evidence.notes")</label>
 				<textarea
 					id="evidence-notes"
 					bind:value={newEvidence.notes}
@@ -153,7 +154,7 @@
 					aria-describedby="evidence-notes-help"
 				></textarea>
 				<div id="evidence-notes-help" class="sr-only">
-					Additional notes about the evidence
+					_L("evidence.notesHelp")
 				</div>
 			</div>
 
@@ -164,20 +165,20 @@
 					class="save-btn"
 					aria-describedby="save-btn-help"
 				>
-					{editingEvidence ? "Update Evidence" : "Add Evidence"}
+					{editingEvidence ? _L("evidence.updateEvidence") : _L("evidence.addEvidence")}
 				</button>
 				<button
 					type="button"
 					on:click={toggleEvidenceForm}
 					class="cancel-btn"
 				>
-					Cancel
+					_L("evidence.cancel")
 				</button>
 			</div>
 			<div id="save-btn-help" class="sr-only">
 				{formValid
-					? "Form is valid and ready to submit"
-					: "Please fill in required fields"}
+					? _L("evidence.saveBtnHelp")
+					: _L("evidence.requiredFields")}
 			</div>
 		</form>
 	{/if}
@@ -196,7 +197,7 @@
 
 						{#if evidence.serial}
 							<div class="evidence-detail">
-								<span class="detail-label">Serial:</span>
+								<span class="detail-label">_L("evidence.serial")</span>
 								<span class="detail-value"
 									>{evidence.serial}</span
 								>
@@ -205,7 +206,7 @@
 
 						{#if evidence.notes}
 							<div class="evidence-detail">
-								<span class="detail-label">Notes:</span>
+								<span class="detail-label">_L("evidence.notes")</span>
 								<span class="detail-value"
 									>{evidence.notes}</span
 								>
@@ -219,7 +220,7 @@
 								aria-label="Evidence images"
 							>
 								<h5 class="images-title">
-									Images ({evidence.images.length})
+									{_L("evidence.images", ["count", evidence.images.length])}
 								</h5>
 								<div class="images-grid">
 									{#each evidence.images as image, imageIndex}
@@ -257,7 +258,7 @@
 							class="edit-btn"
 							aria-label="Edit evidence: {evidence.title}"
 						>
-							Edit
+							_L("evidence.editEvidence")
 						</button>
 						<button
 							type="button"
@@ -265,14 +266,14 @@
 							class="remove-btn"
 							aria-label="Remove evidence: {evidence.title}"
 						>
-							Remove
+							_L("evidence.removeEvidence")
 						</button>
 					</div>
 				</article>
 			{/each}
 		</div>
 	{:else}
-		<p class="no-evidence">No evidence added</p>
+		<p class="no-evidence">_L("evidence.noEvidence")</p>
 	{/if}
 </section>
 
