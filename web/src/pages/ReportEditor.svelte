@@ -39,6 +39,7 @@
 	import { getReportTypesForJob, type MDTTab } from "../constants";
 
 	import type { JobType } from "../interfaces/IUser";
+	import { _L } from "@/utils/localization";
 
 	const {
 		reportId,
@@ -920,7 +921,7 @@
 	{#await reportPromise}
 		<div class="loading-state">
 			<div class="loading-spinner"></div>
-			<p>Loading report...</p>
+			<p>{_L("reportEditor.loading")}</p>
 		</div>
 	{:then}
 		<div class="editor-content">
@@ -951,7 +952,7 @@
 					/>
 				{:else}
 					<div style="padding: 16px; color: rgba(255,255,255,0.4); font-size: 13px;">
-						Connecting to collaborative session...
+						{_L("reportEditor.connecting")}
 					</div>
 				{/if}
 				</div>
@@ -971,7 +972,7 @@
 					onAdd={handlers.handleAddOfficer}
 					onRemove={handlers.handleRemoveOfficer}
 					onUpdate={handlers.handleUpdateOfficer}
-					title={isEMS ? "EMS" : "Officers"}
+					title={isEMS ? _L("reportEditor.ems") : _L("reportEditor.officers")}
 				/>
 
 			{#if !isEMS}
@@ -994,7 +995,7 @@
 					onAdd={handlers.handleAddVictim}
 					onRemove={handlers.handleRemoveVictim}
 					onUpdate={handlers.handleUpdateVictim}
-					title={isEMS ? "Patients" : "Victims"}
+					title={isEMS ? _L("reportEditor.patients") : _L("reportEditor.victims")}
 				/>
 
 			{#if !isEMS}
@@ -1041,9 +1042,9 @@
 		</div>
 	{:catch error}
 		<div class="error-state">
-			<p>Failed to load report: {error.message}</p>
+			<p>{_L("reportEditor.failedToLoadReport")} {error.message}</p>
 			<button class="btn btn-primary" onclick={() => location.reload()}>
-				Retry
+				{_L("reportEditor.retry")}
 			</button>
 		</div>
 	{/await}
@@ -1052,7 +1053,7 @@
 <!-- Officer/EMS Search Modal -->
 <PersonSearchModal
 	show={reportEditorUI.state.showOfficerSearch}
-	title={isEMS ? "Search EMS" : "Search Officers"}
+	title={isEMS ? _L("reportEditor.searchEMS") : _L("reportEditor.searchOfficers")}
 	searchResults={searchService.state.results}
 	onSearch={(query: string) => {
 		reportEditorUI.state.searchQuery = query;
@@ -1080,7 +1081,7 @@
 <!-- Victim/Patient Search Modal -->
 <PersonSearchModal
 	show={reportEditorUI.state.showVictimSearch}
-	title={isEMS ? "Search Patients" : "Search Victims"}
+	title={isEMS ? _L("reportEditor.searchPatients") : _L("reportEditor.searchVictims")}
 	searchResults={searchService.state.results}
 	onSearch={(query: string) => {
 		reportEditorUI.state.searchQuery = query;
@@ -1117,43 +1118,43 @@
 <div class="bw-modal-overlay" use:teleport onclick={closeBenchWarrantModal}>
 	<div class="bw-modal" onclick={(e) => e.stopPropagation()} role="dialog" aria-label="Issue Bench Warrant">
 		<div class="bw-modal-header">
-			<span class="bw-modal-title">Issue Bench Warrant</span>
+			<span class="bw-modal-title">{_L("reportEditor.issueBenchWarrant")}</span>
 			<button class="bw-modal-close" onclick={closeBenchWarrantModal} type="button">&times;</button>
 		</div>
 		<div class="bw-modal-body">
 			<div class="bw-field">
-				<label class="bw-label">Suspect</label>
+				<label class="bw-label">{_L("reportEditor.suspect")}</label>
 				<div class="bw-value">{benchWarrantModal.suspect?.fullName} ({benchWarrantModal.suspect?.citizenid})</div>
 			</div>
 			<div class="bw-field">
-				<label class="bw-label">Linked Report</label>
+				<label class="bw-label">{_L("reportEditor.linkedReport")}</label>
 				<div class="bw-value">#{report.reportId}</div>
 			</div>
 			<div class="bw-field">
-				<label class="bw-label">Charges</label>
+				<label class="bw-label">{_L("reportEditor.charges")}</label>
 				<div class="bw-charges">
 					{#each report.charges.filter(c => c.citizenid === benchWarrantModal.suspect?.citizenid) as charge}
 						<span class="bw-charge-chip">{charge.charge || charge.title || 'Unknown'} {charge.count > 1 ? `x${charge.count}` : ''}</span>
 					{:else}
-						<span class="bw-no-charges">No charges for this suspect</span>
+						<span class="bw-no-charges">{_L("reportEditor.noCharges")}</span>
 					{/each}
 				</div>
 			</div>
 			<div class="bw-field">
-				<label class="bw-label" for="bw-reason">Reason / Justification <span class="bw-required">*</span></label>
+				<label class="bw-label" for="bw-reason">{_L("reportEditor.reason")} <span class="bw-required">*</span></label>
 				<textarea
 					id="bw-reason"
 					class="bw-textarea"
 					bind:value={benchWarrantModal.reason}
-					placeholder="Provide justification for this bench warrant request..."
+					placeholder="{_L("reportEditor.provideJustification")}"
 					rows="4"
 				></textarea>
 			</div>
 		</div>
 		<div class="bw-modal-footer">
-			<button class="bw-btn bw-btn-cancel" onclick={closeBenchWarrantModal} type="button" disabled={benchWarrantModal.submitting}>Cancel</button>
+			<button class="bw-btn bw-btn-cancel" onclick={closeBenchWarrantModal} type="button" disabled={benchWarrantModal.submitting}>{_L("reportEditor.cancel")}</button>
 			<button class="bw-btn bw-btn-submit" onclick={submitBenchWarrant} type="button" disabled={benchWarrantModal.submitting || !benchWarrantModal.reason.trim()}>
-				{benchWarrantModal.submitting ? 'Submitting...' : 'Submit Request'}
+				{benchWarrantModal.submitting ? _L("reportEditor.submitting") : _L("reportEditor.submitRequest")}
 			</button>
 		</div>
 	</div>
