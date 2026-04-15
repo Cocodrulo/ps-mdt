@@ -3,6 +3,7 @@
 	import { fetchNui } from "../../utils/fetchNui";
 	import { isEnvBrowser } from "../../utils/misc";
 	import { NUI_EVENTS } from "../../constants/nuiEvents";
+	import { _L } from "@/utils/localization";
 
 	interface AwardConfig {
 		id: number;
@@ -15,15 +16,15 @@
 	}
 
 	const GOAL_TYPES = [
-		{ value: "reports", label: "Reports Filed" },
-		{ value: "arrests", label: "Arrest Reports" },
-		{ value: "cases", label: "Cases Worked" },
-		{ value: "evidence", label: "Evidence Logged" },
-		{ value: "bolos", label: "BOLOs Issued" },
-		{ value: "warrants", label: "Warrants Issued" },
-		{ value: "totalFined", label: "Total Fined ($)" },
-		{ value: "totalMonths", label: "Months Sentenced" },
-		{ value: "citations", label: "Citations Issued" },
+		{ value: "reports", label: _L("managementAwards.reportsFiled") },
+		{ value: "arrests", label: _L("managementAwards.arrestReports") },
+		{ value: "cases", label: _L("managementAwards.casesWorked") },
+		{ value: "evidence", label: _L("managementAwards.evidenceLogged") },
+		{ value: "bolos", label: _L("managementAwards.bolosIssued") },
+		{ value: "warrants", label: _L("managementAwards.warrantsIssued") },
+		{ value: "totalFined", label: _L("managementAwards.totalFined") },
+		{ value: "totalMonths", label: _L("managementAwards.monthsSentenced") },
+		{ value: "citations", label: _L("managementAwards.citationsIssued") },
 	];
 
 	const ICONS = [
@@ -76,7 +77,7 @@
 		const desc = formDesc.trim();
 		const category = formCategory.trim();
 		if (!name || !desc || !category || formGoalAmount < 1) {
-			showStatus("Fill in all fields", "error");
+			showStatus(_L("managementAwards.fillInAllFields"), "error");
 			return;
 		}
 
@@ -102,14 +103,14 @@
 				NUI_EVENTS.AWARDS.SAVE_AWARD, payload, { success: false }
 			);
 			if (result?.success) {
-				showStatus(editingId ? "Award updated" : "Award created");
+				showStatus(editingId ? _L("managementAwards.awardUpdated") : _L("managementAwards.awardCreated"));
 				resetForm();
 				await loadAwards();
 			} else {
-				showStatus(result?.message || "Failed to save", "error");
+				showStatus(result?.message || _L("managementAwards.failedToSave"), "error");
 			}
 		} catch {
-			showStatus("Failed to save award", "error");
+			showStatus(_L("managementAwards.failedToSave"), "error");
 		} finally {
 			isSubmitting = false;
 		}
@@ -127,14 +128,14 @@
 				NUI_EVENTS.AWARDS.DELETE_AWARD, { id: award.id }, { success: false }
 			);
 			if (result?.success) {
-				showStatus("Award deleted");
+				showStatus(_L("managementAwards.awardDeleted"));
 				if (editingId === award.id) resetForm();
 				await loadAwards();
 			} else {
-				showStatus("Failed to delete", "error");
+				showStatus(_L("managementAwards.failedToDelete"), "error");
 			}
 		} catch {
-			showStatus("Failed to delete award", "error");
+			showStatus(_L("managementAwards.failedToDelete"), "error");
 		}
 	}
 
@@ -180,17 +181,17 @@
 
 	<div class="form-section">
 		<div class="form-row">
-			<input class="form-input name-input" type="text" placeholder="Award name..." bind:value={formName} maxlength="50" />
-			<input class="form-input" type="text" placeholder="Category..." bind:value={formCategory} maxlength="25" />
+			<input class="form-input name-input" type="text" placeholder={_L("managementAwards.awardNamePlaceholder")} bind:value={formName} maxlength="50" />
+			<input class="form-input" type="text" placeholder={_L("managementAwards.awardCategoryPlaceholder")} bind:value={formCategory} maxlength="25" />
 			<select class="form-select" bind:value={formGoalType}>
 				{#each GOAL_TYPES as gt}
 					<option value={gt.value}>{gt.label}</option>
 				{/each}
 			</select>
-			<input class="form-input goal-input" type="number" min="1" bind:value={formGoalAmount} placeholder="Goal" />
+			<input class="form-input goal-input" type="number" min="1" bind:value={formGoalAmount} placeholder={_L("managementAwards.awardGoalAmountPlaceholder")} />
 		</div>
 		<div class="form-row">
-			<input class="form-input desc-input" type="text" placeholder="Description..." bind:value={formDesc} maxlength="100" />
+			<input class="form-input desc-input" type="text" placeholder={_L("managementAwards.awardDescriptionPlaceholder")} bind:value={formDesc} maxlength="100" />
 			<div class="icon-picker">
 				{#each ICONS as icon}
 					<button
@@ -205,11 +206,11 @@
 			</div>
 			<div class="form-actions">
 				{#if editingId}
-					<button class="btn-save" onclick={handleSave} disabled={isSubmitting}>Update</button>
-					<button class="btn-cancel" onclick={resetForm}>Cancel</button>
+					<button class="btn-save" onclick={handleSave} disabled={isSubmitting}>{_L("managementAwards.updateAward")}</button>
+					<button class="btn-cancel" onclick={resetForm}>{_L("managementAwards.cancel")}</button>
 				{:else}
 					<button class="btn-create" onclick={handleSave} disabled={!formName.trim() || !formDesc.trim() || !formCategory.trim() || isSubmitting}>
-						{isSubmitting ? "..." : "+ Add"}
+						{isSubmitting ? "..." : "+ " + _L("managementAwards.addAward")}
 					</button>
 				{/if}
 			</div>
@@ -219,7 +220,7 @@
 	{#if isLoading}
 		<div class="empty-state">
 			<div class="loading-spinner"></div>
-			<p>Loading awards...</p>
+			<p>{_L("managementAwards.loadingAwards")}</p>
 		</div>
 	{:else}
 		<div class="awards-list">
@@ -242,7 +243,7 @@
 					</div>
 				</div>
 			{:else}
-				<div class="empty-state">No awards configured. Add one above.</div>
+				<div class="empty-state">{_L("managementAwards.noAwards")}</div>
 			{/each}
 		</div>
 	{/if}
