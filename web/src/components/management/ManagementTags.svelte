@@ -4,6 +4,7 @@
 	import { isEnvBrowser } from "../../utils/misc";
 	import { NUI_EVENTS } from "../../constants/nuiEvents";
 	import type { JobType } from "../../interfaces/IUser";
+	import { _L } from "@/utils/localization";
 
 	type JobTypeFilter = "leo" | "ems" | "all";
 
@@ -102,7 +103,7 @@
 		const name = newTagName.trim();
 		if (!name) return;
 		if (name.length > 25) {
-			showStatus("Tag name must be 25 characters or less", "error");
+			showStatus(_L("managementTags.tagNameMustBe25CharactersOrLess"), "error");
 			return;
 		}
 
@@ -120,15 +121,15 @@
 				{ success: false },
 			);
 			if (result?.success) {
-				showStatus("Tag created");
+				showStatus(_L("managementTags.tagCreated"));
 				newTagName = "";
 				await loadTags();
 			} else {
-				showStatus(result?.message || "Failed to create tag", "error");
+				showStatus(result?.message || _L("managementTags.failedToCreateTag"), "error");
 			}
 		} catch (error) {
 			console.error("Failed to create tag:", error);
-			showStatus("Failed to create tag", "error");
+			showStatus(_L("managementTags.failedToCreateTag"), "error");
 		} finally {
 			isSubmitting = false;
 		}
@@ -139,7 +140,7 @@
 		const name = editName.trim();
 		if (!name) return;
 		if (name.length > 25) {
-			showStatus("Tag name must be 25 characters or less", "error");
+			showStatus(_L("managementTags.tagNameMustBe25CharactersOrLess"), "error");
 			return;
 		}
 
@@ -157,15 +158,15 @@
 				{ success: false },
 			);
 			if (result?.success) {
-				showStatus("Tag updated");
+				showStatus(_L("managementTags.tagUpdated"));
 				editingTag = null;
 				await loadTags();
 			} else {
-				showStatus(result?.message || "Failed to update tag", "error");
+				showStatus(result?.message || _L("managementTags.failedToUpdateTag"), "error");
 			}
 		} catch (error) {
 			console.error("Failed to update tag:", error);
-			showStatus("Failed to update tag", "error");
+			showStatus(_L("managementTags.failedToUpdateTag"), "error");
 		} finally {
 			isSubmitting = false;
 		}
@@ -184,15 +185,15 @@
 				{ success: false },
 			);
 			if (result?.success) {
-				showStatus("Tag deleted");
+				showStatus(_L("managementTags.tagDeleted"));
 				if (editingTag?.id === tag.id) editingTag = null;
 				await loadTags();
 			} else {
-				showStatus(result?.message || "Failed to delete tag", "error");
+				showStatus(result?.message || _L("managementTags.failedToDeleteTag"), "error");
 			}
 		} catch (error) {
 			console.error("Failed to delete tag:", error);
-			showStatus("Failed to delete tag", "error");
+			showStatus(_L("managementTags.failedToDeleteTag"), "error");
 		}
 	}
 
@@ -246,7 +247,7 @@
 			<input
 				class="tag-name-input"
 				type="text"
-				placeholder="New tag name..."
+				placeholder={_L("managementTags.newTagName")}
 				bind:value={newTagName}
 				maxlength="25"
 				onkeydown={(e) => e.key === "Enter" && handleCreate()}
@@ -279,7 +280,7 @@
 				onclick={handleCreate}
 				disabled={!newTagName.trim() || isSubmitting}
 			>
-				{isSubmitting ? "..." : "+ Add"}
+				{isSubmitting ? "..." : "+ " + _L("managementTags.addTag")}
 			</button>
 		</div>
 	</div>
@@ -289,18 +290,18 @@
 		<input
 			class="search-input"
 			type="text"
-			placeholder="Search tags..."
+			placeholder={_L("managementTags.searchTags")}
 			bind:value={searchQuery}
 		/>
 		<div class="filter-pills">
-			<button class="filter-pill" class:active={filterType === "all"} onclick={() => (filterType = "all")}>All</button>
-			<button class="filter-pill" class:active={filterType === "officer"} onclick={() => (filterType = "officer")}>{isEMS ? 'Personnel' : 'Officer'}</button>
-			<button class="filter-pill" class:active={filterType === "report"} onclick={() => (filterType = "report")}>Report</button>
-			<button class="filter-pill" class:active={filterType === "both"} onclick={() => (filterType = "both")}>Both</button>
+			<button class="filter-pill" class:active={filterType === "all"} onclick={() => (filterType = "all")}>{_L("managementTags.all")}</button>
+			<button class="filter-pill" class:active={filterType === "officer"} onclick={() => (filterType = "officer")}>{isEMS ? _L('managementTags.personnel') : _L('managementTags.officer')}</button>
+			<button class="filter-pill" class:active={filterType === "report"} onclick={() => (filterType = "report")}>{_L("managementTags.report")}</button>
+			<button class="filter-pill" class:active={filterType === "both"} onclick={() => (filterType = "both")}>{_L("managementTags.both")}</button>
 		</div>
 		{#if !isEMS}
 			<div class="filter-pills">
-				<button class="filter-pill" class:active={filterJobType === "all"} onclick={() => (filterJobType = "all")}>All</button>
+				<button class="filter-pill" class:active={filterJobType === "all"} onclick={() => (filterJobType = "all")}>{_L("managementTags.all")}</button>
 				<button class="filter-pill" class:active={filterJobType === "leo"} onclick={() => (filterJobType = "leo")}>LEO</button>
 				<button class="filter-pill" class:active={filterJobType === "ems"} onclick={() => (filterJobType = "ems")}>EMS</button>
 			</div>
@@ -312,7 +313,7 @@
 	{#if isLoading}
 		<div class="empty-state">
 			<div class="loading-spinner"></div>
-			<p>Loading tags...</p>
+			<p>{_L("managementTags.loadingTags")}</p>
 		</div>
 	{:else}
 		<div class="tags-list">
@@ -356,8 +357,8 @@
 									{/each}
 								</div>
 								<div class="edit-actions">
-									<button class="btn-save" onclick={handleUpdate} disabled={!editName.trim() || isSubmitting}>Save</button>
-									<button class="btn-cancel" onclick={cancelEdit}>Cancel</button>
+									<button class="btn-save" onclick={handleUpdate} disabled={!editName.trim() || isSubmitting}>{_L("managementTags.save")}</button>
+									<button class="btn-cancel" onclick={cancelEdit}>{_L("managementTags.cancel")}</button>
 								</div>
 							</div>
 						</div>
@@ -385,9 +386,9 @@
 			{:else}
 				<div class="empty-state">
 					{#if searchQuery || filterType !== "all"}
-						No tags match your filter.
+						{_L("managementTags.noTagsMatchFilter")}
 					{:else}
-						No tags created yet. Add one above.
+						{_L("managementTags.noTagsCreatedYet")}
 					{/if}
 				</div>
 			{/each}
