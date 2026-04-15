@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { _L } from "@/utils/localization";
 	import type { CollabEditor } from "../../services/collabService.svelte";
 
 	interface Props {
@@ -21,7 +22,7 @@
 	<div class="collab-bar">
 		<div class="collab-indicator">
 			<div class="pulse-dot" style="background: {myColor};"></div>
-			<span class="collab-label">Live Editing</span>
+			<span class="collab-label">{_L("collabPresenceBar.liveEditing")}</span>
 		</div>
 		<div class="collab-editors">
 			{#each editors as editor}
