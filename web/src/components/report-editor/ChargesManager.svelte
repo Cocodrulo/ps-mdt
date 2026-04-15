@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { ReportCharge, Suspect } from "../../interfaces/IReportEditor";
 	import type { Charge } from "../../interfaces/ICharges";
+	import { _L, getLocalizedCurrency } from "@/utils/localization";
 
 	interface Props {
 		charges: ReportCharge[];
@@ -140,20 +141,20 @@
 
 <div class="charges-section">
 	<div class="section-header">
-		<span class="section-label">CHARGES</span>
+		<span class="section-label">{_L("chargesManager.title")}</span>
 		<div class="header-actions">
 			{#if suspects.length > 0}
 				<select class="suspect-select" bind:value={selectedSuspect}>
-					<option value="">Select suspect...</option>
+					<option value="">{_L("chargesManager.selectSuspect")}</option>
 					{#each suspects as suspect}
 						<option value={suspect.citizenid}>{suspect.fullName || suspect.citizenid}</option>
 					{/each}
 				</select>
 				<button class="add-btn" onclick={() => { if (selectedSuspect) showPicker = !showPicker; }} disabled={!selectedSuspect}>
-					+ Add Charge
+					+ {_L("chargesManager.addCharge")}
 				</button>
 			{:else}
-				<span class="hint-text">Add a suspect first</span>
+				<span class="hint-text">{_L("chargesManager.addSuspectFirst")}</span>
 			{/if}
 		</div>
 	</div>
@@ -164,7 +165,7 @@
 			<input
 				type="text"
 				class="picker-search"
-				placeholder="Search charges..."
+				placeholder={_L("chargesManager.searchCharges")}
 				bind:value={chargeSearch}
 			/>
 			<div class="picker-list">
@@ -178,13 +179,13 @@
 							<span class="picker-meta">{penal.category}</span>
 							<span class="picker-values">
 								{#if penal.time > 0}{penal.time}mo{/if}
-								{#if penal.fine && penal.fine > 0} ${penal.fine.toLocaleString()}{/if}
+								{#if penal.fine && penal.fine > 0}{getLocalizedCurrency(penal.fine)}{/if}
 							</span>
 						</div>
 					</button>
 				{/each}
 				{#if filteredPenalCodes.length === 0}
-					<p class="no-results">No charges found.</p>
+					<p class="no-results">{_L("chargesManager.noChargesFound")}</p>
 				{/if}
 			</div>
 		</div>
@@ -192,7 +193,7 @@
 
 	<!-- Charges grouped by suspect -->
 	{#if charges.length === 0}
-		<p class="empty-text">No charges added.</p>
+		<p class="empty-text">{_L("chargesManager.noChargesAdded")}</p>
 	{:else}
 		{#each [...chargesBySuspect.entries()] as [citizenid, suspectCharges]}
 			<div class="suspect-group">
@@ -207,7 +208,7 @@
 								<span class="charge-label">{charge.charge}</span>
 								<div class="charge-values">
 									<span class="charge-time">{charge.time * charge.count}mo</span>
-									<span class="charge-fine">${(charge.fine * charge.count).toLocaleString()}</span>
+									<span class="charge-fine">{getLocalizedCurrency(charge.fine * charge.count)}</span>
 								</div>
 							</div>
 							<div class="charge-controls">
@@ -225,7 +226,7 @@
 				<div class="suspect-footer">
 					<div class="suspect-totals">
 						<span class="total-item">{getSuspectTotalMonths(citizenid)} months</span>
-						<span class="total-item">${getSuspectTotalFine(citizenid).toLocaleString()}</span>
+						<span class="total-item">{getLocalizedCurrency(getSuspectTotalFine(citizenid))}</span>
 					</div>
 					<div class="suspect-actions">
 						<button
@@ -233,14 +234,14 @@
 							onclick={() => onSendToJail(citizenid, getSuspectTotalMonths(citizenid))}
 							disabled={!citizenid || getSuspectTotalMonths(citizenid) <= 0}
 						>
-							Send to Jail
+							{_L("chargesManager.sendToJail")}
 						</button>
 						<button
 							class="action-btn fine-btn"
 							onclick={() => onGiveCitation(citizenid, getSuspectTotalFine(citizenid))}
 							disabled={!citizenid || getSuspectTotalFine(citizenid) <= 0}
 						>
-							Issue Fine
+							{_L("chargesManager.issueFine")}
 						</button>
 						{#if reductionOffers.length > 0}
 							<button
@@ -248,7 +249,7 @@
 								onclick={() => openReduction(citizenid)}
 								disabled={!citizenid || (getSuspectTotalFine(citizenid) <= 0 && getSuspectTotalMonths(citizenid) <= 0)}
 							>
-								Reduction
+								{_L("chargesManager.reduction")}
 							</button>
 						{/if}
 					</div>
@@ -258,7 +259,7 @@
 				{#if reductionTarget === citizenid}
 					<div class="reduction-panel">
 						<div class="reduction-header">
-							<span class="reduction-title">Offer Reduction</span>
+							<span class="reduction-title">{_L("chargesManager.offerReduction")}</span>
 							<button class="reduction-close" onclick={closeReduction}>
 								<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
 							</button>
@@ -271,7 +272,7 @@
 									class:selected={selectedReduction === pct}
 									onclick={() => selectedReduction = pct}
 								>
-									{pct}% off
+									{_L("chargesManager.pctOff", ["percentage", pct])}
 								</button>
 							{/each}
 						</div>
@@ -279,18 +280,18 @@
 						{#if selectedReduction}
 							<div class="reduction-preview">
 								<div class="reduction-preview-row">
-									<span class="preview-label">Jail</span>
+									<span class="preview-label">{_L("chargesManager.jail")}</span>
 									<span class="preview-original">{getSuspectTotalMonths(citizenid)}mo</span>
 									<span class="preview-arrow">→</span>
 									<span class="preview-reduced">{getReducedMonths(citizenid, selectedReduction)}mo</span>
 									<span class="preview-saved">(-{getSuspectTotalMonths(citizenid) - getReducedMonths(citizenid, selectedReduction)}mo)</span>
 								</div>
 								<div class="reduction-preview-row">
-									<span class="preview-label">Fine</span>
-									<span class="preview-original">${getSuspectTotalFine(citizenid).toLocaleString()}</span>
+									<span class="preview-label">{_L("chargesManager.fine")}</span>
+									<span class="preview-original">{getLocalizedCurrency(getSuspectTotalFine(citizenid))}</span>
 									<span class="preview-arrow">→</span>
-									<span class="preview-reduced">${getReducedFine(citizenid, selectedReduction).toLocaleString()}</span>
-									<span class="preview-saved">(-${(getSuspectTotalFine(citizenid) - getReducedFine(citizenid, selectedReduction)).toLocaleString()})</span>
+									<span class="preview-reduced">{getLocalizedCurrency(getReducedFine(citizenid, selectedReduction))}</span>
+									<span class="preview-saved">(-{getLocalizedCurrency(getSuspectTotalFine(citizenid) - getReducedFine(citizenid, selectedReduction))})</span>
 								</div>
 							</div>
 
@@ -300,21 +301,21 @@
 									onclick={applyReductionJail}
 									disabled={getSuspectTotalMonths(citizenid) <= 0}
 								>
-									Jail ({getReducedMonths(citizenid, selectedReduction)}mo)
+									{_L("chargesManager.jail")} ({getReducedMonths(citizenid, selectedReduction)}mo)
 								</button>
 								<button
 									class="action-btn fine-btn"
 									onclick={applyReductionFine}
 									disabled={getSuspectTotalFine(citizenid) <= 0}
 								>
-									Fine (${getReducedFine(citizenid, selectedReduction).toLocaleString()})
+									{_L("chargesManager.fine")} ({getReducedFine(citizenid, selectedReduction).toLocaleString()})
 								</button>
 								<button
 									class="action-btn both-btn"
 									onclick={applyReductionBoth}
 									disabled={getSuspectTotalMonths(citizenid) <= 0 && getSuspectTotalFine(citizenid) <= 0}
 								>
-									Jail & Fine
+									{_L("chargesManager.jailAndFine")}
 								</button>
 							</div>
 						{/if}
@@ -326,12 +327,12 @@
 		<!-- Grand totals -->
 		<div class="grand-totals">
 			<div class="grand-total-item">
-				<span class="grand-label">Total Jail Time</span>
-				<span class="grand-value">{totalMonths} months</span>
+				<span class="grand-label">{_L("chargesManager.totalJailTime")}</span>
+				<span class="grand-value">{_L("chargesManager.months", ["months", totalMonths])}</span>
 			</div>
 			<div class="grand-total-item">
-				<span class="grand-label">Total Fines</span>
-				<span class="grand-value">${totalFine.toLocaleString()}</span>
+				<span class="grand-label">{_L("chargesManager.totalFines")}</span>
+				<span class="grand-value">{getLocalizedCurrency(totalFine)}</span>
 			</div>
 		</div>
 	{/if}

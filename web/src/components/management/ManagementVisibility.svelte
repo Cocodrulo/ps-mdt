@@ -4,6 +4,7 @@
 	import { TAB_VISIBILITY_KEYS } from "@/constants/management";
 	import { NAV_GROUPS, getTabsForJob, MDT_TABS } from "@/constants";
 	import type { JobType } from "@/interfaces/IUser";
+	import { _L } from "@/utils/localization";
 
 	let { jobType = 'leo' }: { jobType?: JobType } = $props();
 
@@ -86,7 +87,7 @@
 	{/if}
 
 	<div class="visibility-header">
-		<span class="header-label">Tab Visibility</span>
+		<span class="header-label">{_L("managementVisibility.tabVisibility")}</span>
 		{#if mgmt.jobLabel}
 			<span class="job-tag">{mgmt.jobLabel}</span>
 		{/if}
@@ -95,11 +96,11 @@
 	{#if mgmt.isLoading}
 		<div class="empty-state">
 			<div class="loading-spinner"></div>
-			<p>Loading roles...</p>
+			<p>{_L("managementVisibility.loadingRoles")}</p>
 		</div>
 	{:else if mgmt.roles.length === 0}
 		<div class="empty-state">
-			<p>No roles available</p>
+			<p>{_L("managementVisibility.noRolesAvailable")}</p>
 		</div>
 	{:else}
 		<div class="visibility-body">
@@ -112,7 +113,7 @@
 					>
 						<span class="role-name">{role.label}</span>
 						{#if role.isBoss}
-							<span class="boss-tag">All</span>
+							<span class="boss-tag">{_L("managementVisibility.all")}</span>
 						{/if}
 					</button>
 				{/each}
@@ -123,7 +124,7 @@
 					<div class="role-title-row">
 						<span class="role-title">{currentRole.label}</span>
 						{#if currentRole.isBoss}
-							<span class="boss-note">Boss roles always see all tabs</span>
+							<span class="boss-note">{_L("managementVisibility.bossRolesAlwaysSeeAllTabs")}</span>
 						{/if}
 					</div>
 
@@ -141,7 +142,7 @@
 											class:all-hidden={!groupAllVisible(group.id)}
 											onclick={() => toggleGroup(group.id)}
 										>
-											{groupAllVisible(group.id) ? "Hide All" : "Show All"}
+											{groupAllVisible(group.id) ? _L("managementVisibility.hideAll") : _L("managementVisibility.showAll")}
 										</button>
 									{/if}
 								</div>
@@ -175,7 +176,7 @@
 								onclick={() => mgmt.saveAllRoles()}
 								disabled={mgmt.isSaving}
 							>
-								{mgmt.isSaving ? "Saving..." : "Save Visibility"}
+								{mgmt.isSaving ? _L("managementVisibility.saving") : _L("managementVisibility.saveVisibility")}
 							</button>
 						</div>
 					{/if}
