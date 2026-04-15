@@ -3,6 +3,7 @@
 	import { fetchNui } from "../../utils/fetchNui";
 	import { isEnvBrowser } from "../../utils/misc";
 	import { NUI_EVENTS } from "../../constants/nuiEvents";
+	import { _L } from "@/utils/localization";
 
 	interface TrackingConfig {
 		[key: string]: boolean;
@@ -115,18 +116,18 @@
 <div class="tracking-page">
 	<div class="tracking-card">
 		<div class="card-title-row">
-			<span class="card-label">Activity Tracking</span>
+			<span class="card-label">{_L("managementTracking.activityTracking")}</span>
 			<div class="tracking-actions">
-				<button class="action-btn" onclick={enableAll}>Enable All</button>
-				<button class="action-btn" onclick={disableAll}>Disable All</button>
+				<button class="action-btn" onclick={enableAll}>{_L("managementTracking.enableAll")}</button>
+				<button class="action-btn" onclick={disableAll}>{_L("managementTracking.disableAll")}</button>
 			</div>
 		</div>
-		<p class="card-subtitle">Configure which actions are logged in the activity feed. Changes apply department-wide.</p>
+		<p class="card-subtitle">{_L("managementTracking.configureWhichActionsAreLogged")}</p>
 
 		{#if isLoadingTracking}
 			<div class="tracking-loading">
 				<div class="loading-spinner"></div>
-				<p>Loading tracking settings...</p>
+				<p>{_L("managementTracking.loadingTrackingSettings")}</p>
 			</div>
 		{:else}
 			<div class="tracking-scroll">
@@ -156,7 +157,7 @@
 		<div class="save-bar">
 			<button class="btn-save" onclick={saveTrackingConfig} disabled={isSavingTracking}>
 				<span class="material-icons btn-save-icon">save</span>
-				{isSavingTracking ? "Saving..." : "Save Settings"}
+				{isSavingTracking ? _L("managementTracking.saving") : _L("managementTracking.saveSettings")}
 			</button>
 			{#if trackingStatus}
 				<span class="save-status {trackingStatus.type}">{trackingStatus.text}</span>
