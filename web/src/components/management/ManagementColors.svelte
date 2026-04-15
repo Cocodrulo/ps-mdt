@@ -4,6 +4,7 @@
 	import { isEnvBrowser } from "@/utils/misc";
 	import { NUI_EVENTS } from "@/constants/nuiEvents";
 	import { settingsService } from "@/services/settingsService.svelte";
+	import { _L } from "@/utils/localization";
 
 	interface ColorConfig {
 		accent: string;
@@ -146,7 +147,7 @@
 	async function saveConfig() {
 		if (isEnvBrowser()) {
 			savedConfig = { ...config };
-			showStatus("Colors saved");
+			showStatus(_L("managementColors.colorsSaved"));
 			return;
 		}
 		try {
@@ -159,13 +160,13 @@
 			if (result?.success) {
 				savedConfig = { ...config };
 				settingsService.setColorConfig(config);
-				showStatus("Colors saved - applies to all officers on next MDT open");
+				showStatus(_L("managementColors.colorsSaved"));
 			} else {
-				showStatus(result?.message || "Failed to save colors", "error");
+				showStatus(result?.message || _L("managementColors.failedToSaveColors"), "error");
 			}
 		} catch (error) {
 			console.error("Failed to save color config:", error);
-			showStatus("Failed to save colors", "error");
+			showStatus(_L("managementColors.failedToSaveColors"), "error");
 		} finally {
 			isSaving = false;
 		}
@@ -178,12 +179,12 @@
 
 <div class="colors-page">
 	{#if isLoading}
-		<div class="colors-loading">Loading...</div>
+		<div class="colors-loading">{_L("managementColors.loading")}</div>
 	{:else}
 		<div class="colors-body">
 			<!-- Custom Colors - horizontal -->
 			<div class="section">
-				<span class="card-label">Custom Colors</span>
+				<span class="card-label">{_L("managementColors.customColors")}</span>
 				<div class="colors-hz">
 					{#each COLOR_FIELDS as field}
 						<div class="color-tile">
@@ -201,7 +202,7 @@
 
 			<!-- Themes - horizontal scroll -->
 			<div class="section">
-				<span class="card-label">Themes</span>
+				<span class="card-label">{_L("managementColors.themes")}</span>
 				<div class="themes-hz">
 					{#each THEMES as theme}
 						<button
@@ -238,28 +239,28 @@
 
 			<!-- Preview -->
 			<div class="section">
-				<span class="card-label">Preview</span>
+				<span class="card-label">{_L("managementColors.preview")}</span>
 				<div class="preview-mockup" style="background: rgb({config.background})">
 					<div class="mock-sidebar" style="background: rgb({config.cardBackground})">
 						<div class="mock-nav-item active" style="background: rgba({config.accent}, 0.15); color: rgb({config.accentText})">
 							<span class="material-icons mock-icon">dashboard</span>
-							<span>Dashboard</span>
+							<span>{_L("managementColors.dashboard")}</span>
 						</div>
 						<div class="mock-nav-item">
 							<span class="material-icons mock-icon">people</span>
-							<span>Citizens</span>
+							<span>{_L("managementColors.citizens")}</span>
 						</div>
 						<div class="mock-nav-item">
 							<span class="material-icons mock-icon">description</span>
-							<span>Reports</span>
+							<span>{_L("managementColors.reports")}</span>
 						</div>
 						<div class="mock-nav-item">
 							<span class="material-icons mock-icon">folder</span>
-							<span>Cases</span>
+							<span>{_L("managementColors.cases")}</span>
 						</div>
 						<div class="mock-nav-item">
 							<span class="material-icons mock-icon">gavel</span>
-							<span>Warrants</span>
+							<span>{_L("managementColors.warrants")}</span>
 						</div>
 					</div>
 					<div class="mock-main">
@@ -363,16 +364,16 @@
 		{#if hasChanges}
 			<button class="btn-reset" onclick={resetToSaved}>
 				<span class="material-icons btn-icon">undo</span>
-				Reset
+				{_L("managementColors.reset")}
 			</button>
 		{/if}
 		<button class="btn-save" onclick={saveConfig} disabled={isSaving || !hasChanges}>
 			<span class="material-icons btn-icon">save</span>
-			{isSaving ? "Saving..." : "Save Colors"}
+			{isSaving ? _L("managementColors.saving") : _L("managementColors.saveColors")}
 		</button>
 		<button class="btn-default" onclick={revertToDefault} disabled={isSaving}>
 			<span class="material-icons btn-icon">restart_alt</span>
-			Revert to Default
+			{_L("managementColors.revertToDefault")}
 		</button>
 		{#if statusMsg}
 			<span class="save-status" class:error={statusMsg.type === "error"}>{statusMsg.text}</span>
