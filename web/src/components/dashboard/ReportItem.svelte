@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { _L } from "@/utils/localization";
 	import type { DashboardData } from "../../interfaces/IDashboard";
 
 	let {
@@ -27,17 +28,17 @@
 			</div>
 		</div>
 		<div class="report-actions">
-			<button class="action-btn" onclick={() => onToggle(report.id)} title={isExpanded ? "Hide preview" : "Quick view"}>
+			<button class="action-btn" onclick={() => onToggle(report.id)} title={isExpanded ? _L("dashboard.hidePreview") : _L("dashboard.quickView")}>
 				<span class="material-icons">{isExpanded ? "visibility_off" : "visibility"}</span>
 			</button>
-			<button class="action-btn goto" onclick={() => onNavigate(report.id)} title="Go to report">
+			<button class="action-btn goto" onclick={() => onNavigate(report.id)} title={_L("dashboard.goToReport")}>
 				<span class="material-icons">open_in_new</span>
 			</button>
 		</div>
 	</div>
 	{#if isExpanded}
 		<div class="report-body">
-			<div class="body-label">Details</div>
+			<div class="body-label">{_L("dashboard.details")}</div>
 			<div class="body-content">{@html report.contentplaintext}</div>
 		</div>
 	{/if}
