@@ -3,6 +3,7 @@
 	import { fetchNui } from "../../utils/fetchNui";
 	import { isEnvBrowser } from "../../utils/misc";
 	import { NUI_EVENTS } from "../../constants/nuiEvents";
+	import { _L } from "@/utils/localization";
 
 	interface CustomLicense {
 		id: number;
@@ -40,7 +41,7 @@
 		const name = formName.trim();
 		const desc = formDesc.trim();
 		if (!name) {
-			showStatus("License name is required", "error");
+			showStatus(_L("managementLicenses.licenseNameRequired"), "error");
 			return;
 		}
 
@@ -62,14 +63,14 @@
 				NUI_EVENTS.SETTINGS.SAVE_CUSTOM_LICENSE, payload, { success: false }
 			);
 			if (result?.success) {
-				showStatus(editingId ? "License updated" : "License created");
+				showStatus(editingId ? _L("managementLicenses.licenseUpdated") : _L("managementLicenses.licenseCreated"));
 				resetForm();
 				await loadLicenses();
 			} else {
-				showStatus(result?.message || "Failed to save", "error");
+				showStatus(result?.message || _L("managementLicenses.failedToSave"), "error");
 			}
 		} catch {
-			showStatus("Failed to save license", "error");
+			showStatus(_L("managementLicenses.failedToSave"), "error");
 		} finally {
 			isSubmitting = false;
 		}
@@ -87,14 +88,14 @@
 				NUI_EVENTS.SETTINGS.DELETE_CUSTOM_LICENSE, { id: license.id }, { success: false }
 			);
 			if (result?.success) {
-				showStatus("License deleted");
+				showStatus(_L("managementLicenses.licenseDeleted"));
 				if (editingId === license.id) resetForm();
 				await loadLicenses();
 			} else {
-				showStatus("Failed to delete", "error");
+				showStatus(_L("managementLicenses.failedToDelete"), "error");
 			}
 		} catch {
-			showStatus("Failed to delete license", "error");
+			showStatus(_L("managementLicenses.failedToDelete"), "error");
 		}
 	}
 
@@ -132,21 +133,21 @@
 	<div class="info-section">
 		<div class="info-row">
 			<span class="material-icons info-icon">info</span>
-			<span class="info-text">State licenses (Driver's License, Weapon License) are managed by the core framework. Create custom licenses below that officers can grant or revoke from citizen profiles.</span>
+			<span class="info-text">{_L("managementLicenses.stateLicenses")}</span>
 		</div>
 	</div>
 
 	<div class="form-section">
 		<div class="form-row">
-			<input class="form-input name-input" type="text" placeholder="License name..." bind:value={formName} maxlength="50" />
-			<input class="form-input desc-input" type="text" placeholder="Description (optional)..." bind:value={formDesc} maxlength="150" />
+			<input class="form-input name-input" type="text" placeholder="{_L('managementLicenses.licenseNamePlaceholder')}" bind:value={formName} maxlength="50" />
+			<input class="form-input desc-input" type="text" placeholder="{_L('managementLicenses.licenseDescPlaceholder')}" bind:value={formDesc} maxlength="150" />
 			<div class="form-actions">
 				{#if editingId}
 					<button class="btn-save" onclick={handleSave} disabled={isSubmitting}>Update</button>
 					<button class="btn-cancel" onclick={resetForm}>Cancel</button>
 				{:else}
 					<button class="btn-create" onclick={handleSave} disabled={!formName.trim() || isSubmitting}>
-						{isSubmitting ? "..." : "+ Add"}
+						{isSubmitting ? "..." : "+ "+_L("managementLicenses.addLicense")}
 					</button>
 				{/if}
 			</div>
@@ -156,7 +157,7 @@
 	{#if isLoading}
 		<div class="empty-state">
 			<div class="loading-spinner"></div>
-			<p>Loading licenses...</p>
+			<p>{_L("managementLicenses.loadingLicenses")}</p>
 		</div>
 	{:else}
 		<div class="licenses-list">
@@ -164,18 +165,18 @@
 			<div class="license-row state">
 				<span class="material-icons row-icon">verified</span>
 				<div class="row-info">
-					<span class="row-name">Driver's License</span>
-					<span class="row-desc">State-issued license for operating motor vehicles</span>
+					<span class="row-name">{_L("managementLicenses.driversLicense")}</span>
+					<span class="row-desc">{_L("managementLicenses.driversLicenseDesc")}</span>
 				</div>
-				<span class="row-badge state-badge">STATE</span>
+				<span class="row-badge state-badge">{_L("managementLicenses.stateBadge")}</span>
 			</div>
 			<div class="license-row state">
 				<span class="material-icons row-icon">verified</span>
 				<div class="row-info">
-					<span class="row-name">Weapon License</span>
-					<span class="row-desc">State-issued license for carrying firearms</span>
+					<span class="row-name">{_L("managementLicenses.weaponLicense")}</span>
+					<span class="row-desc">{_L("managementLicenses.weaponLicenseDesc")}</span>
 				</div>
-				<span class="row-badge state-badge">STATE</span>
+				<span class="row-badge state-badge">{_L("managementLicenses.stateBadge")}</span>
 			</div>
 
 			<!-- Custom licenses -->
@@ -188,7 +189,7 @@
 							<span class="row-desc">{license.description}</span>
 						{/if}
 					</div>
-					<span class="row-badge custom-badge">CUSTOM</span>
+					<span class="row-badge custom-badge">{_L("managementLicenses.customBadge")}</span>
 					<div class="row-actions">
 						<button class="action-btn edit-btn" onclick={() => startEdit(license)} title="Edit">
 							<span class="material-icons">edit</span>
@@ -201,7 +202,7 @@
 			{/each}
 
 			{#if licenses.length === 0}
-				<div class="empty-state">No custom licenses configured. Add one above.</div>
+				<div class="empty-state">{_L("managementLicenses.noCustomLicenses")}</div>
 			{/if}
 		</div>
 	{/if}
