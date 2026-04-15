@@ -3,6 +3,7 @@
 	import { fetchNui } from "../../utils/fetchNui";
 	import { isEnvBrowser } from "../../utils/misc";
 	import { NUI_EVENTS } from "../../constants/nuiEvents";
+	import { _L } from "@/utils/localization";
 
 	interface Props {
 		vehicles: ReportVehicle[];
@@ -73,9 +74,9 @@
 
 <div class="metadata-section">
 	<div class="section-header">
-		<span class="section-label">VEHICLES INVOLVED</span>
+		<span class="section-label">{_L("vehiclesManager.title")}</span>
 		<button class="add-btn" onclick={toggleSearch} type="button">
-			{showSearch ? "× Close" : "+ Add"}
+			{showSearch ? "× " + _L("vehiclesManager.close") : "+ " + _L("vehiclesManager.add")}
 		</button>
 	</div>
 
@@ -83,13 +84,13 @@
 		<div class="search-area">
 			<input
 				type="text"
-				placeholder="Search by plate, owner name..."
+				placeholder={_L("vehiclesManager.searchPlaceholder")}
 				value={searchQuery}
 				oninput={handleSearchInput}
 				class="search-input"
 			/>
 			{#if isSearching}
-				<div class="search-status">Searching...</div>
+				<div class="search-status">{_L("vehiclesManager.searching")}</div>
 			{:else if searchResults.length > 0}
 				<div class="search-results">
 					{#each searchResults as result}
@@ -103,13 +104,13 @@
 							<span class="result-label">{result.vehicle_label}</span>
 							<span class="result-owner">{result.owner_name}</span>
 							{#if isAlreadyAdded(result.plate)}
-								<span class="result-added">Added</span>
+								<span class="result-added">{_L("vehiclesManager.added")}</span>
 							{/if}
 						</button>
 					{/each}
 				</div>
 			{:else if searchQuery.trim().length > 0}
-				<div class="search-status">No vehicles found</div>
+				<div class="search-status">{_L("vehiclesManager.noVehiclesFound")}</div>
 			{/if}
 		</div>
 	{/if}
@@ -127,7 +128,7 @@
 					</svg>
 				</button>
 			</div>
-			<span class="vehicle-owner">Owner: {vehicle.owner_name}</span>
+			<span class="vehicle-owner">{_L("vehiclesManager.owner", ["owner_name", vehicle.owner_name])}</span>
 			{#if onIssueBolo}
 				<div class="vehicle-actions">
 					<button
@@ -137,7 +138,7 @@
 						type="button"
 						aria-label="Issue BOLO for vehicle {vehicle.plate}"
 					>
-						Issue BOLO
+						{_L("vehiclesManager.issueBolo")}
 					</button>
 				</div>
 			{/if}
