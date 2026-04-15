@@ -3,6 +3,7 @@
 	import { fetchNui } from "../../utils/fetchNui";
 	import { isEnvBrowser } from "../../utils/misc";
 	import { NUI_EVENTS } from "../../constants/nuiEvents";
+	import { _L } from "@/utils/localization";
 
 	interface Bulletin {
 		id?: number;
@@ -76,16 +77,16 @@
 				{ success: false },
 			);
 			if (result && result.success) {
-				showStatus("Bulletin posted");
+				showStatus(_L("managementBulletins.bulletinPosted"));
 				newTitle = "";
 				newContent = "";
 				await loadBulletins();
 			} else {
-				showStatus(result?.message || "Failed to post bulletin", "error");
+				showStatus(result?.message || _L("managementBulletins.failedToPostBulletin"), "error");
 			}
 		} catch (error) {
 			console.error("Failed to create bulletin:", error);
-			showStatus("Failed to post bulletin", "error");
+			showStatus(_L("managementBulletins.failedToPostBulletin"), "error");
 		} finally {
 			isSubmitting = false;
 		}
@@ -104,14 +105,14 @@
 				{ success: false },
 			);
 			if (result && result.success) {
-				showStatus("Bulletin deleted");
+				showStatus(_L("managementBulletins.bulletinDeleted"));
 				await loadBulletins();
 			} else {
-				showStatus(result?.message || "Failed to delete bulletin", "error");
+				showStatus(result?.message || _L("managementBulletins.failedToPostBulletin"), "error");
 			}
 		} catch (error) {
 			console.error("Failed to delete bulletin:", error);
-			showStatus("Failed to delete bulletin", "error");
+			showStatus(_L("managementBulletins.failedToPostBulletin"), "error");
 		}
 	}
 
@@ -140,12 +141,12 @@
 			<input
 				class="bulletin-title-input"
 				type="text"
-				placeholder="Title (e.g. TRAINING, BOLO REMINDER)"
+				placeholder={_L("managementBulletins.titlePlaceholder")}
 				bind:value={newTitle}
 			/>
 			<textarea
 				class="bulletin-input"
-				placeholder="Write a bulletin..."
+				placeholder={_L("managementBulletins.writeABulletin")}
 				rows="2"
 				bind:value={newContent}
 			></textarea>
@@ -155,14 +156,14 @@
 			onclick={handleSubmit}
 			disabled={(!newContent.trim() && !newTitle.trim()) || isSubmitting}
 		>
-			{isSubmitting ? "Posting..." : "Post"}
+			{isSubmitting ? _L("managementBulletins.posting") : _L("managementBulletins.post")}
 		</button>
 	</div>
 
 	{#if isLoading}
 		<div class="empty-state">
 			<div class="loading-spinner"></div>
-			<p>Loading bulletins...</p>
+			<p>{_L("managementBulletins.loading")}</p>
 		</div>
 	{:else}
 		<div class="bulletins-list">
@@ -188,7 +189,7 @@
 					{/if}
 				</div>
 			{:else}
-				<div class="empty-state">No bulletins posted.</div>
+				<div class="empty-state">{_L("managementBulletins.noBulletins")}</div>
 			{/each}
 		</div>
 	{/if}
