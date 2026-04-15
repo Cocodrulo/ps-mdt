@@ -5,6 +5,7 @@
 	import { NUI_EVENTS } from "../../constants/nuiEvents";
 	import { getReportTypesForJob } from "../../constants/index";
 	import type { JobType } from "../../interfaces/IUser";
+	import { _L } from "@/utils/localization";
 
 	interface ReportTemplate {
 		id: number;
@@ -95,15 +96,15 @@
 				{ success: false },
 			);
 			if (result?.success) {
-				showStatus(editingTemplate ? "Template updated" : "Template created");
+				showStatus(editingTemplate ? _L("managementTemplates.templateUpdated") : _L("managementTemplates.templateCreated"));
 				cancelEdit();
 				await loadTemplates();
 			} else {
-				showStatus(result?.message || "Failed to save template", "error");
+				showStatus(result?.message || _L("managementTemplates.failedToSaveTemplate"), "error");
 			}
 		} catch (error) {
 			console.error("Failed to save template:", error);
-			showStatus("Failed to save template", "error");
+			showStatus(_L("managementTemplates.failedToSaveTemplate"), "error");
 		} finally {
 			isSaving = false;
 		}
@@ -112,7 +113,7 @@
 	async function deleteTemplate(id: number) {
 		if (isEnvBrowser()) {
 			templates = templates.filter((t) => t.id !== id);
-			showStatus("Template deleted");
+			showStatus(_L("managementTemplates.templateDeleted"));
 			return;
 		}
 
@@ -123,14 +124,14 @@
 				{ success: false },
 			);
 			if (result?.success) {
-				showStatus("Template deleted");
+				showStatus(_L("managementTemplates.templateDeleted"));
 				await loadTemplates();
 			} else {
-				showStatus(result?.message || "Failed to delete template", "error");
+				showStatus(result?.message || _L("managementTemplates.failedToDeleteTemplate"), "error");
 			}
 		} catch (error) {
 			console.error("Failed to delete template:", error);
-			showStatus("Failed to delete template", "error");
+			showStatus(_L("managementTemplates.failedToDeleteTemplate"), "error");
 		}
 	}
 
@@ -180,32 +181,32 @@
 <div class="templates-page">
 	<div class="templates-card">
 		<div class="card-title-row">
-			<span class="card-label">Report Templates</span>
+			<span class="card-label">{_L("managementTemplates.reportTemplates")}</span>
 			<div class="template-actions">
 				{#if !isCreating}
 					<button class="action-btn create-btn" onclick={startCreate}>
 						<span class="material-icons" style="font-size: 11px;">add</span>
-						New Template
+						{_L("managementTemplates.newTemplate")}
 					</button>
 				{/if}
 			</div>
 		</div>
-		<p class="card-subtitle">Configure templates available when creating reports. Each template is linked to a report type.</p>
+		<p class="card-subtitle">{_L("managementTemplates.configureTemplates")}</p>
 
 		{#if isLoading}
 			<div class="templates-loading">
 				<div class="loading-spinner"></div>
-				<p>Loading templates...</p>
+				<p>{_L("managementTemplates.loadingTemplates")}</p>
 			</div>
 		{:else if isCreating}
 			<div class="template-form">
 				<div class="form-row">
 					<div class="form-group">
-						<label class="form-label" for="tmpl-name">Template Name</label>
+						<label class="form-label" for="tmpl-name">{_L("managementTemplates.templateName")}</label>
 						<input id="tmpl-name" type="text" class="form-input" placeholder="e.g. Standard Incident" bind:value={formName} />
 					</div>
 					<div class="form-group">
-						<label class="form-label" for="tmpl-type">Report Type</label>
+						<label class="form-label" for="tmpl-type">{_L("managementTemplates.reportType")}</label>
 						<select id="tmpl-type" class="form-select" bind:value={formType}>
 							{#each REPORT_TYPES as rt}
 								<option value={rt}>{rt}</option>
@@ -215,15 +216,15 @@
 				</div>
 
 				<div class="form-group">
-					<label class="form-label" for="tmpl-content">Template Content <span class="form-hint">(HTML)</span></label>
+					<label class="form-label" for="tmpl-content">{_L("managementTemplates.templateContent")} <span class="form-hint">(HTML)</span></label>
 					<textarea id="tmpl-content" class="form-textarea" placeholder="Enter HTML template content..." bind:value={formContent} rows={12}></textarea>
 				</div>
 
 				<div class="form-actions">
-					<button class="btn-cancel" onclick={cancelEdit}>Cancel</button>
+					<button class="btn-cancel" onclick={cancelEdit}>{_L("managementTemplates.cancel")}</button>
 					<button class="btn-save" onclick={saveTemplate} disabled={isSaving}>
 						<span class="material-icons btn-save-icon">save</span>
-						{isSaving ? "Saving..." : editingTemplate ? "Update Template" : "Create Template"}
+						{isSaving ? _L("managementTemplates.saving") : editingTemplate ? _L("managementTemplates.updateTemplate") : _L("managementTemplates.createTemplate")}
 					</button>
 				</div>
 			</div>
@@ -232,8 +233,8 @@
 				{#if templates.length === 0}
 					<div class="empty-state">
 						<span class="material-icons" style="font-size: 20px; color: rgba(255,255,255,0.15); margin-bottom: 6px;">description</span>
-						<p>No templates configured</p>
-						<p class="empty-hint">Create a template to get started</p>
+						<p>{_L("managementTemplates.noTemplatesConfigured")}</p>
+						<p class="empty-hint">{_L("managementTemplates.createATemplateToGetStarted")}</p>
 					</div>
 				{:else}
 					<div class="templates-list">
