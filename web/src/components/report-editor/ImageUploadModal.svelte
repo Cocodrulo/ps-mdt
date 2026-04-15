@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { _L } from "@/utils/localization";
+
 	interface Props {
 		show: boolean;
 		uploading?: boolean;
@@ -49,7 +51,7 @@
 		<!-- svelte-ignore a11y_no_static_element_interactions -->
 		<div class="popup" role="dialog" aria-modal="true" tabindex="-1">
 			<div class="popup-header">
-				<span class="popup-title">Upload Evidence Image</span>
+				<span class="popup-title">{_L("imageUploadModal.title")}</span>
 				{#if !uploading}
 					<button class="popup-close" onclick={onClose}>x</button>
 				{/if}
@@ -58,8 +60,8 @@
 				{#if uploading}
 					<div class="uploading-state">
 						<div class="spinner"></div>
-						<span class="uploading-text">Uploading{selectedFileName ? ` ${selectedFileName}` : ""}...</span>
-						<span class="uploading-hint">Please wait, compressing and uploading image</span>
+						<span class="uploading-text">{_L("imageUploadModal.uploading", ["fileName", selectedFileName])}</span>
+						<span class="uploading-hint">{_L("imageUploadModal.uploadingHint")}</span>
 					</div>
 				{:else}
 					<div class="upload-area">
@@ -72,8 +74,8 @@
 						/>
 						<label for="image-upload" class="upload-label">
 							<span class="upload-icon">+</span>
-							<span class="upload-text">Click to select image</span>
-							<span class="upload-hint">Supports JPG, PNG, GIF (auto-compressed)</span>
+							<span class="upload-text">{_L("imageUploadModal.clickToSelect")}</span>
+							<span class="upload-hint">{_L("imageUploadModal.supports")}</span>
 						</label>
 					</div>
 				{/if}
