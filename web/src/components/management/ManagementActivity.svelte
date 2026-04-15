@@ -4,6 +4,7 @@
 	import { isEnvBrowser } from "../../utils/misc";
 	import { NUI_EVENTS } from "../../constants/nuiEvents";
 	import Pagination from "../Pagination.svelte";
+	import { _L } from "@/utils/localization";
 
 	interface AuditLog {
 		id: number;
@@ -23,46 +24,46 @@
 	}
 
 	const ACTION_LABELS: Record<string, string> = {
-		mdt_login: "Logged into MDT",
-		mdt_logout: "Logged out of MDT",
-		report_created: "Created a report",
-		report_updated: "Updated a report",
-		report_deleted: "Deleted a report",
-		warrant_issued: "Issued a warrant",
-		warrant_closed: "Closed a warrant",
-		case_created: "Created a case",
-		case_updated: "Updated a case",
-		case_deleted: "Deleted a case",
-		case_officer_assigned: "Assigned officer to case",
-		case_officer_removed: "Removed officer from case",
-		case_attachment_added: "Added case attachment",
-		case_attachment_removed: "Removed case attachment",
-		case_attachment_uploaded: "Uploaded case attachment",
-		evidence_added: "Added evidence",
-		evidence_updated: "Updated evidence",
-		evidence_deleted: "Deleted evidence",
-		evidence_transferred: "Transferred evidence custody",
-		evidence_image_added: "Added evidence image",
-		evidence_image_removed: "Removed evidence image",
-		evidence_linked_case: "Linked evidence to case",
-		case_created_from_evidence: "Created case from evidence",
-		weapon_created: "Registered a weapon",
-		weapon_updated: "Updated weapon record",
-		weapon_deleted: "Deleted weapon record",
-		vehicle_updated: "Updated vehicle record",
-		vehicle_impounded: "Impounded a vehicle",
-		vehicle_released: "Released vehicle from impound",
-		search_citizens: "Searched citizens",
-		search_players: "Searched players",
-		search_officers: "Searched officers",
-		fine_processed: "Processed a fine",
-		charge_updated: "Updated a charge",
-		arrest_logged: "Logged an arrest",
-		sent_to_jail: "Sent citizen to jail",
-		callsign_changed: "Changed officer callsign",
-		signal100_activated: "Activated Signal 100",
-		signal100_deactivated: "Deactivated Signal 100",
-		icu_deleted: "Deleted ICU record",
+		mdt_login: _L("managementActivity.mdtLogin"),
+		mdt_logout: _L("managementActivity.mdtLogout"),
+		report_created: _L("managementActivity.reportCreated"),
+		report_updated: _L("managementActivity.reportUpdated"),
+		report_deleted: _L("managementActivity.reportDeleted"),
+		warrant_issued: _L("managementActivity.warrantIssued"),
+		warrant_closed: _L("managementActivity.warrantClosed"),
+		case_created: _L("managementActivity.caseCreated"),
+		case_updated: _L("managementActivity.caseUpdated"),
+		case_deleted: _L("managementActivity.caseDeleted"),
+		case_officer_assigned: _L("managementActivity.caseOfficerAssigned"),
+		case_officer_removed: _L("managementActivity.caseOfficerRemoved"),
+		case_attachment_added: _L("managementActivity.caseAttachmentAdded"),
+		case_attachment_removed: _L("managementActivity.caseAttachmentRemoved"),
+		case_attachment_uploaded: _L("managementActivity.caseAttachmentUploaded"),
+		evidence_added: _L("managementActivity.evidenceAdded"),
+		evidence_updated: _L("managementActivity.evidenceUpdated"),
+		evidence_deleted: _L("managementActivity.evidenceDeleted"),
+		evidence_transferred: _L("managementActivity.evidenceTransferred"),
+		evidence_image_added: _L("managementActivity.evidenceImageAdded"),
+		evidence_image_removed: _L("managementActivity.evidenceImageRemoved"),
+		evidence_linked_case: _L("managementActivity.evidenceLinkedCase"),
+		case_created_from_evidence: _L("managementActivity.caseCreatedFromEvidence"),
+		weapon_created: _L("managementActivity.weaponCreated"),
+		weapon_updated: _L("managementActivity.weaponUpdated"),
+		weapon_deleted: _L("managementActivity.weaponDeleted"),
+		vehicle_updated: _L("managementActivity.vehicleUpdated"),
+		vehicle_impounded: _L("managementActivity.vehicleImpounded"),
+		vehicle_released: _L("managementActivity.vehicleReleased"),
+		search_citizens: _L("managementActivity.searchCitizens"),
+		search_players: _L("managementActivity.searchPlayers"),
+		search_officers: _L("managementActivity.searchOfficers"),
+		fine_processed: _L("managementActivity.fineProcessed"),
+		charge_updated: _L("managementActivity.chargeUpdated"),
+		arrest_logged: _L("managementActivity.arrestLogged"),
+		sent_to_jail: _L("managementActivity.sentToJail"),
+		callsign_changed: _L("managementActivity.callsignChanged"),
+		signal100_activated: _L("managementActivity.signal100Activated"),
+		signal100_deactivated: _L("managementActivity.signal100Deactivated"),
+		icu_deleted: _L("managementActivity.icuDeleted"),
 	};
 
 	const ACTION_ICONS: Record<string, { icon: string; color: string }> = {
@@ -106,23 +107,23 @@
 	function getEntityLabel(log: AuditLog): string {
 		if (!log.entity_id) return "";
 		const typeLabels: Record<string, string> = {
-			profile: "Profile",
-			report: "Report",
-			warrant: "Warrant",
-			case: "Case",
-			evidence: "Evidence",
-			vehicle: "Vehicle",
-			weapon: "Weapon",
-			citizen: "Citizen",
+			profile: _L("managementActivity.profile"),
+			report: _L("managementActivity.report"),
+			warrant: _L("managementActivity.warrant"),
+			case: _L("managementActivity.case"),
+			evidence: _L("managementActivity.evidence"),
+			vehicle: _L("managementActivity.vehicle"),
+			weapon: _L("managementActivity.weapon"),
+			citizen: _L("managementActivity.citizen"),
 			search: "",
-			dispatch: "Channel",
-			fine: "Fine",
-			charge: "Charge",
-			arrest: "Arrest",
-			icu: "ICU",
-			case_attachment: "Attachment",
-			evidence_image: "Image",
-			officer: "Officer",
+			dispatch: _L("managementActivity.dispatch"),
+			fine: _L("managementActivity.fine"),
+			charge: _L("managementActivity.charge"),
+			arrest: _L("managementActivity.arrest"),
+			icu: _L("managementActivity.icu"),
+			case_attachment: _L("managementActivity.caseAttachment"),
+			evidence_image: _L("managementActivity.evidenceImage"),
+			officer: _L("managementActivity.officer"),
 		};
 		const label = typeLabels[log.entity_type] || log.entity_type;
 		return label ? `${label} #${log.entity_id}` : `#${log.entity_id}`;
@@ -135,12 +136,12 @@
 		const now = new Date();
 		const diff = now.getTime() - date.getTime();
 		const mins = Math.floor(diff / 60000);
-		if (mins < 1) return "Just now";
-		if (mins < 60) return `${mins}m ago`;
+		if (mins < 1) return _L("managementActivity.justNow");
+		if (mins < 60) return _L("managementActivity.minutesAgo", ["mins", mins]);
 		const hours = Math.floor(mins / 60);
-		if (hours < 24) return `${hours}h ago`;
+		if (hours < 24) return _L("managementActivity.hoursAgo", ["hours", hours]);
 		const days = Math.floor(hours / 24);
-		if (days < 7) return `${days}d ago`;
+		if (days < 7) return _L("managementActivity.daysAgo", ["days", days]);
 		return date.toLocaleDateString() + " " + date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 	}
 
@@ -217,18 +218,18 @@
 	<div class="activity-topbar">
 		<input
 			type="text"
-			placeholder="Search activity..."
+			placeholder={_L("managementActivity.searchActivity")}
 			value={searchQuery}
 			oninput={handleSearch}
 			class="search-input"
 		/>
-		<span class="result-count">{totalItems} entries</span>
+		<span class="result-count">{_L("managementActivity.entries", ['count', totalItems])}</span>
 	</div>
 
 	{#if isLoading}
 		<div class="empty-state">
 			<div class="loading-spinner"></div>
-			<p>Loading activity...</p>
+			<p>{_L("managementActivity.loadingActivity")}</p>
 		</div>
 	{:else}
 		<div class="activity-list">
@@ -251,7 +252,7 @@
 				</div>
 			{:else}
 				<div class="empty-state">
-					{searchQuery ? "No results matching your search." : "No recent activity."}
+					{searchQuery ? _L("managementActivity.noResults") : _L("managementActivity.noRecentActivity")}
 				</div>
 			{/each}
 		</div>
