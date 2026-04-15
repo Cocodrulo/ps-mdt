@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { _L, getLocalizedCurrency } from "@/utils/localization";
 	import type { Charge } from "./../interfaces/ICharges";
 
 	interface Props {
@@ -114,7 +115,7 @@
 	}
 
 	function formatFine(value: number): string {
-		return `$${value.toLocaleString()}`;
+		return getLocalizedCurrency(value);
 	}
 
 	function formatTime(value: number): string {
@@ -139,11 +140,11 @@
 			<div class="category-group">
 				<div class="category-label">{category}</div>
 				<div class="table-header">
-					<span class="col-code">Code</span>
-					<span class="col-label">Charge</span>
-					<span class="col-desc">Description</span>
-					<span class="col-fine">Fine</span>
-					<span class="col-time">Time</span>
+					<span class="col-code">{_L("charges.code")}</span>
+					<span class="col-label">{_L("charges.charge")}</span>
+					<span class="col-desc">{_L("charges.description")}</span>
+					<span class="col-fine">{_L("charges.fine")}</span>
+					<span class="col-time">{_L("charges.time")}</span>
 					{#if isEditing}
 						<span class="col-actions"></span>
 					{/if}
@@ -193,14 +194,14 @@
 									onclick={() => saveEdit(charge)}
 									disabled={isSaving}
 								>
-									{isSaving ? "..." : "Save"}
+									{isSaving ? "..." : _L("charges.save")}
 								</button>
 								<button
 									class="btn-cancel"
 									onclick={cancelEdit}
 									disabled={isSaving}
 								>
-									Cancel
+									{_L("charges.cancel")}
 								</button>
 							</span>
 						</div>
