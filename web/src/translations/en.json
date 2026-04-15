@@ -94,6 +94,77 @@
             "notes": "Notes: {{notes}}",
             "type": "Type: {{type}}",
             "badgeId": "Badge: {{badgeId}}"            
+        },
+        "evidence": {
+            "title": "Evidence",
+            "addEvidence": "Add Evidence",
+            "cancel": "Cancel",
+            "remove": "Remove",
+            "noEvidence": "No evidence added",
+            "evidenceSearch": "Evidence search interface",
+            "notes": "Notes: {{notes}}",
+            "type": "Type: {{type}}",
+            "badgeId": "Badge: {{badgeId}}",
+            "titleHelp": "Enter a descriptive title for the evidence",
+            "typeHelp": "Select the type of evidence",
+            "serialHelp": "Enter serial number if applicable",
+            "notesHelp": "Additional notes about the evidence",
+            "saveBtnHelp": "Form is valid and ready to submit",
+            "selectType": "Select type...",
+            "updateEvidence": "Update Evidence",
+            "requiredFields": "Please fill in required fields",
+            "serial": "Serial Number",
+            "images": "Images ({{count}})",
+            "editEvidence": "Edit Evidence",
+            "removeEvidence": "Remove Evidence",
+            "image": "Image"
+        },
+        "contentArea": {
+            "permissionDenied": "Permission Denied",
+            "permissionDeniedDesc": "You do not have permission to access <strong>{{page}}</strong>. Contact a supervisor to request access.",
+            "backToDashboard": "Back to Dashboard",
+            "componentNotFound": "Component not found"
+        },
+        "charges": {
+            "code": "Code",
+            "charge": "Charge",
+            "description": "Description",
+            "fine": "Fine",
+            "time": "Time",
+            "save": "Save",
+            "cancel": "Cancel"
+        },
+        "victimsManager": {
+            "title": "Victims"
+        },
+        "vehiclesManager": {
+            "title": "Vehicles",
+            "add": "Add",
+            "close": "Close",
+            "searchPlaceholder": "Search by plate, owner name...",
+            "searching": "Searching...",
+            "noVehiclesFound": "No vehicles found",
+            "added": "Added",
+            "owner": "Owner: {{owner_name}}",
+            "actions": "Actions",
+            "issueBolo": "Issue BOLO"
+        },
+        "tagsManager": {
+            "title": "Tags",
+            "add": "Add",
+            "availableTags": "Available Tags",
+            "noTagsAvailable": "No more tags available"
+        },
+        "suspectsManager": {
+            "title": "Suspects",
+            "add": "Add",
+            "noMugshot": "No mugshot on file for <strong>{{fullName}}</strong>.",
+            "takeMugshot": "Take Mugshot",
+            "noFingerprint": "No fingerprint on file for <strong>{{fullName}}</strong>.",
+            "addFingerprint": "Add Fingerprint",
+            "issueWarrant": "Issue Warrant",
+            "issueBenchWarrant": "Issue Bench Warrant",
+            "issueBolo": "Issue BOLO"
         }
     }
 }
