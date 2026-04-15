@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { _L } from "@/utils/localization";
 	import type { Evidence } from "../../interfaces/IReportEditor";
 
 	interface Props {
@@ -53,13 +54,13 @@
 
 <div class="metadata-section">
 	<div class="section-header">
-		<span class="section-label">EVIDENCE</span>
+		<span class="section-label">{_L("evidenceManager.title")}</span>
 		<button
 			class="add-btn"
 			onclick={onAddEvidence}
 			title="Add Evidence"
 			aria-label="Add Evidence"
-		>+ Add</button>
+		>+ {_L("evidenceManager.add")}</button>
 	</div>
 
 	{#if evidence.length > 0}
@@ -69,7 +70,7 @@
 					<div class="card-info">
 						<input
 							type="text"
-							placeholder="Evidence Title"
+							placeholder={_L("evidenceManager.titlePlaceholder")}
 							value={item.title}
 							oninput={(e) => updateEvidence(item.id, "title", e.currentTarget.value)}
 							class="title-input"
@@ -107,14 +108,14 @@
 						</select>
 						<input
 							type="text"
-							placeholder="Serial Number"
+							placeholder={_L("evidenceManager.serialPlaceholder")}
 							value={item.serial}
 							oninput={(e) => updateEvidence(item.id, "serial", e.currentTarget.value)}
 							class="field-input"
 						/>
 					</div>
 					<textarea
-						placeholder="Notes"
+						placeholder={_L("evidenceManager.notesPlaceholder")}
 						value={item.notes}
 						oninput={(e) => updateEvidence(item.id, "notes", e.currentTarget.value)}
 						class="notes-input"
@@ -126,17 +127,17 @@
 						<input
 							type="text"
 							class="field-input"
-							placeholder="Case ID"
+							placeholder={_L("evidenceManager.caseIdPlaceholder")}
 							value={(item as any).caseId || ""}
 							onchange={(e) => linkEvidenceCase(item.id, e.currentTarget.value)}
 						/>
 						<button class="action-btn" onclick={() => onCreateCaseFromEvidence(item.id)}>
-							Create Case
+							{_L("evidenceManager.createCase")}
 						</button>
 					</div>
 					<div class="image-actions">
 						<button class="action-btn" onclick={() => onOpenImageUpload(item.id)}>
-							Add Image
+							{_L("evidenceManager.addImage")}
 						</button>
 						{#if item.images.length > 0}
 							<span class="image-count">{item.images.length} image{item.images.length > 1 ? "s" : ""}</span>
