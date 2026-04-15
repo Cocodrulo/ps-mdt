@@ -3,6 +3,7 @@
 	import { fetchNui } from "../../utils/fetchNui";
 	import { NUI_EVENTS } from "../../constants/nuiEvents";
 	import type { JobType } from "../../interfaces/IUser";
+	import { _L } from "@/utils/localization";
 
 	interface FTOPhase {
 		id: number;
@@ -120,11 +121,11 @@
 				{ success: true }
 			);
 			if (result?.success) {
-				showStatus("Phases saved");
+				showStatus(_L("managementFTO.phasesSaved"));
 				await loadPhases();
 			}
 		} catch {
-			showStatus("Failed to save phases");
+			showStatus(_L("managementFTO.failedToSave"));
 		}
 	}
 
@@ -199,10 +200,10 @@
 
 	<div class="sop-tabs">
 		<button class="sop-tab" class:active={activeTab === "phases"} onclick={() => activeTab = "phases"}>
-			<span class="material-icons">timeline</span> Phases
+			<span class="material-icons">timeline</span> {_L("managementFTO.phases")}
 		</button>
 		<button class="sop-tab" class:active={activeTab === "competencies"} onclick={() => activeTab = "competencies"}>
-			<span class="material-icons">checklist</span> Competencies
+			<span class="material-icons">checklist</span> {_L("managementFTO.competencies")}
 		</button>
 	</div>
 
@@ -210,16 +211,16 @@
 		{#if activeTab === "phases"}
 			<div class="list-section">
 				<div class="panel-header">
-					<h3>FTO Phases</h3>
+					<h3>{_L("managementFTO.phases")}</h3>
 					<button class="btn-save" onclick={saveAllPhases}>
-						<span class="material-icons">save</span> Save All Phases
+						<span class="material-icons">save</span> {_L("managementFTO.savePhases")}
 					</button>
 				</div>
 
 				{#if phases.length === 0 && !loading}
 					<div class="empty-state">
 						<span class="material-icons">timeline</span>
-						<p>No phases configured. Add your first FTO phase below.</p>
+						<p>{_L("managementFTO.noPhasesConfigured")}</p>
 					</div>
 				{/if}
 
@@ -227,10 +228,10 @@
 					{#each phases as phase, i}
 						{#if editingPhaseId === phase.id}
 							<div class="item-edit-row">
-								<input type="text" bind:value={editPhaseName} placeholder="Phase name" class="input-sm" />
-								<input type="text" bind:value={editPhaseDescription} placeholder="Description" class="input-sm" />
-								<input type="number" bind:value={editPhaseDuration} placeholder="Days" class="input-sm input-narrow" min="1" />
-								<button class="btn-icon-sm" onclick={saveEditPhase} title="Save">
+								<input type="text" bind:value={editPhaseName} placeholder="{_L("managementFTO.phaseName")}" class="input-sm" />
+								<input type="text" bind:value={editPhaseDescription} placeholder="{_L("managementFTO.phaseDescription")}" class="input-sm" />
+								<input type="number" bind:value={editPhaseDuration} placeholder="{_L("managementFTO.phaseDuration")}" class="input-sm input-narrow" min="1" />
+								<button class="btn-icon-sm" onclick={saveEditPhase} title="{_L("managementFTO.save")}">
 									<span class="material-icons">check</span>
 								</button>
 								<button class="btn-icon-sm cancel" onclick={() => editingPhaseId = null} title="Cancel">
@@ -250,16 +251,16 @@
 									<span class="item-badge">{phase.duration_days}d</span>
 								{/if}
 								<div class="item-actions">
-									<button class="btn-icon-xs" onclick={() => movePhase(i, -1)} title="Move up" disabled={i === 0}>
+									<button class="btn-icon-xs" onclick={() => movePhase(i, -1)} title="{_L("managementFTO.moveUp")}" disabled={i === 0}>
 										<span class="material-icons">arrow_upward</span>
 									</button>
-									<button class="btn-icon-xs" onclick={() => movePhase(i, 1)} title="Move down" disabled={i === phases.length - 1}>
+									<button class="btn-icon-xs" onclick={() => movePhase(i, 1)} title="{_L("managementFTO.moveDown")}" disabled={i === phases.length - 1}>
 										<span class="material-icons">arrow_downward</span>
 									</button>
-									<button class="btn-icon-xs" onclick={() => startEditPhase(phase)} title="Edit">
+									<button class="btn-icon-xs" onclick={() => startEditPhase(phase)} title="{_L("managementFTO.edit")}">
 										<span class="material-icons">edit</span>
 									</button>
-									<button class="btn-icon-xs danger" onclick={() => deletePhase(phase.id)} title="Delete">
+									<button class="btn-icon-xs danger" onclick={() => deletePhase(phase.id)} title="{_L("managementFTO.delete")}">
 										<span class="material-icons">delete</span>
 									</button>
 								</div>
@@ -269,9 +270,9 @@
 				</div>
 
 				<div class="add-row">
-					<input type="text" bind:value={newPhaseName} placeholder="Phase name..." class="input-sm" onkeydown={(e) => e.key === 'Enter' && addPhase()} />
-					<input type="text" bind:value={newPhaseDescription} placeholder="Description..." class="input-sm" />
-					<input type="number" bind:value={newPhaseDuration} placeholder="Days" class="input-sm input-narrow" min="1" />
+					<input type="text" bind:value={newPhaseName} placeholder="{_L("managementFTO.phaseName")}" class="input-sm" onkeydown={(e) => e.key === 'Enter' && addPhase()} />
+					<input type="text" bind:value={newPhaseDescription} placeholder="{_L("managementFTO.phaseDescription")}" class="input-sm" />
+					<input type="number" bind:value={newPhaseDuration} placeholder="{_L("managementFTO.phaseDuration")}" class="input-sm input-narrow" min="1" />
 					<button class="btn-add" onclick={addPhase} disabled={!newPhaseName.trim()}>
 						<span class="material-icons">add</span>
 					</button>
@@ -281,16 +282,16 @@
 		{:else if activeTab === "competencies"}
 			<div class="list-section">
 				<div class="panel-header">
-					<h3>FTO Competencies</h3>
+					<h3>{_L("managementFTO.competencies")}</h3>
 					<button class="btn-save" onclick={saveAllCompetencies}>
-						<span class="material-icons">save</span> Save All Competencies
+						<span class="material-icons">save</span> {_L("managementFTO.saveCompetencies")}
 					</button>
 				</div>
 
 				{#if competencies.length === 0 && !loading}
 					<div class="empty-state">
 						<span class="material-icons">checklist</span>
-						<p>No competencies configured. Add your first competency below.</p>
+						<p>{_L("managementFTO.noCompetenciesConfigured")}</p>
 					</div>
 				{/if}
 
@@ -298,12 +299,12 @@
 					{#each competencies as comp, i}
 						{#if editingCompId === comp.id}
 							<div class="item-edit-row">
-								<input type="text" bind:value={editCompName} placeholder="Competency name" class="input-sm" />
-								<input type="text" bind:value={editCompCategory} placeholder="Category" class="input-sm" />
-								<button class="btn-icon-sm" onclick={saveEditComp} title="Save">
+								<input type="text" bind:value={editCompName} placeholder="{_L("managementFTO.competencyName")}" class="input-sm" />
+								<input type="text" bind:value={editCompCategory} placeholder="{_L("managementFTO.category")}" class="input-sm" />
+								<button class="btn-icon-sm" onclick={saveEditComp} title="{_L("managementFTO.save")}">
 									<span class="material-icons">check</span>
 								</button>
-								<button class="btn-icon-sm cancel" onclick={() => editingCompId = null} title="Cancel">
+								<button class="btn-icon-sm cancel" onclick={() => editingCompId = null} title="{_L("managementFTO.cancel")}">
 									<span class="material-icons">close</span>
 								</button>
 							</div>
@@ -315,16 +316,16 @@
 									<span class="item-badge">{comp.category}</span>
 								{/if}
 								<div class="item-actions">
-									<button class="btn-icon-xs" onclick={() => moveComp(i, -1)} title="Move up" disabled={i === 0}>
+									<button class="btn-icon-xs" onclick={() => moveComp(i, -1)} title="{_L("managementFTO.moveUp")}" disabled={i === 0}>
 										<span class="material-icons">arrow_upward</span>
 									</button>
-									<button class="btn-icon-xs" onclick={() => moveComp(i, 1)} title="Move down" disabled={i === competencies.length - 1}>
+									<button class="btn-icon-xs" onclick={() => moveComp(i, 1)} title="{_L("managementFTO.moveDown")}" disabled={i === competencies.length - 1}>
 										<span class="material-icons">arrow_downward</span>
 									</button>
-									<button class="btn-icon-xs" onclick={() => startEditComp(comp)} title="Edit">
+									<button class="btn-icon-xs" onclick={() => startEditComp(comp)} title="{_L("managementFTO.edit")}">
 										<span class="material-icons">edit</span>
 									</button>
-									<button class="btn-icon-xs danger" onclick={() => deleteComp(comp.id)} title="Delete">
+									<button class="btn-icon-xs danger" onclick={() => deleteComp(comp.id)} title="{_L("managementFTO.delete")}">
 										<span class="material-icons">delete</span>
 									</button>
 								</div>
@@ -334,8 +335,8 @@
 				</div>
 
 				<div class="add-row">
-					<input type="text" bind:value={newCompName} placeholder="Competency name..." class="input-sm" onkeydown={(e) => e.key === 'Enter' && addCompetency()} />
-					<input type="text" bind:value={newCompCategory} placeholder="Category..." class="input-sm" />
+					<input type="text" bind:value={newCompName} placeholder="{_L("managementFTO.competencyName")}" class="input-sm" onkeydown={(e) => e.key === 'Enter' && addCompetency()} />
+					<input type="text" bind:value={newCompCategory} placeholder="{_L("managementFTO.category")}" class="input-sm" />
 					<button class="btn-add" onclick={addCompetency} disabled={!newCompName.trim()}>
 						<span class="material-icons">add</span>
 					</button>
