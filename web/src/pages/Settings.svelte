@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { _L } from "@/utils/localization";
 	import { onMount } from "svelte";
 
 	const STORAGE_KEY = "ps-mdt-preferences";
@@ -80,21 +81,21 @@
 <div class="settings-page">
 	<div class="settings-grid">
 		<div class="settings-card">
-			<span class="card-label">Appearance</span>
+			<span class="card-label">{_L("settings.appearance")}</span>
 			<div class="setting-row">
 				<div class="setting-info">
-					<span class="setting-label">Theme</span>
-					<span class="setting-desc">Select the MDT color theme</span>
+					<span class="setting-label">{_L("settings.theme")}</span>
+					<span class="setting-desc">{_L("settings.themeDesc")}</span>
 				</div>
 				<select class="setting-select" bind:value={theme}>
-					<option value="dark">Dark</option>
-					<option value="light">Light</option>
+					<option value="dark">{_L("settings.dark")}</option>
+					<option value="light">{_L("settings.light")}</option>
 				</select>
 			</div>
 			<div class="setting-row">
 				<div class="setting-info">
-					<span class="setting-label">Notification Sounds</span>
-					<span class="setting-desc">Play sounds for dispatch alerts and messages</span>
+					<span class="setting-label">{_L("settings.notificationSounds")}</span>
+					<span class="setting-desc">{_L("settings.notificationSoundsDesc")}</span>
 				</div>
 				<label class="toggle">
 					<input type="checkbox" bind:checked={notificationSounds} />
@@ -103,8 +104,8 @@
 			</div>
 			<div class="setting-row">
 				<div class="setting-info">
-					<span class="setting-label">UI Zoom</span>
-					<span class="setting-desc">Adjust the overall MDT interface size</span>
+					<span class="setting-label">{_L("settings.uiZoom")}</span>
+					<span class="setting-desc">{_L("settings.uiZoomDesc")}</span>
 				</div>
 				<div class="zoom-control">
 					<input
@@ -118,18 +119,18 @@
 					/>
 					<span class="zoom-value">{uiZoom}%</span>
 					{#if uiZoom !== 130}
-						<button class="zoom-reset" onclick={resetZoom} type="button">Reset</button>
+						<button class="zoom-reset" onclick={resetZoom} type="button">{_L("settings.reset")}</button>
 					{/if}
 				</div>
 			</div>
 		</div>
 
 		<div class="settings-card">
-			<span class="card-label">Map</span>
+			<span class="card-label">{_L("settings.map")}</span>
 			<div class="setting-row">
 				<div class="setting-info">
-					<span class="setting-label">Default Zoom Level</span>
-					<span class="setting-desc">Zoom level when opening the map (3-10)</span>
+					<span class="setting-label">{_L("settings.defaultZoomLevel")}</span>
+					<span class="setting-desc">{_L("settings.defaultZoomLevelDesc")}</span>
 				</div>
 				<input
 					type="number"
@@ -141,8 +142,8 @@
 			</div>
 			<div class="setting-row">
 				<div class="setting-info">
-					<span class="setting-label">Show Officers</span>
-					<span class="setting-desc">Display officer positions on the map</span>
+					<span class="setting-label">{_L("settings.showOfficers")}</span>
+					<span class="setting-desc">{_L("settings.showOfficersDesc")}</span>
 				</div>
 				<label class="toggle">
 					<input type="checkbox" bind:checked={showOfficers} />
@@ -151,8 +152,8 @@
 			</div>
 			<div class="setting-row">
 				<div class="setting-info">
-					<span class="setting-label">Show Vehicles</span>
-					<span class="setting-desc">Display tracked vehicles on the map</span>
+					<span class="setting-label">{_L("settings.showVehicles")}</span>
+					<span class="setting-desc">{_L("settings.showVehiclesDesc")}</span>
 				</div>
 				<label class="toggle">
 					<input type="checkbox" bind:checked={showVehicles} />
@@ -161,8 +162,8 @@
 			</div>
 			<div class="setting-row">
 				<div class="setting-info">
-					<span class="setting-label">Show Bodycams</span>
-					<span class="setting-desc">Display bodycam feeds on the map</span>
+					<span class="setting-label">{_L("settings.showBodycams")}</span>
+					<span class="setting-desc">{_L("settings.showBodycamsDesc")}</span>
 				</div>
 				<label class="toggle">
 					<input type="checkbox" bind:checked={showBodycams} />
@@ -176,7 +177,7 @@
 	<div class="save-bar">
 		<button class="btn-save" onclick={savePreferences}>
 			<span class="material-icons btn-save-icon">save</span>
-			Save Preferences
+			{_L("settings.savePreferences")}
 		</button>
 		{#if saveStatus}
 			<span class="save-status">{saveStatus}</span>
