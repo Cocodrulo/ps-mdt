@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { _L } from "@/utils/localization";
 	import type { Snippet } from "svelte";
 
 	interface Props {
@@ -16,9 +17,9 @@
 		<button
 			class="add-btn"
 			onclick={onAdd}
-			title="Add {title}"
-			aria-label="Add {title}"
-		>+ Add</button>
+			title={_L("personnelSection.addTitle", ["title", title])}
+			aria-label={_L("personnelSection.addTitle", ["title", title])}
+		>+ {_L("personnelSection.add")}</button>
 	</div>
 	{@render children()}
 </div>
