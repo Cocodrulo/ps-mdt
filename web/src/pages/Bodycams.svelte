@@ -4,6 +4,7 @@
 	import { isEnvBrowser } from "../utils/misc";
 	import { NUI_EVENTS } from "../constants/nuiEvents";
 	import { globalNotifications } from "../services/notificationService.svelte";
+	import { _L } from "@/utils/localization";
 
 	let bodycams = $state<Bodycam[]>([]);
 	let isLoading = $state(false);
@@ -125,7 +126,7 @@
 	<div class="topbar">
 		<input
 			type="text"
-			placeholder="Search by name, callsign or rank..."
+			placeholder={_L("bodycamsPage.searchPlaceholder")}
 			bind:value={searchQuery}
 			class="search-input"
 		/>
@@ -136,18 +137,18 @@
 				onclick={loadBodycams}
 				disabled={isLoading}
 			>
-				{isLoading ? "Loading..." : "Refresh"}
+				{isLoading ? _L("bodycamsPage.loading") : _L("bodycamsPage.refresh")}
 			</button>
 		</div>
 	</div>
 
 	<div class="list-panel">
 		<div class="table-header">
-			<span class="col-callsign">Callsign</span>
-			<span class="col-name">Officer</span>
-			<span class="col-rank">Rank</span>
-			<span class="col-status">Status</span>
-			<span class="col-viewers">Viewers</span>
+			<span class="col-callsign">{_L("bodycamsPage.callsign")}</span>
+			<span class="col-name">{_L("bodycamsPage.officer")}</span>
+			<span class="col-rank">{_L("bodycamsPage.rank")}</span>
+			<span class="col-status">{_L("bodycamsPage.status")}</span>
+			<span class="col-viewers">{_L("bodycamsPage.viewers")}</span>
 			<span class="col-action"></span>
 		</div>
 
@@ -155,15 +156,15 @@
 			{#if isLoading && bodycams.length === 0}
 				<div class="empty-state">
 					<div class="loading-spinner"></div>
-					<p>Loading bodycams...</p>
+					<p>{_L("bodycamsPage.loading")}</p>
 				</div>
 			{:else if filteredBodycams.length === 0}
 				<div class="empty-state">
-					<p class="empty-title">No Bodycams Found</p>
+					<p class="empty-title">{_L("bodycamsPage.noBodycamsFound")}</p>
 					<p class="empty-sub">
 						{searchQuery
-							? "No officers match your search criteria."
-							: "No officers with bodycams are currently on duty."}
+							? _L("bodycamsPage.noOfficersMatchSearch")
+							: _L("bodycamsPage.noOfficersWithBodycams")}
 					</p>
 				</div>
 			{:else}
@@ -176,9 +177,9 @@
 						<span class="col-rank">{bodycam.rank}</span>
 						<span class="col-status">
 							{#if bodycam.isOnline}
-								<span class="pill pill-green">Online</span>
+								<span class="pill pill-green">{_L("bodycamsPage.online")}</span>
 							{:else}
-								<span class="pill pill-grey">Offline</span>
+								<span class="pill pill-grey">{_L("bodycamsPage.offline")}</span>
 							{/if}
 						</span>
 						<span class="col-viewers">
@@ -192,7 +193,7 @@
 							{#if bodycam.isOnline}
 								<button class="view-btn" onclick={() => viewBodycam(bodycam)}>
 									<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-									View
+									{_L("bodycamsPage.view")}
 								</button>
 							{/if}
 						</span>
