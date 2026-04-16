@@ -4,6 +4,7 @@
 	import { isEnvBrowser } from "../utils/misc";
 	import { NUI_EVENTS } from "../constants/nuiEvents";
 	import { globalNotifications } from "../services/notificationService.svelte";
+	import { _L } from "@/utils/localization";
 
 	let cameras = $state<Camera[]>([]);
 	let isLoading = $state(false);
@@ -213,7 +214,7 @@
 	<div class="topbar">
 		<input
 			type="text"
-			placeholder="Search cameras..."
+			placeholder={_L("camerasPage.searchCameras")}
 			bind:value={searchQuery}
 			class="search-input"
 		/>
@@ -224,7 +225,7 @@
 				onclick={loadCameras}
 				disabled={isLoading}
 			>
-				{isLoading ? "Loading..." : "Refresh"}
+				{isLoading ? _L("camerasPage.loadingCameras") : _L("camerasPage.refresh")}
 			</button>
 		</div>
 	</div>
@@ -233,15 +234,15 @@
 		{#if isLoading && cameras.length === 0}
 			<div class="empty-state">
 				<div class="loading-spinner"></div>
-				<p>Loading cameras...</p>
+				<p>{_L("camerasPage.loadingCameras")}</p>
 			</div>
 		{:else if filteredCameras.length === 0}
 			<div class="empty-state">
-				<p class="empty-title">No Cameras Found</p>
+				<p class="empty-title">{_L("camerasPage.noCamerasFound")}</p>
 				<p class="empty-sub">
 					{searchQuery
-						? "No cameras match your search criteria."
-						: "No cameras have been loaded yet."}
+						? _L("camerasPage.noCamerasMatchYourSearchCriteria")
+						: _L("camerasPage.noCamerasHaveBeenLoadedYet")}
 				</p>
 			</div>
 		{:else}
@@ -260,10 +261,10 @@
 					</div>
 					{#if !collapsedSections[type]}
 						<div class="table-header">
-							<span class="col-id">ID</span>
-							<span class="col-label">Camera</span>
-							<span class="col-status">Status</span>
-							<span class="col-viewers">Viewers</span>
+							<span class="col-id">{_L("camerasPage.id")}</span>
+							<span class="col-label">{_L("camerasPage.camera")}</span>
+							<span class="col-status">{_L("camerasPage.status")}</span>
+							<span class="col-viewers">{_L("camerasPage.viewers")}</span>
 							<span class="col-action"></span>
 						</div>
 						{#each typeCameras as camera (camera.id)}
@@ -274,9 +275,9 @@
 								<span class="col-label">{camera.label}</span>
 								<span class="col-status">
 									{#if camera.isOnline}
-										<span class="pill pill-green">Online</span>
+										<span class="pill pill-green">{_L("camerasPage.online")}</span>
 									{:else}
-										<span class="pill pill-grey">Offline</span>
+										<span class="pill pill-grey">{_L("camerasPage.offline")}</span>
 									{/if}
 								</span>
 								<span class="col-viewers">
@@ -290,7 +291,7 @@
 									{#if camera.isOnline}
 										<button class="view-btn" onclick={() => viewCamera(camera)}>
 											<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-											View
+											{_L("camerasPage.view")}
 										</button>
 									{/if}
 								</span>
