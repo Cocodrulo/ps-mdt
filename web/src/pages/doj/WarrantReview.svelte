@@ -6,6 +6,7 @@
 	import { globalNotifications } from "../../services/notificationService.svelte";
 	import type { createTabService } from "../../services/tabService.svelte";
 	import type { AuthService } from "../../services/authService.svelte";
+	import { _L, getLocalizedDate, getLocalizedTime } from "@/utils/localization";
 
 	interface Props {
 		tabService: ReturnType<typeof createTabService>;
@@ -88,22 +89,18 @@
 		if (!value) return "-";
 		const date = new Date(value);
 		if (Number.isNaN(date.getTime())) return "-";
-		return date.toLocaleDateString("en-US", {
-			month: "2-digit",
-			day: "2-digit",
-			year: "numeric",
-		});
+		return getLocalizedDate(date);
 	}
 
 	function formatDateTimeValue(value: string | undefined): string {
 		if (!value) return "-";
 		const date = new Date(value);
 		if (Number.isNaN(date.getTime())) return "-";
-		return date.toLocaleDateString("en-US", {
+		return getLocalizedDate(date, {
 			month: "2-digit",
 			day: "2-digit",
 			year: "numeric",
-		}) + " " + date.toLocaleTimeString("en-US", {
+		}) + " " + getLocalizedTime(date, {
 			hour: "2-digit",
 			minute: "2-digit",
 			hour12: false,
@@ -214,9 +211,9 @@
 		<div class="topbar">
 			<button class="back-btn" onclick={goBack}>
 				<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-				Back to Requests
+				{_L("warrantReviewPage.backToRequests")}
 			</button>
-			<span class="topbar-case-number">Warrant Request #{selectedRequest.id}</span>
+			<span class="topbar-case-number">{_L("warrantReviewPage.warrantRequest", ["id", selectedRequest.id])}</span>
 			<span class="pill {getStatusPillClass(selectedRequest.status)}">{formatLabel(selectedRequest.status)}</span>
 		</div>
 
@@ -224,45 +221,45 @@
 			<div class="detail-layout">
 				<div class="detail-main">
 					<div class="section">
-						<div class="section-title">Request Information</div>
+						<div class="section-title">{_L("warrantReviewPage.requestInformation")}</div>
 						<div class="field-row">
 							<div class="field-group">
-								<span class="field-label">Citizen</span>
+								<span class="field-label">{_L("warrantReviewPage.citizen")}</span>
 								<span class="field-value">{selectedRequest.citizen_name}</span>
 							</div>
 							<div class="field-group">
-								<span class="field-label">Citizen ID</span>
+								<span class="field-label">{_L("warrantReviewPage.citizenId")}</span>
 								<span class="field-value mono">{selectedRequest.citizenid}</span>
 							</div>
 							<div class="field-group">
-								<span class="field-label">Submitted</span>
+								<span class="field-label">{_L("warrantReviewPage.submitted")}</span>
 								<span class="field-value">{formatDateTimeValue(selectedRequest.created_at)}</span>
 							</div>
 						</div>
 					</div>
 
 					<div class="section">
-						<div class="section-title">Charges</div>
+						<div class="section-title">{_L("warrantReviewPage.charges")}</div>
 						<div class="charges-list">
 							{#each selectedRequest.charges as charge}
 								<span class="charge-chip">{charge}</span>
 							{/each}
 							{#if selectedRequest.charges.length === 0}
-								<span class="muted-text">No charges listed</span>
+								<span class="muted-text">{_L("warrantReviewPage.noChargesListed")}</span>
 							{/if}
 						</div>
 					</div>
 
 					<div class="section">
-						<div class="section-title">Requesting Officer</div>
+						<div class="section-title">{_L("warrantReviewPage.requestingOfficer")}</div>
 						<div class="field-row">
 							<div class="field-group">
-								<span class="field-label">Officer</span>
+								<span class="field-label">{_L("warrantReviewPage.officer")}</span>
 								<span class="field-value">{selectedRequest.requesting_officer}{selectedRequest.requesting_officer_badge ? ` (#${selectedRequest.requesting_officer_badge})` : ""}</span>
 							</div>
 							{#if selectedRequest.linked_report_id}
 								<div class="field-group">
-									<span class="field-label">Linked Report</span>
+									<span class="field-label">{_L("warrantReviewPage.linkedReport")}</span>
 									<span class="field-value link">#{selectedRequest.linked_report_id}</span>
 								</div>
 							{/if}
@@ -270,21 +267,21 @@
 					</div>
 
 					<div class="section">
-						<div class="section-title">Reason / Justification</div>
+						<div class="section-title">{_L("warrantReviewPage.reason")}</div>
 						<p class="summary-text">{selectedRequest.reason || "No reason provided."}</p>
 					</div>
 
 					{#if selectedRequest.review_reason}
 						<div class="section">
-							<div class="section-title">Review Decision</div>
+							<div class="section-title">{_L("warrantReviewPage.reviewDecision")}</div>
 							<p class="summary-text">{selectedRequest.review_reason}</p>
 							<div class="field-row">
 								<div class="field-group">
-									<span class="field-label">Reviewed By</span>
+									<span class="field-label">{_L("warrantReviewPage.reviewedBy")}</span>
 									<span class="field-value">{selectedRequest.reviewed_by || "-"}</span>
 								</div>
 								<div class="field-group">
-									<span class="field-label">Reviewed At</span>
+									<span class="field-label">{_L("warrantReviewPage.reviewedAt")}</span>
 									<span class="field-value">{formatDateTimeValue(selectedRequest.reviewed_at)}</span>
 								</div>
 							</div>
@@ -295,32 +292,32 @@
 				<div class="detail-side">
 					{#if canApprove && selectedRequest.status === "pending"}
 						<div class="section">
-							<div class="section-title">Judicial Review</div>
+							<div class="section-title">{_L("warrantReviewPage.judicialReview")}</div>
 							<div class="form-group">
-								<label class="form-label">Reason</label>
+								<label class="form-label">{_L("warrantReviewPage.reason")}</label>
 								<textarea class="form-textarea" placeholder="Enter reason for approval or denial..." bind:value={reviewReason}></textarea>
 							</div>
 							<div class="review-actions">
 								<button class="approve-btn" disabled={!reviewReason.trim() || isLoading} onclick={() => handleReview("approved")}>
 									<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-									Approve
+									{_L("warrantReviewPage.approve")}
 								</button>
 								<button class="deny-btn" disabled={!reviewReason.trim() || isLoading} onclick={() => handleReview("denied")}>
 									<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-									Deny
+									{_L("warrantReviewPage.deny")}
 								</button>
 							</div>
 						</div>
 					{:else if !canApprove && selectedRequest.status === "pending"}
 						<div class="section">
 							<div class="center-state" style="padding: 20px;">
-								<p>Only judges with warrant approval permission can review this request.</p>
+								<p>{_L("warrantReviewPage.onlyJudgesCanReview")}</p>
 							</div>
 						</div>
 					{/if}
 					<div class="section">
 						<div class="section-header-row">
-							<span class="section-title">Documents</span>
+							<span class="section-title">{_L("warrantReviewPage.documents")}</span>
 							<button class="add-btn" onclick={() => { newDocData = { title: `Warrant Review - ${selectedRequest?.citizen_name || ''}`, type: "ruling", content: "" }; showNewDocModal = true; }}>+ Add</button>
 						</div>
 					</div>
@@ -331,7 +328,7 @@
 		<!-- LIST VIEW -->
 		<div class="topbar">
 			<div class="search-box">
-				<input type="text" placeholder="Search requests..." bind:value={searchQuery} />
+				<input type="text" placeholder="{_L("warrantReviewPage.searchRequests")}" bind:value={searchQuery} />
 			</div>
 			<div class="filter-pills">
 				{#each statusOptions as opt}
@@ -342,7 +339,7 @@
 			</div>
 			<div class="topbar-actions">
 				<span class="result-count">{allFilteredRequests.length} request{allFilteredRequests.length !== 1 ? "s" : ""}</span>
-				<button class="action-btn" onclick={loadRequests} disabled={isLoading}>{isLoading ? "Loading..." : "Refresh"}</button>
+				<button class="action-btn" onclick={loadRequests} disabled={isLoading}>{isLoading ? _L("warrantReviewPage.loading") : _L("warrantReviewPage.refresh")}</button>
 			</div>
 		</div>
 
@@ -350,21 +347,21 @@
 			{#if isLoading && requests.length === 0}
 				<div class="center-state">
 					<div class="loading-spinner"></div>
-					<p>Loading warrant requests...</p>
+					<p>{_L("warrantReviewPage.loading")}</p>
 				</div>
 			{:else if allFilteredRequests.length === 0}
 				<div class="center-state">
-					<h3>No Warrant Requests Found</h3>
-					<p>{searchQuery ? "No requests match your search criteria." : "No warrant requests available."}</p>
+					<h3>{_L("warrantReviewPage.noWarrantRequestsFound")}</h3>
+					<p>{searchQuery ? _L("warrantReviewPage.noRequestsMatchSearch") : _L("warrantReviewPage.noWarrantRequestsAvailable")}</p>
 				</div>
 			{:else}
 				<div class="table-header">
-					<span>Citizen</span>
-					<span>Charges</span>
-					<span>Requesting Officer</span>
-					<span>Report</span>
-					<span>Status</span>
-					<span>Date</span>
+					<span>{_L("warrantReviewPage.citizen")}</span>
+					<span>{_L("warrantReviewPage.charges")}</span>
+					<span>{_L("warrantReviewPage.requestingOfficer")}</span>
+					<span>{_L("warrantReviewPage.report")}</span>
+					<span>{_L("warrantReviewPage.status")}</span>
+					<span>{_L("warrantReviewPage.date")}</span>
 				</div>
 				<div class="table-body">
 					{#each allFilteredRequests as item}
@@ -387,36 +384,36 @@
 <div class="modal-backdrop" onclick={() => (showNewDocModal = false)} role="presentation">
 	<div class="modal" onclick={(e) => e.stopPropagation()} role="dialog">
 		<div class="modal-header">
-			<span class="modal-title">New Legal Document</span>
+			<span class="modal-title">{_L("warrantReviewPage.newLegalDocument")}</span>
 			<button class="modal-close" onclick={() => (showNewDocModal = false)}>
 				<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
 			</button>
 		</div>
 		<div class="modal-body">
 			<div class="form-group">
-				<label class="form-label">Title</label>
+				<label class="form-label">{_L("warrantReviewPage.title")}</label>
 				<input type="text" class="form-input" bind:value={newDocData.title} />
 			</div>
 			<div class="form-group">
-				<label class="form-label">Type</label>
+				<label class="form-label">{_L("warrantReviewPage.type")}</label>
 				<select class="form-select" bind:value={newDocData.type}>
-					<option value="brief">Brief</option>
-					<option value="motion">Motion</option>
-					<option value="ruling">Ruling</option>
-					<option value="opinion">Opinion</option>
-					<option value="plea_deal">Plea Deal</option>
-					<option value="sentencing">Sentencing</option>
-					<option value="other">Other</option>
+					<option value="brief">{_L("warrantReviewPage.brief")}</option>
+					<option value="motion">{_L("warrantReviewPage.motion")}</option>
+					<option value="ruling">{_L("warrantReviewPage.ruling")}</option>
+					<option value="opinion">{_L("warrantReviewPage.opinion")}</option>
+					<option value="plea_deal">{_L("warrantReviewPage.pleaDeal")}</option>
+					<option value="sentencing">{_L("warrantReviewPage.sentencing")}</option>
+					<option value="other">{_L("warrantReviewPage.other")}</option>
 				</select>
 			</div>
 			<div class="form-group">
-				<label class="form-label">Content</label>
+				<label class="form-label">{_L("warrantReviewPage.content")}</label>
 				<textarea class="form-textarea" rows="6" placeholder="Document content..." bind:value={newDocData.content}></textarea>
 			</div>
 		</div>
 		<div class="modal-footer">
-			<button class="back-btn" onclick={() => (showNewDocModal = false)}>Cancel</button>
-			<button class="primary-btn" disabled={!newDocData.title.trim()} onclick={handleCreateDocument}>Create Document</button>
+			<button class="back-btn" onclick={() => (showNewDocModal = false)}>{_L("warrantReviewPage.cancel")}</button>
+			<button class="primary-btn" disabled={!newDocData.title.trim()} onclick={handleCreateDocument}>{_L("warrantReviewPage.createDocument")}</button>
 		</div>
 	</div>
 </div>
