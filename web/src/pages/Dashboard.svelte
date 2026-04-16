@@ -19,6 +19,7 @@
 	}
 
 	import type { JobType } from "../interfaces/IUser";
+	import { _L, getLocalizedDate } from "@/utils/localization";
 
 	let {
 		signOut,
@@ -137,12 +138,12 @@
 		if (diffInMs < 0) return "in the future";
 
 		const units = [
-			{ label: "year", ms: 1000 * 60 * 60 * 24 * 365 },
-			{ label: "month", ms: 1000 * 60 * 60 * 24 * 30 },
-			{ label: "week", ms: 1000 * 60 * 60 * 24 * 7 },
-			{ label: "day", ms: 1000 * 60 * 60 * 24 },
-			{ label: "hour", ms: 1000 * 60 * 60 },
-			{ label: "minute", ms: 1000 * 60 },
+			{ label: _L("dashboardPage.year"), ms: 1000 * 60 * 60 * 24 * 365 },
+			{ label: _L("dashboardPage.month"), ms: 1000 * 60 * 60 * 24 * 30 },
+			{ label: _L("dashboardPage.week"), ms: 1000 * 60 * 60 * 24 * 7 },
+			{ label: _L("dashboardPage.day"), ms: 1000 * 60 * 60 * 24 },
+			{ label: _L("dashboardPage.hour"), ms: 1000 * 60 * 60 },
+			{ label: _L("dashboardPage.minute"), ms: 1000 * 60 },
 		];
 
 		const parts = [];
@@ -155,9 +156,9 @@
 			}
 		}
 
-		if (parts.length === 0) return "just now";
+		if (parts.length === 0) return _L("dashboardPage.justNow");
 
-		return parts.join(", ") + " ago";
+		return parts.join(", ") + " " + _L("dashboardPage.ago");
 	}
 
 	async function attachYourselfToDispatch(dispatchId: string) {
@@ -226,7 +227,7 @@
 				</div>
 				<div class="stat-content">
 					<span class="stat-value">{dashboardService.reportsInfo.totalThisWeek} <span class="stat-change" class:positive={dashboardService.reportsInfo.changeFromLastWeek > 0} class:negative={dashboardService.reportsInfo.changeFromLastWeek < 0}>{#if dashboardService.reportsInfo.changeFromLastWeek > 0}+{/if}{dashboardService.reportsInfo.changeFromLastWeek}</span></span>
-					<span class="stat-label">Reports this week</span>
+					<span class="stat-label">{_L("dashboardPage.reportsThisWeek")}</span>
 				</div>
 			</div>
 			<div class="stat-divider"></div>
@@ -235,8 +236,8 @@
 					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
 				</div>
 				<div class="stat-content">
-					<span class="stat-value">{dashboardService.activeUnits.count} <span class="stat-badge">On Duty</span></span>
-					<span class="stat-label">Active units</span>
+					<span class="stat-value">{dashboardService.activeUnits.count} <span class="stat-badge">{_L("dashboardPage.onDuty")}</span></span>
+					<span class="stat-label">{_L("dashboardPage.activeUnits")}</span>
 				</div>
 			</div>
 
@@ -264,7 +265,7 @@
 							</div>
 						{/if}
 					{:else}
-						<span class="bulletin-empty">No active bulletins</span>
+						<span class="bulletin-empty">{_L("dashboardPage.noActiveBulletins")}</span>
 					{/if}
 				</div>
 			</div>
@@ -290,24 +291,24 @@
 		<div class="column">
 			<div class="panel">
 				<div class="panel-header">
-					<span class="panel-title">Warrants</span>
+					<span class="panel-title">{_L("dashboardPage.warrants")}</span>
 					<span class="panel-count">{dashboardService.activeWarrants.length}</span>
 				</div>
 				<div class="panel-body">
 					{#if dashboardService.activeWarrants.length === 0}
-						<div class="empty-state">No active warrants</div>
+						<div class="empty-state">{_L("dashboardPage.noActiveWarrants")}</div>
 					{:else}
 						{#each pagedWarrants as warrant}
 							<button class="list-item" onclick={() => openWarrant(warrant.reportid)}>
 								<div class="item-left">
 									<span class="item-name">{warrant.name}</span>
 									<span class="item-meta">
-										#{warrant.reportid} · Exp. {new Date(warrant.expirydate).toLocaleDateString()}
+										#{warrant.reportid} · Exp. {getLocalizedDate(new Date(warrant.expirydate))}
 									</span>
 									<div class="pill-row">
-										{#if warrant.felonies > 0}<span class="pill pill-red">{warrant.felonies} Felony</span>{/if}
-										{#if warrant.misdemeanors > 0}<span class="pill pill-orange">{warrant.misdemeanors} Misd.</span>{/if}
-										{#if warrant.infractions > 0}<span class="pill pill-green">{warrant.infractions} Infr.</span>{/if}
+										{#if warrant.felonies > 0}<span class="pill pill-red">{warrant.felonies} {_L("dashboardPage.felony")}</span>{/if}
+										{#if warrant.misdemeanors > 0}<span class="pill pill-orange">{warrant.misdemeanors} {_L("dashboardPage.misdemeanor")}</span>{/if}
+										{#if warrant.infractions > 0}<span class="pill pill-green">{warrant.infractions} {_L("dashboardPage.infraction")}</span>{/if}
 									</div>
 								</div>
 								<svg class="item-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
@@ -330,12 +331,12 @@
 
 			<div class="panel">
 				<div class="panel-header">
-					<span class="panel-title">BOLOs</span>
+					<span class="panel-title">{_L("dashboardPage.bolos")}</span>
 					<span class="panel-count">{(dashboardService.activeBolos || []).length}</span>
 				</div>
 				<div class="panel-body">
 					{#if (dashboardService.activeBolos || []).length === 0}
-						<div class="empty-state">No active BOLOs</div>
+						<div class="empty-state">{_L("dashboardPage.noActiveBolos")}</div>
 					{:else}
 						{#each pagedBolos as bolo}
 							<button class="list-item" onclick={() => viewBolo(bolo.id)}>
@@ -372,12 +373,12 @@
 		<div class="column">
 			<div class="panel">
 				<div class="panel-header">
-					<span class="panel-title">Recent Reports</span>
+					<span class="panel-title">{_L("dashboardPage.recentReports")}</span>
 					<span class="panel-count">{dashboardService.recentReports.length}</span>
 				</div>
 				<div class="panel-body">
 					{#if dashboardService.recentReports.length === 0}
-						<div class="empty-state">No recent reports</div>
+						<div class="empty-state">{_L("dashboardPage.noRecentReports")}</div>
 					{:else}
 						{#each dashboardService.recentReports as report}
 							<ReportItem
@@ -390,7 +391,7 @@
 					{/if}
 				</div>
 				{#if dashboardService.recentReportsHasMore}
-					<button class="load-more-btn" onclick={loadMoreReports}>Load more</button>
+					<button class="load-more-btn" onclick={loadMoreReports}>{_L("dashboardPage.loadMore")}</button>
 				{/if}
 			</div>
 		</div>
@@ -400,17 +401,17 @@
 			{#if isDOJ}
 				<div class="panel">
 					<div class="panel-header">
-						<span class="panel-title">Pending Warrant Reviews</span>
+						<span class="panel-title">{_L("dashboardPage.pendingWarrantReviews")}</span>
 						<span class="panel-count">{dojWarrantReviews.length}</span>
 					</div>
 					<div class="panel-body">
 						{#if dojWarrantReviews.length === 0}
-							<div class="empty-state">No pending warrants</div>
+							<div class="empty-state">{_L("dashboardPage.noPendingWarrants")}</div>
 						{:else}
 							{#each dojWarrantReviews as wr}
 								<button class="list-item-btn" onclick={() => tabService.openTab('warrant_review')}>
 									<span class="item-name">{wr.citizen_name || wr.citizenid}</span>
-									<span class="item-meta">{wr.status || 'pending'} · {new Date(wr.created_at).toLocaleDateString()}</span>
+									<span class="item-meta">{wr.status || 'pending'} · {getLocalizedDate(new Date(wr.created_at))}</span>
 								</button>
 							{/each}
 						{/if}
@@ -418,17 +419,17 @@
 				</div>
 				<div class="panel">
 					<div class="panel-header">
-						<span class="panel-title">Court Cases</span>
+						<span class="panel-title">{_L("dashboardPage.courtCases")}</span>
 						<span class="panel-count">{dojCourtCases.length}</span>
 					</div>
 					<div class="panel-body">
 						{#if dojCourtCases.length === 0}
-							<div class="empty-state">No court cases</div>
+							<div class="empty-state">{_L("dashboardPage.noCourtCases")}</div>
 						{:else}
 							{#each dojCourtCases as cc}
 								<button class="list-item-btn" onclick={() => tabService.openTab('court_cases')}>
 									<span class="item-name">{cc.title || cc.case_number}</span>
-									<span class="item-meta">{cc.status} · {new Date(cc.created_at || cc.filed_date).toLocaleDateString()}</span>
+									<span class="item-meta">{cc.status} · {getLocalizedDate(new Date(cc.created_at || cc.filed_date))}</span>
 								</button>
 							{/each}
 						{/if}
@@ -436,17 +437,17 @@
 				</div>
 				<div class="panel">
 					<div class="panel-header">
-						<span class="panel-title">Court Orders</span>
+						<span class="panel-title">{_L("dashboardPage.courtOrders")}</span>
 						<span class="panel-count">{dojCourtOrders.length}</span>
 					</div>
 					<div class="panel-body">
 						{#if dojCourtOrders.length === 0}
-							<div class="empty-state">No court orders</div>
+							<div class="empty-state">{_L("dashboardPage.noCourtOrders")}</div>
 						{:else}
 							{#each dojCourtOrders as co}
 								<button class="list-item-btn" onclick={() => tabService.openTab('court_orders')}>
 									<span class="item-name">{co.title || co.order_number}</span>
-									<span class="item-meta">{co.status} · {new Date(co.created_at).toLocaleDateString()}</span>
+									<span class="item-meta">{co.status} · {getLocalizedDate(new Date(co.created_at))}</span>
 								</button>
 							{/each}
 						{/if}
@@ -455,7 +456,7 @@
 			{:else}
 				<div class="panel">
 					<div class="panel-header">
-						<span class="panel-title">Dispatches</span>
+						<span class="panel-title">{_L("dashboardPage.dispatches")}</span>
 						<span class="panel-count">{(dashboardService.recentDispatches && Array.isArray(dashboardService.recentDispatches) ? dashboardService.recentDispatches : []).length}</span>
 					</div>
 					<div class="panel-body">
@@ -476,7 +477,7 @@
 								{#if expandedDispatch === dispatch.id}
 									<div class="dispatch-detail">
 										<div class="dispatch-detail-header">
-											<span class="detail-label">Attached Units</span>
+											<span class="detail-label">{_L("dashboardPage.attachedUnits")}</span>
 											<div class="dispatch-btns">
 												<button
 													class="d-action-btn"
@@ -485,13 +486,13 @@
 															? detachYourselfFromDispatch(dispatch.id)
 															: attachYourselfToDispatch(dispatch.id)}
 												>
-													{dispatchService.isUserAttachedToDispatch(dispatch, playerData) ? "Detach" : "Attach"}
+													{dispatchService.isUserAttachedToDispatch(dispatch, playerData) ? _L("dashboardPage.detach") : _L("dashboardPage.attach")}
 												</button>
 												<button
 													class="d-action-btn"
 													onclick={() => dispatchService.routeToDispatch(dispatch)}
 												>
-													Route
+													{_L("dashboardPage.route")}
 												</button>
 											</div>
 										</div>
