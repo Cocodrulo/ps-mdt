@@ -8,6 +8,7 @@
 	import type { AuthService } from "../../services/authService.svelte";
 	import type { SearchResult } from "../../interfaces/IReportEditor";
 	import PersonSearchModal from "../../components/report-editor/PersonSearchModal.svelte";
+	import { _L } from "@/utils/localization";
 
 	interface Props {
 		tabService: ReturnType<typeof createTabService>;
@@ -330,7 +331,7 @@
 		<div class="topbar">
 			<button class="back-btn" onclick={goBack}>
 				<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-				Back to Cases
+				{_L("courtCases.backToCases")}
 			</button>
 			<span class="topbar-case-number">{selectedCase.court_case.case_number}</span>
 			<span class="pill {getStatusPillClass(selectedCase.court_case.status)}">{formatLabel(selectedCase.court_case.status)}</span>
@@ -340,50 +341,50 @@
 			<div class="detail-layout">
 				<div class="detail-main">
 					<div class="section">
-						<div class="section-title">Case Information</div>
+						<div class="section-title">{_L("courtCases.caseInformation")}</div>
 						<h3 class="case-title">{selectedCase.court_case.title}</h3>
 						<div class="field-row">
 							<div class="field-group">
-								<span class="field-label">Case Number</span>
+								<span class="field-label">{_L("courtCases.caseNumber")}</span>
 								<span class="field-value">{selectedCase.court_case.case_number}</span>
 							</div>
 							<div class="field-group">
-								<span class="field-label">Case Type</span>
+								<span class="field-label">{_L("courtCases.caseType")}</span>
 								<span class="field-value">{formatLabel(selectedCase.court_case.case_type)}</span>
 							</div>
 							<div class="field-group">
-								<span class="field-label">Status</span>
+								<span class="field-label">{_L("courtCases.status")}</span>
 								<span class="pill {getStatusPillClass(selectedCase.court_case.status)}">{formatLabel(selectedCase.court_case.status)}</span>
 							</div>
 							<div class="field-group">
-								<span class="field-label">Filed Date</span>
+								<span class="field-label">{_L("courtCases.filedDate")}</span>
 								<span class="field-value">{formatDateValue(selectedCase.court_case.filed_date)}</span>
 							</div>
 						</div>
 					</div>
 
 					<div class="section">
-						<div class="section-title">Defendant</div>
+						<div class="section-title">{_L("courtCases.defendant")}</div>
 						<div class="field-row">
 							<div class="field-group">
-								<span class="field-label">Name</span>
+								<span class="field-label">{_L("courtCases.name")}</span>
 								<span class="field-value">{selectedCase.court_case.defendant_name || "-"}</span>
 							</div>
 							<div class="field-group">
-								<span class="field-label">Citizen ID</span>
+								<span class="field-label">{_L("courtCases.citizenId")}</span>
 								<span class="field-value mono">{selectedCase.court_case.defendant_citizenid || "-"}</span>
 							</div>
 						</div>
 					</div>
 
 					<div class="section">
-						<div class="section-title">Hearing</div>
+						<div class="section-title">{_L("courtCases.hearing")}</div>
 						<div class="field-row">
 							<div class="field-group" style="flex:1;">
-								<span class="field-label">Hearing Date</span>
+								<span class="field-label">{_L("courtCases.hearingDate")}</span>
 								<div class="inline-edit-row">
 									<input type="datetime-local" class="form-input" bind:value={editingHearingDate} />
-									<button class="save-field-btn" onclick={saveHearingDate}>Save</button>
+									<button class="save-field-btn" onclick={saveHearingDate}>{_L("courtCases.save")}</button>
 								</div>
 							</div>
 						</div>
@@ -391,14 +392,14 @@
 
 					<div class="section">
 						<div class="section-header-row">
-							<span class="section-title">Documents</span>
-							<button class="add-btn" onclick={() => { newDocData = { title: `${selectedCase.court_case.case_number} - `, type: "brief", content: "" }; showNewDocModal = true; }}>+ Add</button>
+							<span class="section-title">{_L("courtCases.documents")}</span>
+							<button class="add-btn" onclick={() => { newDocData = { title: `${selectedCase.court_case.case_number} - `, type: "brief", content: "" }; showNewDocModal = true; }}>+ {_L("courtCases.add")}</button>
 						</div>
 					</div>
 
 					{#if selectedCase.linked_reports.length > 0}
 						<div class="section">
-							<div class="section-title">Linked Reports</div>
+							<div class="section-title">{_L("courtCases.linkedReports")}</div>
 							<div class="linked-items">
 								{#each selectedCase.linked_reports as report}
 									<span class="linked-chip">#{report.id} - {report.title}</span>
@@ -410,7 +411,7 @@
 
 				<div class="detail-side">
 					<div class="section">
-						<div class="section-title">Update Status</div>
+						<div class="section-title">{_L("courtCases.updateStatus")}</div>
 						<select class="form-select" value={selectedCase.court_case.status} onchange={(e) => handleUpdateCase({ status: (e.target as HTMLSelectElement).value })}>
 							{#each statusOptions.filter((s) => s !== "all") as opt}
 								<option value={opt}>{formatLabel(opt)}</option>
@@ -420,11 +421,11 @@
 
 					<div class="section">
 						<div class="section-header-row">
-							<span class="section-title">Judge</span>
+							<span class="section-title">{_L("courtCases.judge")}</span>
 							{#if selectedCase.court_case.presiding_judge_name}
-								<button class="add-btn" onclick={() => clearParty("judge")}>x Remove</button>
+								<button class="add-btn" onclick={() => clearParty("judge")}>x {_L("courtCases.remove")}</button>
 							{:else}
-								<button class="add-btn" onclick={() => (partySearchTarget = "judge")}>+ Add</button>
+								<button class="add-btn" onclick={() => (partySearchTarget = "judge")}>+ {_L("courtCases.add")}</button>
 							{/if}
 						</div>
 						{#if selectedCase.court_case.presiding_judge_name}
@@ -433,11 +434,11 @@
 					</div>
 					<div class="section">
 						<div class="section-header-row">
-							<span class="section-title">Prosecutor</span>
+							<span class="section-title">{_L("courtCases.prosecutor")}</span>
 							{#if selectedCase.court_case.prosecutor_name}
-								<button class="add-btn" onclick={() => clearParty("prosecutor")}>x Remove</button>
+								<button class="add-btn" onclick={() => clearParty("prosecutor")}>x {_L("courtCases.remove")}</button>
 							{:else}
-								<button class="add-btn" onclick={() => (partySearchTarget = "prosecutor")}>+ Add</button>
+								<button class="add-btn" onclick={() => (partySearchTarget = "prosecutor")}>+ {_L("courtCases.add")}</button>
 							{/if}
 						</div>
 						{#if selectedCase.court_case.prosecutor_name}
@@ -446,11 +447,11 @@
 					</div>
 					<div class="section">
 						<div class="section-header-row">
-							<span class="section-title">Defense</span>
+							<span class="section-title">{_L("courtCases.defenseAttorney")}</span>
 							{#if selectedCase.court_case.defense_attorney_name}
-								<button class="add-btn" onclick={() => clearParty("defense")}>x Remove</button>
+								<button class="add-btn" onclick={() => clearParty("defense")}>x {_L("courtCases.remove")}</button>
 							{:else}
-								<button class="add-btn" onclick={() => (partySearchTarget = "defense")}>+ Add</button>
+								<button class="add-btn" onclick={() => (partySearchTarget = "defense")}>+ {_L("courtCases.add")}</button>
 							{/if}
 						</div>
 						{#if selectedCase.court_case.defense_attorney_name}
@@ -464,7 +465,7 @@
 		<!-- LIST VIEW -->
 		<div class="topbar">
 			<div class="search-box">
-				<input type="text" placeholder="Search cases..." bind:value={searchQuery} />
+				<input type="text" placeholder={_L("courtCases.searchCases")} bind:value={searchQuery} />
 			</div>
 			<div class="filter-pills">
 				{#each statusOptions as opt}
@@ -475,8 +476,8 @@
 			</div>
 			<div class="topbar-actions">
 				<span class="result-count">{allFilteredCases.length} case{allFilteredCases.length !== 1 ? "s" : ""}</span>
-				<button class="action-btn" onclick={loadCases} disabled={isLoading}>{isLoading ? "Loading..." : "Refresh"}</button>
-				<button class="primary-btn" onclick={() => (showCreateModal = true)}>New Court Case</button>
+				<button class="action-btn" onclick={loadCases} disabled={isLoading}>{isLoading ? _L("courtCases.loading") : _L("courtCases.refresh")}</button>
+				<button class="primary-btn" onclick={() => (showCreateModal = true)}>{_L("courtCases.createCase")}</button>
 			</div>
 		</div>
 
@@ -484,22 +485,22 @@
 			{#if isLoading && cases.length === 0}
 				<div class="center-state">
 					<div class="loading-spinner"></div>
-					<p>Loading court cases...</p>
+					<p>{_L("courtCases.loading")}</p>
 				</div>
 			{:else if allFilteredCases.length === 0}
 				<div class="center-state">
-					<h3>No Court Cases Found</h3>
-					<p>{searchQuery ? "No cases match your search criteria." : "No court cases available."}</p>
+					<h3>{_L("courtCases.noCasesFound")}</h3>
+					<p>{searchQuery ? _L("courtCases.noCasesMatchSearch") : _L("courtCases.noCasesAvailable")}</p>
 				</div>
 			{:else}
 				<div class="table-header">
-					<span>Case #</span>
-					<span>Title</span>
-					<span>Defendant</span>
-					<span>Type</span>
-					<span>Status</span>
-					<span>Hearing</span>
-					<span>Filed</span>
+					<span>{_L("courtCases.caseNumber")}</span>
+					<span>{_L("courtCases.title")}</span>
+					<span>{_L("courtCases.defendant")}</span>
+					<span>{_L("courtCases.caseType")}</span>
+					<span>{_L("courtCases.status")}</span>
+					<span>{_L("courtCases.hearingDate")}</span>
+					<span>{_L("courtCases.filedDate")}</span>
 				</div>
 				<div class="table-body">
 					{#each paginatedCases as item}
@@ -524,27 +525,27 @@
 	<div class="modal-backdrop" onclick={() => (showCreateModal = false)} role="presentation">
 		<div class="modal" onclick={(e) => e.stopPropagation()} role="dialog">
 			<div class="modal-header">
-				<span class="modal-title">New Court Case</span>
+				<span class="modal-title">{_L("courtCases.createCase")}</span>
 				<button class="modal-close" onclick={() => (showCreateModal = false)}>
 					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
 				</button>
 			</div>
 			<div class="modal-body">
 				<div class="form-group">
-					<label class="form-label">Title</label>
-					<input type="text" class="form-input" placeholder="e.g. State v. John Doe" bind:value={newCase.title} />
+					<label class="form-label">{_L("courtCases.title")}</label>
+					<input type="text" class="form-input" placeholder={_L("courtCases.titlePlaceholder")} bind:value={newCase.title} />
 				</div>
 				<div class="form-group">
-					<label class="form-label">Case Type</label>
+					<label class="form-label">{_L("courtCases.caseType")}</label>
 					<select class="form-select" bind:value={newCase.case_type}>
-						<option value="criminal">Criminal</option>
-						<option value="civil">Civil</option>
-						<option value="appeal">Appeal</option>
-						<option value="motion">Motion</option>
+						<option value="criminal">{_L("courtCases.criminal")}</option>
+						<option value="civil">{_L("courtCases.civil")}</option>
+						<option value="appeal">{_L("courtCases.appeal")}</option>
+						<option value="motion">{_L("courtCases.motion")}</option>
 					</select>
 				</div>
 				<div class="form-group">
-					<label class="form-label">Defendant</label>
+					<label class="form-label">{_L("courtCases.defendant")}</label>
 					{#if newCase.defendant_citizenid}
 						<div class="selected-citizen">
 							<span class="citizen-name">{newCase.defendant_name}</span>
@@ -552,13 +553,13 @@
 							<button type="button" class="remove-citizen-btn" onclick={() => { newCase.defendant_citizenid = ""; newCase.defendant_name = ""; }}>x</button>
 						</div>
 					{:else}
-						<button type="button" class="form-input search-citizen-btn" onclick={() => (showDefendantSearch = true)}>Search citizen...</button>
+						<button type="button" class="form-input search-citizen-btn" onclick={() => (showDefendantSearch = true)}>{_L("courtCases.searchCitizen")}</button>
 					{/if}
 				</div>
 				</div>
 			<div class="modal-footer">
-				<button class="back-btn" onclick={() => (showCreateModal = false)}>Cancel</button>
-				<button class="primary-btn" disabled={!newCase.title.trim()} onclick={handleCreateCase}>Create Case</button>
+				<button class="back-btn" onclick={() => (showCreateModal = false)}>{_L("courtCases.cancel")}</button>
+				<button class="primary-btn" disabled={!newCase.title.trim()} onclick={handleCreateCase}>{_L("courtCases.createCase")}</button>
 			</div>
 		</div>
 	</div>
@@ -586,36 +587,36 @@
 <div class="modal-backdrop" onclick={() => (showNewDocModal = false)} role="presentation">
 	<div class="modal" onclick={(e) => e.stopPropagation()} role="dialog">
 		<div class="modal-header">
-			<span class="modal-title">New Legal Document</span>
+			<span class="modal-title">{_L("courtCases.newLegalDocument")}</span>
 			<button class="modal-close" onclick={() => (showNewDocModal = false)}>
 				<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
 			</button>
 		</div>
 		<div class="modal-body">
 			<div class="form-group">
-				<label class="form-label">Title</label>
+				<label class="form-label">{_L("courtCases.title")}</label>
 				<input type="text" class="form-input" bind:value={newDocData.title} />
 			</div>
 			<div class="form-group">
-				<label class="form-label">Type</label>
+				<label class="form-label">{_L("courtCases.type")}</label>
 				<select class="form-select" bind:value={newDocData.type}>
-					<option value="brief">Brief</option>
-					<option value="motion">Motion</option>
-					<option value="ruling">Ruling</option>
-					<option value="opinion">Opinion</option>
-					<option value="plea_deal">Plea Deal</option>
-					<option value="sentencing">Sentencing</option>
-					<option value="other">Other</option>
+					<option value="brief">{_L("courtCases.brief")}</option>
+					<option value="motion">{_L("courtCases.motion")}</option>
+					<option value="ruling">{_L("courtCases.ruling")}</option>
+					<option value="opinion">{_L("courtCases.opinion")}</option>
+					<option value="plea_deal">{_L("courtCases.pleaDeal")}</option>
+					<option value="sentencing">{_L("courtCases.sentencing")}</option>
+					<option value="other">{_L("courtCases.other")}</option>
 				</select>
 			</div>
 			<div class="form-group">
-				<label class="form-label">Content</label>
-				<textarea class="form-textarea" rows="6" placeholder="Document content..." bind:value={newDocData.content}></textarea>
+				<label class="form-label">{_L("courtCases.content")}</label>
+				<textarea class="form-textarea" rows="6" placeholder={_L("courtCases.contentPlaceholder")} bind:value={newDocData.content}></textarea>
 			</div>
 		</div>
 		<div class="modal-footer">
-			<button class="back-btn" onclick={() => (showNewDocModal = false)}>Cancel</button>
-			<button class="primary-btn" disabled={!newDocData.title.trim()} onclick={handleCreateDocument}>Create Document</button>
+			<button class="back-btn" onclick={() => (showNewDocModal = false)}>{_L("courtCases.cancel")}</button>
+			<button class="primary-btn" disabled={!newDocData.title.trim()} onclick={handleCreateDocument}>{_L("courtCases.createDocument")}</button>
 		</div>
 	</div>
 </div>
