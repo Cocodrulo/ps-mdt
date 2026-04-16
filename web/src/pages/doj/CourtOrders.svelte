@@ -8,6 +8,7 @@
 	import type { AuthService } from "../../services/authService.svelte";
 	import type { SearchResult } from "../../interfaces/IReportEditor";
 	import PersonSearchModal from "../../components/report-editor/PersonSearchModal.svelte";
+	import { _L, getLocalizedDate } from "@/utils/localization";
 
 	interface Props {
 		tabService: ReturnType<typeof createTabService>;
@@ -75,13 +76,13 @@
 	}
 
 	const typeOptions: { value: string; label: string }[] = [
-		{ value: "all", label: "All Types" },
-		{ value: "restraining_order", label: "Restraining Order" },
-		{ value: "subpoena", label: "Subpoena" },
-		{ value: "bail_conditions", label: "Bail Conditions" },
-		{ value: "search_warrant", label: "Search Warrant" },
-		{ value: "arrest_warrant", label: "Arrest Warrant" },
-		{ value: "other", label: "Other" },
+		{ value: "all", label: _L("courtOrders.allTypes") },
+		{ value: "restraining_order", label: _L("courtOrders.restrainingOrder") },
+		{ value: "subpoena", label: _L("courtOrders.subpoena") },
+		{ value: "bail_conditions", label: _L("courtOrders.bailConditions") },
+		{ value: "search_warrant", label: _L("courtOrders.searchWarrant") },
+		{ value: "arrest_warrant", label: _L("courtOrders.arrestWarrant") },
+		{ value: "other", label: _L("courtOrders.other") },
 	];
 
 	const statusOptions = ["active", "expired", "revoked", "all"];
@@ -114,11 +115,7 @@
 		if (!value) return "-";
 		const date = new Date(value);
 		if (Number.isNaN(date.getTime())) return "-";
-		return date.toLocaleDateString("en-US", {
-			month: "2-digit",
-			day: "2-digit",
-			year: "numeric",
-		});
+		return getLocalizedDate(date);
 	}
 
 	let allFilteredOrders = $derived.by(() => {
@@ -248,7 +245,7 @@
 		<div class="topbar">
 			<button class="back-btn" onclick={goBack}>
 				<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-				Back to Orders
+				{_L("courtOrders.backToOrders")}
 			</button>
 			<span class="topbar-case-number">{selectedOrder.order_number}</span>
 			<span class="pill {getTypePillClass(selectedOrder.type)}">{formatLabel(selectedOrder.type)}</span>
@@ -259,66 +256,66 @@
 			<div class="detail-layout">
 				<div class="detail-main">
 					<div class="section">
-						<div class="section-title">Order Information</div>
+						<div class="section-title">{_L("courtOrders.orderInformation")}</div>
 						<h3 class="order-title">{selectedOrder.title}</h3>
 						<div class="field-row">
 							<div class="field-group">
-								<span class="field-label">Order Number</span>
+								<span class="field-label">{_L("courtOrders.orderNumber")}</span>
 								<span class="field-value">{selectedOrder.order_number}</span>
 							</div>
 							<div class="field-group">
-								<span class="field-label">Type</span>
+								<span class="field-label">{_L("courtOrders.type")}</span>
 								<span class="pill {getTypePillClass(selectedOrder.type)}">{formatLabel(selectedOrder.type)}</span>
 							</div>
 							<div class="field-group">
-								<span class="field-label">Status</span>
+								<span class="field-label">{_L("courtOrders.status")}</span>
 								<span class="pill {getStatusPillClass(selectedOrder.status)}">{formatLabel(selectedOrder.status)}</span>
 							</div>
 						</div>
 					</div>
 
 					<div class="section">
-						<div class="section-title">Target</div>
+						<div class="section-title">{_L("courtOrders.target")}</div>
 						<div class="field-row">
 							<div class="field-group">
-								<span class="field-label">Name</span>
+								<span class="field-label">{_L("courtOrders.name")}</span>
 								<span class="field-value">{selectedOrder.target_name}</span>
 							</div>
 							<div class="field-group">
-								<span class="field-label">Citizen ID</span>
+								<span class="field-label">{_L("courtOrders.citizenId")}</span>
 								<span class="field-value mono">{selectedOrder.target_citizenid}</span>
 							</div>
 						</div>
 					</div>
 
 					<div class="section">
-						<div class="section-title">Content</div>
+						<div class="section-title">{_L("courtOrders.content")}</div>
 						<p class="summary-text">{selectedOrder.content || "No content."}</p>
 					</div>
 				</div>
 
 				<div class="detail-side">
 					<div class="section">
-						<div class="section-title">Dates</div>
+						<div class="section-title">{_L("courtOrders.dates")}</div>
 						<div class="field-group">
-							<span class="field-label">Effective Date</span>
+							<span class="field-label">{_L("courtOrders.effectiveDate")}</span>
 							<span class="field-value">{formatDateValue(selectedOrder.effective_date)}</span>
 						</div>
 						<div class="field-group">
-							<span class="field-label">Expiry Date</span>
+							<span class="field-label">{_L("courtOrders.expiryDate")}</span>
 							<span class="field-value">{formatDateValue(selectedOrder.expiry_date)}</span>
 						</div>
 						<div class="field-group">
-							<span class="field-label">Issued By</span>
+							<span class="field-label">{_L("courtOrders.issuedBy")}</span>
 							<span class="field-value">{selectedOrder.issued_by || "-"}</span>
 						</div>
 					</div>
 
 					{#if selectedOrder.status === "active"}
 						<div class="section">
-							<div class="section-title">Actions</div>
+							<div class="section-title">{_L("courtOrders.actions")}</div>
 							<button class="danger-btn" onclick={handleRevokeOrder} disabled={isLoading}>
-								Revoke Order
+								{_L("courtOrders.revokeOrder")}
 							</button>
 						</div>
 					{/if}
@@ -329,7 +326,7 @@
 		<!-- LIST VIEW -->
 		<div class="topbar">
 			<div class="search-box">
-				<input type="text" placeholder="Search orders..." bind:value={searchQuery} />
+				<input type="text" placeholder={_L("courtOrders.searchPlaceholder")} bind:value={searchQuery} />
 			</div>
 			<div class="filter-pills">
 				{#each statusOptions as opt}
@@ -345,8 +342,8 @@
 			</select>
 			<div class="topbar-actions">
 				<span class="result-count">{allFilteredOrders.length} order{allFilteredOrders.length !== 1 ? "s" : ""}</span>
-				<button class="action-btn" onclick={loadOrders} disabled={isLoading}>{isLoading ? "Loading..." : "Refresh"}</button>
-				<button class="primary-btn" onclick={() => (showCreateModal = true)}>New Court Order</button>
+				<button class="action-btn" onclick={loadOrders} disabled={isLoading}>{isLoading ? _L("loadingOrders") : _L("refresh")}</button>
+				<button class="primary-btn" onclick={() => (showCreateModal = true)}>{_L("courtOrders.newCourtOrder")}</button>
 			</div>
 		</div>
 
@@ -354,22 +351,22 @@
 			{#if isLoading && orders.length === 0}
 				<div class="center-state">
 					<div class="loading-spinner"></div>
-					<p>Loading court orders...</p>
+					<p>{_L("courtOrders.loadingOrders")}</p>
 				</div>
 			{:else if allFilteredOrders.length === 0}
 				<div class="center-state">
-					<h3>No Court Orders Found</h3>
-					<p>{searchQuery ? "No orders match your search criteria." : "No court orders available."}</p>
+					<h3>{_L("courtOrders.noOrdersFound")}</h3>
+					<p>{searchQuery ? _L("courtOrders.noOrdersMatchSearch") : _L("courtOrders.noOrdersAvailable")}</p>
 				</div>
 			{:else}
 				<div class="table-header">
-					<span>Order #</span>
-					<span>Type</span>
-					<span>Title</span>
-					<span>Target</span>
-					<span>Status</span>
-					<span>Effective</span>
-					<span>Expires</span>
+					<span>{_L("courtOrders.orderNumber")}</span>
+					<span>{_L("courtOrders.type")}</span>
+					<span>{_L("courtOrders.title")}</span>
+					<span>{_L("courtOrders.target")}</span>
+					<span>{_L("courtOrders.status")}</span>
+					<span>{_L("courtOrders.effectiveDate")}</span>
+					<span>{_L("courtOrders.expiryDate")}</span>
 				</div>
 				<div class="table-body">
 					{#each allFilteredOrders as item}
@@ -394,29 +391,29 @@
 	<div class="modal-backdrop" onclick={() => (showCreateModal = false)} role="presentation">
 		<div class="modal" onclick={(e) => e.stopPropagation()} role="dialog">
 			<div class="modal-header">
-				<span class="modal-title">New Court Order</span>
+				<span class="modal-title">{_L("courtOrders.newCourtOrder")}</span>
 				<button class="modal-close" onclick={() => (showCreateModal = false)}>
 					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
 				</button>
 			</div>
 			<div class="modal-body">
 				<div class="form-group">
-					<label class="form-label">Type</label>
+					<label class="form-label">{_L("courtOrders.type")}</label>
 					<select class="form-select" bind:value={newOrder.type}>
-						<option value="restraining_order">Restraining Order</option>
-						<option value="subpoena">Subpoena</option>
-						<option value="bail_conditions">Bail Conditions</option>
-						<option value="search_warrant">Search Warrant</option>
-						<option value="arrest_warrant">Arrest Warrant</option>
-						<option value="other">Other</option>
+						<option value="restraining_order">{_L("courtOrders.restrainingOrder")}</option>
+						<option value="subpoena">{_L("courtOrders.subpoena")}</option>
+						<option value="bail_conditions">{_L("courtOrders.bailConditions")}</option>
+						<option value="search_warrant">{_L("courtOrders.searchWarrant")}</option>
+						<option value="arrest_warrant">{_L("courtOrders.arrestWarrant")}</option>
+						<option value="other">{_L("courtOrders.other")}</option>
 					</select>
 				</div>
 				<div class="form-group">
-					<label class="form-label">Title</label>
-					<input type="text" class="form-input" placeholder="Order title..." bind:value={newOrder.title} />
+					<label class="form-label">{_L("courtOrders.title")}</label>
+					<input type="text" class="form-input" placeholder={_L("courtOrders.titlePlaceholder")} bind:value={newOrder.title} />
 				</div>
 				<div class="form-group">
-					<label class="form-label">Target Citizen</label>
+					<label class="form-label">{_L("courtOrders.targetCitizen")}</label>
 					{#if newOrder.target_citizenid}
 						<div class="selected-citizen">
 							<span class="citizen-name">{newOrder.target_name}</span>
@@ -424,27 +421,27 @@
 							<button type="button" class="remove-citizen-btn" onclick={() => { newOrder.target_citizenid = ""; newOrder.target_name = ""; }}>x</button>
 						</div>
 					{:else}
-						<button type="button" class="form-input search-citizen-btn" onclick={() => (showTargetSearch = true)}>Search citizen...</button>
+						<button type="button" class="form-input search-citizen-btn" onclick={() => (showTargetSearch = true)}>{_L("courtOrders.searchCitizen")}</button>
 					{/if}
 				</div>
 				<div class="form-group">
-					<label class="form-label">Content</label>
-					<textarea class="form-textarea" style="min-height: 100px;" placeholder="Order content..." bind:value={newOrder.content}></textarea>
+					<label class="form-label">{_L("courtOrders.content")}</label>
+					<textarea class="form-textarea" style="min-height: 100px;" placeholder={_L("courtOrders.contentPlaceholder")} bind:value={newOrder.content}></textarea>
 				</div>
 				<div class="form-row">
 					<div class="form-group" style="flex: 1;">
-						<label class="form-label">Effective Date</label>
+						<label class="form-label">{_L("courtOrders.effectiveDate")}</label>
 						<input type="date" class="form-input" bind:value={newOrder.effective_date} />
 					</div>
 					<div class="form-group" style="flex: 1;">
-						<label class="form-label">Expiry Date (optional)</label>
+						<label class="form-label">{_L("courtOrders.expiryDate")}</label>
 						<input type="date" class="form-input" bind:value={newOrder.expiry_date} />
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="back-btn" onclick={() => (showCreateModal = false)}>Cancel</button>
-				<button class="primary-btn" disabled={!newOrder.title.trim()} onclick={handleCreateOrder}>Create Order</button>
+				<button class="back-btn" onclick={() => (showCreateModal = false)}>{_L("cancel")}</button>
+				<button class="primary-btn" disabled={!newOrder.title.trim()} onclick={handleCreateOrder}>{_L("courtOrders.createOrder")}</button>
 			</div>
 		</div>
 	</div>
