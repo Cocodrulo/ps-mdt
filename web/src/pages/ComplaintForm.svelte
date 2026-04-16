@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { _L } from "@/utils/localization";
     import { GetParentResourceName } from "../utils/fivem";
 
     let { show = false, onClose = () => {} }: { show: boolean; onClose: () => void } = $props();
@@ -21,12 +22,12 @@
     let errorMessage = $state("");
 
     const categories = [
-        { value: "misconduct", label: "Misconduct" },
-        { value: "excessive_force", label: "Excessive Force" },
-        { value: "corruption", label: "Corruption" },
-        { value: "negligence", label: "Negligence" },
-        { value: "discrimination", label: "Discrimination" },
-        { value: "other", label: "Other" },
+        { value: "misconduct", label: _L("complaintForm.misconduct") },
+        { value: "excessive_force", label: _L("complaintForm.excessiveForce") },
+        { value: "corruption", label: _L("complaintForm.corruption") },
+        { value: "negligence", label: _L("complaintForm.negligence") },
+        { value: "discrimination", label: _L("complaintForm.discrimination") },
+        { value: "other", label: _L("complaintForm.other") },
     ];
 
     let isFormValid = $derived(
@@ -129,15 +130,15 @@
             </button>
             <div class="success-container">
                 <div class="success-icon">&#x2714;</div>
-                <h2 class="success-title">Complaint Filed Successfully</h2>
-                <p class="success-number">Your complaint number: <strong>{complaintNumber}</strong></p>
-                <p class="success-note">You will be contacted if further information is needed.</p>
+                <h2 class="success-title">{_L("complaintForm.complaintFiledSuccessfully")}</h2>
+                <p class="success-number">{_L("complaintForm.yourComplaintNumber")} <strong>{complaintNumber}</strong></p>
+                <p class="success-note">{_L("complaintForm.youWillBeContacted")}</p>
             </div>
         {:else}
             <!-- Form State -->
             <div class="card-header">
                 <span class="header-icon">&#x1F6E1;</span>
-                <h2 class="header-title">Internal Affairs Complaint</h2>
+                <h2 class="header-title">{_L("complaintForm.internalAffairsComplaint")}</h2>
             </div>
 
             {#if errorMessage}
@@ -147,7 +148,7 @@
             <form class="complaint-form" onsubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
                 <!-- Officer Name -->
                 <div class="form-group">
-                    <label class="form-label" for="officerName">Officer Name <span class="required">*</span></label>
+                    <label class="form-label" for="officerName">{_L("complaintForm.officerName")} <span class="required">*</span></label>
                     <input
                         id="officerName"
                         type="text"
@@ -160,7 +161,7 @@
 
                 <!-- Officer Badge -->
                 <div class="form-group">
-                    <label class="form-label" for="officerBadge">Officer Badge</label>
+                    <label class="form-label" for="officerBadge">{_L("complaintForm.officerBadge")}</label>
                     <input
                         id="officerBadge"
                         type="text"
@@ -172,7 +173,7 @@
 
                 <!-- Category -->
                 <div class="form-group">
-                    <label class="form-label" for="category">Category <span class="required">*</span></label>
+                    <label class="form-label" for="category">{_L("complaintForm.category")} <span class="required">*</span></label>
                     <select id="category" class="form-input form-select" bind:value={category} required>
                         {#each categories as cat}
                             <option value={cat.value}>{cat.label}</option>
@@ -182,7 +183,7 @@
 
                 <!-- Incident Date -->
                 <div class="form-group">
-                    <label class="form-label" for="incidentDate">Incident Date</label>
+                    <label class="form-label" for="incidentDate">{_L("complaintForm.incidentDate")}</label>
                     <input
                         id="incidentDate"
                         type="date"
@@ -193,7 +194,7 @@
 
                 <!-- Location -->
                 <div class="form-group">
-                    <label class="form-label" for="incidentLocation">Location</label>
+                    <label class="form-label" for="incidentLocation">{_L("complaintForm.incidentLocation")}</label>
                     <input
                         id="incidentLocation"
                         type="text"
@@ -205,7 +206,7 @@
 
                 <!-- Description -->
                 <div class="form-group">
-                    <label class="form-label" for="description">Description <span class="required">*</span></label>
+                    <label class="form-label" for="description">{_L("complaintForm.description")} <span class="required">*</span></label>
                     <textarea
                         id="description"
                         class="form-input form-textarea"
@@ -218,7 +219,7 @@
 
                 <!-- Witnesses -->
                 <div class="form-group">
-                    <label class="form-label" for="witnesses">Witnesses</label>
+                    <label class="form-label" for="witnesses">{_L("complaintForm.witnesses")}</label>
                     <textarea
                         id="witnesses"
                         class="form-input form-textarea"
@@ -230,7 +231,7 @@
 
                 <!-- Evidence -->
                 <div class="form-group">
-                    <label class="form-label">Evidence</label>
+                    <label class="form-label">{_L("complaintForm.evidence")}</label>
                     <div class="evidence-input-row">
                         <input
                             type="url"
@@ -239,7 +240,7 @@
                             bind:value={evidenceUrl}
                             onkeydown={(e) => { if (e.key === "Enter") { e.preventDefault(); addEvidence(); } }}
                         />
-                        <button type="button" class="btn-add-evidence" onclick={addEvidence}>Add</button>
+                        <button type="button" class="btn-add-evidence" onclick={addEvidence}>{_L("complaintForm.addEvidence")}</button>
                     </div>
                     {#if evidenceList.length > 0}
                         <ul class="evidence-list">
@@ -263,7 +264,7 @@
                         {submitting ? "Submitting..." : "Submit Complaint"}
                     </button>
                     <button type="button" class="btn-cancel" onclick={handleCancel}>
-                        Cancel
+                        {_L("complaintForm.cancel")}
                     </button>
                 </div>
             </form>
