@@ -1,7 +1,7 @@
 import { DATE_FORMAT_OPTIONS, TIME_FORMAT_OPTIONS } from "@/constants";
 import type { ITranslations, IConfig } from "@/interfaces/ITranslations";
 
-const DEFAULT_LOCALE = "en";
+const DEFAULT_LOCALE = "es";
 
 const {config, translations}: {config: IConfig, translations: ITranslations} = await getTranslations(DEFAULT_LOCALE);
 
