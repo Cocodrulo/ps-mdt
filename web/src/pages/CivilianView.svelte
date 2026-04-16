@@ -3,6 +3,7 @@
 	import { fetchNui } from "../utils/fetchNui";
 	import { NUI_EVENTS } from "../constants/nuiEvents";
 	import type { AuthService } from "../services/authService.svelte";
+	import { _L, getLocalizedCurrency } from "@/utils/localization";
 
 	interface CivilianProfile {
 		citizenid: string;
@@ -111,9 +112,9 @@
 	}
 
 	const TYPE_LABELS: Record<string, string> = {
-		felony: "Felony",
-		misdemeanor: "Misdemeanor",
-		infraction: "Infraction",
+		felony: _L("charges.felony"),
+		misdemeanor: _L("charges.misdemeanor"),
+		infraction: _L("charges.infraction"),
 	};
 
 	const TYPE_COLORS: Record<string, string> = {
@@ -128,14 +129,14 @@
 		<div class="civ-header-left">
 			<span class="material-icons civ-icon">person</span>
 			<span class="civ-title">{playerName}</span>
-			<span class="civ-badge">Civilian Access</span>
+			<span class="civ-badge">{_L("civilianView.civilianAccess")}</span>
 		</div>
 		<div class="civ-tabs">
 			<button class="civ-tab" class:active={activeTab === "profile"} onclick={() => activeTab = "profile"}>
-				<span class="material-icons tab-icon">badge</span> My Profile
+				<span class="material-icons tab-icon">badge</span> {_L("civilianView.myProfile")}
 			</button>
 			<button class="civ-tab" class:active={activeTab === "legislation"} onclick={() => activeTab = "legislation"}>
-				<span class="material-icons tab-icon">gavel</span> Legislation
+				<span class="material-icons tab-icon">gavel</span> {_L("civilianView.legislation")}
 			</button>
 		</div>
 		<button class="close-btn" onclick={closeTerminal}>
@@ -148,12 +149,12 @@
 			{#if loadingProfile}
 				<div class="loading-state">
 					<div class="spinner"></div>
-					<span>Loading profile...</span>
+					<span>{_L("civilianView.loadingProfile")}</span>
 				</div>
 			{:else if !profile}
 				<div class="empty-state">
 					<span class="material-icons">error_outline</span>
-					<span>Could not load your profile</span>
+					<span>{_L("civilianView.couldNotLoadProfile")}</span>
 				</div>
 			{:else}
 				<div class="profile-layout">
@@ -171,29 +172,29 @@
 						</div>
 
 						<div class="info-section">
-							<div class="info-row"><span class="info-label">Gender</span><span class="info-value">{profile.gender}</span></div>
-							<div class="info-row"><span class="info-label">Date of Birth</span><span class="info-value">{profile.dob}</span></div>
-							<div class="info-row"><span class="info-label">Phone</span><span class="info-value">{profile.phone}</span></div>
-							<div class="info-row"><span class="info-label">Fingerprint</span><span class="info-value">{profile.fingerprint || 'N/A'}</span></div>
-							<div class="info-row"><span class="info-label">DNA</span><span class="info-value">{profile.dna || 'N/A'}</span></div>
-							<div class="info-row"><span class="info-label">Arrests</span><span class="info-value">{profile.arrests}</span></div>
+							<div class="info-row"><span class="info-label">{_L("civilianView.gender")}</span><span class="info-value">{profile.gender}</span></div>
+							<div class="info-row"><span class="info-label">{_L("civilianView.dateOfBirth")}</span><span class="info-value">{profile.dob}</span></div>
+							<div class="info-row"><span class="info-label">{_L("civilianView.phone")}</span><span class="info-value">{profile.phone}</span></div>
+							<div class="info-row"><span class="info-label">{_L("civilianView.fingerprint")}</span><span class="info-value">{profile.fingerprint || 'N/A'}</span></div>
+							<div class="info-row"><span class="info-label">{_L("civilianView.dna")}</span><span class="info-value">{profile.dna || 'N/A'}</span></div>
+							<div class="info-row"><span class="info-label">{_L("civilianView.arrests")}</span><span class="info-value">{profile.arrests}</span></div>
 						</div>
 
 						<div class="info-section">
-							<h3 class="section-title">Licenses</h3>
+							<h3 class="section-title">{_L("civilianView.licenses")}</h3>
 							<div class="info-row">
-								<span class="info-label">Driver</span>
+								<span class="info-label">{_L("civilianView.driver")}</span>
 								<span class="info-value license" class:active={profile.licenses?.driver}>{profile.licenses?.driver ? 'Active' : 'None'}</span>
 							</div>
 							<div class="info-row">
-								<span class="info-label">Weapon</span>
+								<span class="info-label">{_L("civilianView.weapon")}</span>
 								<span class="info-value license" class:active={profile.licenses?.weapon}>{profile.licenses?.weapon ? 'Active' : 'None'}</span>
 							</div>
 							{#if profile.customLicenses && profile.customLicenses.length > 0}
 								{#each profile.customLicenses as lic}
 									<div class="info-row">
 										<span class="info-label">{lic.name}</span>
-										<span class="info-value license" class:active={lic.active}>{lic.active ? 'Active' : 'None'}</span>
+										<span class="info-value license" class:active={lic.active}>{lic.active ? _L('civilianView.active') : _L('civilianView.none')}</span>
 									</div>
 								{/each}
 							{/if}
@@ -203,11 +204,11 @@
 					<div class="profile-main">
 						{#if profile.activeWarrants && profile.activeWarrants.length > 0}
 							<div class="section-card danger">
-								<h3 class="section-header"><span class="material-icons">warning</span> Active Warrants</h3>
+								<h3 class="section-header"><span class="material-icons">warning</span> {_L("civilianView.warrants")}</h3>
 								{#each profile.activeWarrants as warrant}
 									<div class="list-item">
-										<span class="item-id">Report #{warrant.reportid}</span>
-										<span class="item-name">Expires: {new Date(warrant.expirydate).toLocaleDateString()}</span>
+										<span class="item-id">{_L("civilianView.report")} #{warrant.reportid}</span>
+										<span class="item-name">{_L("civilianView.expires")} {new Date(warrant.expirydate).toLocaleDateString()}</span>
 									</div>
 								{/each}
 							</div>
@@ -215,11 +216,11 @@
 
 						{#if profile.activeBolos && profile.activeBolos.length > 0}
 							<div class="section-card danger">
-								<h3 class="section-header"><span class="material-icons">notification_important</span> Active BOLOs</h3>
+								<h3 class="section-header"><span class="material-icons">notification_important</span> {_L("civilianView.bolos")}</h3>
 								{#each profile.activeBolos as bolo}
 									<div class="list-item">
 										<span class="item-id">#{bolo.reportId}</span>
-										<span class="item-name">{bolo.notes || 'No details'}</span>
+										<span class="item-name">{bolo.notes || _L('civilianView.noDetails')}</span>
 										<span class="item-tag">{bolo.type}</span>
 									</div>
 								{/each}
@@ -228,7 +229,7 @@
 
 						{#if profile.linkedReports && profile.linkedReports.length > 0}
 							<div class="section-card">
-								<h3 class="section-header"><span class="material-icons">description</span> Linked Reports</h3>
+								<h3 class="section-header"><span class="material-icons">description</span> {_L("civilianView.reports")}</h3>
 								{#each profile.linkedReports as report}
 									<div class="list-item">
 										<span class="item-id">#{report.id}</span>
@@ -241,7 +242,7 @@
 
 						{#if profile.ownedVehicles && profile.ownedVehicles.length > 0}
 							<div class="section-card">
-								<h3 class="section-header"><span class="material-icons">directions_car</span> Vehicles</h3>
+								<h3 class="section-header"><span class="material-icons">directions_car</span> {_L("civilianView.vehicles")}</h3>
 								{#each profile.ownedVehicles as vehicle}
 									<div class="list-item">
 										<span class="item-id">{vehicle.plate}</span>
@@ -253,7 +254,7 @@
 
 						{#if profile.weapons && profile.weapons.length > 0}
 							<div class="section-card">
-								<h3 class="section-header"><span class="material-icons">security</span> Registered Weapons</h3>
+								<h3 class="section-header"><span class="material-icons">security</span> {_L("civilianView.weapons")}</h3>
 								{#each profile.weapons as weapon}
 									<div class="list-item">
 										<span class="item-id">{weapon.serial}</span>
@@ -266,7 +267,7 @@
 						{#if !profile.activeWarrants?.length && !profile.activeBolos?.length && !profile.linkedReports?.length && !profile.ownedVehicles?.length && !profile.weapons?.length}
 							<div class="empty-state">
 								<span class="material-icons">check_circle</span>
-								<span>No records on file</span>
+								<span>{_L("civilianView.noRecords")}</span>
 							</div>
 						{/if}
 					</div>
@@ -283,7 +284,7 @@
 				{#if loadingCharges}
 					<div class="loading-state">
 						<div class="spinner"></div>
-						<span>Loading penal codes...</span>
+						<span>{_L("civilianView.loadingCharges")}</span>
 					</div>
 				{:else}
 					{#each Object.entries(chargesByType()) as [type, typeCharges]}
@@ -294,10 +295,10 @@
 								</h3>
 								<div class="charge-table">
 									<div class="charge-header-row">
-										<span class="ch-code">Code</span>
-										<span class="ch-label">Charge</span>
-										<span class="ch-fine">Fine</span>
-										<span class="ch-time">Jail</span>
+										<span class="ch-code">{_L("civilianView.code")}</span>
+										<span class="ch-label">{_L("civilianView.charge")}</span>
+										<span class="ch-fine">{_L("civilianView.fine")}</span>
+										<span class="ch-time">{_L("civilianView.time")}</span>
 									</div>
 									{#each typeCharges as charge}
 										<div class="charge-row">
@@ -308,7 +309,7 @@
 													<span class="ch-desc">{charge.description}</span>
 												{/if}
 											</span>
-											<span class="ch-fine">${charge.fine.toLocaleString()}</span>
+											<span class="ch-fine">{getLocalizedCurrency(charge.fine)}</span>
 											<span class="ch-time">{charge.time} mo</span>
 										</div>
 									{/each}
@@ -319,7 +320,7 @@
 					{#if filteredCharges().length === 0}
 						<div class="empty-state">
 							<span class="material-icons">search_off</span>
-							<span>No charges found</span>
+							<span>{_L("civilianView.noCharges")}</span>
 						</div>
 					{/if}
 				{/if}
