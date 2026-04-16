@@ -12,6 +12,7 @@
 	import { isEnvBrowser } from "../utils/misc";
 	import { NUI_EVENTS } from "../constants/nuiEvents";
 	import { globalNotifications } from "../services/notificationService.svelte";
+	import { _L } from "@/utils/localization";
 
 	let mapContainer: HTMLDivElement | null = null;
 	let map: L.Map | null = null;
@@ -253,41 +254,41 @@
 <div class="map-page">
 	<div class="map-wrapper">
 		<div class="map-controls">
-			<span class="controls-header">Tracking</span>
+			<span class="controls-header">{_L('map.tracking')}</span>
 
 			<div class="controls-group">
 				<label class="control-toggle">
 					<input type="checkbox" bind:checked={showOfficers} />
-					<span class="toggle-label">Officers</span>
+					<span class="toggle-label">{_L('map.officers')}</span>
 				</label>
 				<label class="control-toggle">
 					<input type="checkbox" bind:checked={showVehicles} />
-					<span class="toggle-label">Vehicles</span>
+					<span class="toggle-label">{_L('map.vehicles')}</span>
 				</label>
 				<label class="control-toggle">
 					<input type="checkbox" bind:checked={showBodycams} />
-					<span class="toggle-label">Bodycams</span>
+					<span class="toggle-label">{_L('map.bodycams')}</span>
 				</label>
 			</div>
 
 			<div class="controls-divider"></div>
 
 			<div class="controls-group">
-				<span class="controls-label">Style</span>
+				<span class="controls-label">{_L('map.style')}</span>
 				<div class="segment">
 					<button
 						class:active={iconStyle === "dot"}
 						onclick={() => (iconStyle = "dot")}
 						type="button"
 					>
-						Dots
+						{_L('map.dots')}
 					</button>
 					<button
 						class:active={iconStyle === "badge"}
 						onclick={() => (iconStyle = "badge")}
 						type="button"
 					>
-						Badges
+						{_L('map.badges')}
 					</button>
 				</div>
 			</div>
@@ -295,9 +296,9 @@
 			<div class="controls-divider"></div>
 
 			<div class="legend">
-				<span class="legend-item officer">Officer</span>
-				<span class="legend-item vehicle">Vehicle</span>
-				<span class="legend-item bodycam">Bodycam</span>
+				<span class="legend-item officer">{_L('map.officer')}</span>
+				<span class="legend-item vehicle">{_L('map.vehicle')}</span>
+				<span class="legend-item bodycam">{_L('map.bodycam')}</span>
 			</div>
 		</div>
 		<div
