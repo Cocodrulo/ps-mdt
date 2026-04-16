@@ -10,6 +10,7 @@
 	import ChargeType from "../components/ChargeType.svelte";
 
 	import type { Charge, GroupedCharges } from "./../interfaces/ICharges";
+	import { _L } from "@/utils/localization";
 
 	let { authService }: { authService?: AuthService } = $props();
 
@@ -181,18 +182,18 @@
 	<div class="topbar">
 		<input
 			type="text"
-			placeholder="Search charges..."
+			placeholder={_L("chargesPage.searchCharges")}
 			bind:value={searchQuery}
 			class="search-input"
 		/>
 		<div class="topbar-right">
-			<span class="result-count">{filteredCharges.length} charge{filteredCharges.length !== 1 ? "s" : ""}</span>
+			<span class="result-count">{filteredCharges.length} {_L("chargesPage.charges")}</span>
 			<button
 				class="btn-secondary"
 				onclick={loadCharges}
 				disabled={isLoading}
 			>
-				{isLoading ? "Loading..." : "Refresh"}
+				{isLoading ? _L("chargesPage.loading") : _L("chargesPage.refresh")}
 			</button>
 			{#if canEdit}
 				<button
@@ -201,7 +202,7 @@
 					onclick={toggleEdit}
 				>
 					<span class="material-icons btn-edit-icon">{isEditing ? "check" : "edit"}</span>
-					{isEditing ? "Done" : "Edit Charges"}
+					{isEditing ? _L("chargesPage.done") : _L("chargesPage.editCharges")}
 				</button>
 			{/if}
 		</div>
@@ -211,15 +212,15 @@
 		{#if isLoading && charges.length === 0}
 			<div class="empty-state">
 				<div class="loading-spinner"></div>
-				<p>Loading charges...</p>
+				<p>{_L("chargesPage.loading")}</p>
 			</div>
 		{:else if filteredCharges.length === 0}
 			<div class="empty-state">
-				<p class="empty-title">No Charges Found</p>
+				<p class="empty-title">{_L("chargesPage.noChargesFound")}</p>
 				<p class="empty-sub">
 					{searchQuery
-						? "No charges match your search criteria."
-						: "No charges have been loaded yet."}
+						? _L("chargesPage.noChargesMatch")
+						: _L("chargesPage.noChargesLoaded")}
 				</p>
 			</div>
 		{:else}
