@@ -261,7 +261,7 @@
                         class="btn-submit"
                         disabled={!isFormValid || submitting}
                     >
-                        {submitting ? "Submitting..." : "Submit Complaint"}
+                        {submitting ? _L("complaintForm.submitting") : _L("complaintForm.submitComplaint")}
                     </button>
                     <button type="button" class="btn-cancel" onclick={handleCancel}>
                         {_L("complaintForm.cancel")}
