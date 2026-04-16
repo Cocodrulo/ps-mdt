@@ -18,6 +18,7 @@
 		CasePriority,
 	} from "../interfaces/ICase";
 	import { globalNotifications } from "../services/notificationService.svelte";
+	import { _L, getLocalizedDate, getLocalizedTime } from "@/utils/localization";
 
 	let { tabService }: { tabService?: ReturnType<typeof createTabService> } = $props();
 
@@ -294,22 +295,14 @@
 		if (!value) return "-";
 		const date = new Date(value);
 		if (Number.isNaN(date.getTime())) return "-";
-		return date.toLocaleDateString("en-US", {
-			month: "2-digit",
-			day: "2-digit",
-			year: "numeric",
-		});
+		return getLocalizedDate(date);
 	}
 
 	function formatTimeValue(value: string | number | undefined): string {
 		if (!value) return "-";
 		const date = new Date(value);
 		if (Number.isNaN(date.getTime())) return "-";
-		return date.toLocaleTimeString("en-US", {
-			hour: "2-digit",
-			minute: "2-digit",
-			hour12: false,
-		});
+		return getLocalizedTime(date);
 	}
 
 	async function handleOfficerSearch(query: string) {
@@ -419,22 +412,22 @@
 	let transferCitizenId = $state("");
 	let transferNotes = $state("");
 	const ACTION_LABELS: Record<string, string> = {
-		case_created: "Created case",
-		case_updated: "Updated case",
-		case_deleted: "Deleted case",
-		case_officer_assigned: "Assigned officer",
-		case_officer_removed: "Removed officer",
-		case_attachment_added: "Added attachment",
-		case_attachment_uploaded: "Uploaded attachment",
-		case_attachment_removed: "Removed attachment",
-		evidence_added: "Added evidence",
-		evidence_updated: "Updated evidence",
-		evidence_deleted: "Deleted evidence",
-		evidence_transferred: "Transferred evidence",
-		evidence_image_added: "Added evidence image",
-		evidence_image_removed: "Removed evidence image",
-		evidence_linked_case: "Linked evidence to case",
-		case_created_from_evidence: "Created case from evidence",
+		case_created: _L("casesPage.caseCreated"),
+		case_updated: _L("casesPage.caseUpdated"),
+		case_deleted: _L("casesPage.caseDeleted"),
+		case_officer_assigned: _L("casesPage.caseOfficerAssigned"),
+		case_officer_removed: _L("casesPage.caseOfficerRemoved"),
+		case_attachment_added: _L("casesPage.caseAttachmentAdded"),
+		case_attachment_uploaded: _L("casesPage.caseAttachmentUploaded"),
+		case_attachment_removed: _L("casesPage.caseAttachmentRemoved"),
+		evidence_added: _L("casesPage.evidenceAdded"),
+		evidence_updated: _L("casesPage.evidenceUpdated"),
+		evidence_deleted: _L("casesPage.evidenceDeleted"),
+		evidence_transferred: _L("casesPage.evidenceTransferred"),
+		evidence_image_added: _L("casesPage.evidenceImageAdded"),
+		evidence_image_removed: _L("casesPage.evidenceImageRemoved"),
+		evidence_linked_case: _L("casesPage.evidenceLinkedCase"),
+		case_created_from_evidence: _L("casesPage.caseCreatedFromEvidence"),
 	};
 
 	function formatAuditAction(action: string): string {
@@ -596,10 +589,10 @@
 		<div class="topbar">
 			<button class="back-btn" onclick={closeCaseView}>
 				<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-				Back
+				{_L("casesPage.back")}
 			</button>
 			{#if showCreatePanel}
-				<span class="topbar-title">New Case</span>
+				<span class="topbar-title">{_L("casesPage.newCase")}</span>
 			{:else if selectedCase}
 				<span class="topbar-case-number">{selectedCase.case.case_number}</span>
 				<span class="topbar-title">{selectedCase.case.title}</span>
@@ -614,11 +607,11 @@
 				<div class="create-layout">
 					<div class="create-main">
 						<div class="section">
-							<div class="section-title">Case Details</div>
-							<input type="text" placeholder="Case Title" bind:value={newCase.title} class="form-input title-input" />
+							<div class="section-title">{_L("casesPage.caseDetails")}</div>
+							<input type="text" placeholder="{_L("casesPage.caseTitle")}" bind:value={newCase.title} class="form-input title-input" />
 							<div class="field-row">
 								<div class="field-group">
-									<span class="field-label">Status</span>
+									<span class="field-label">{_L("casesPage.status")}</span>
 									<select bind:value={newCase.status} class="form-select">
 										{#each statusOptions as option}
 											<option value={option}>{formatStatus(option)}</option>
@@ -626,7 +619,7 @@
 									</select>
 								</div>
 								<div class="field-group">
-									<span class="field-label">Priority</span>
+									<span class="field-label">{_L("casesPage.priority")}</span>
 									<select bind:value={newCase.priority} class="form-select">
 										{#each priorityOptions as option}
 											<option value={option}>{formatStatus(option)}</option>
@@ -634,46 +627,46 @@
 									</select>
 								</div>
 								<div class="field-group">
-									<span class="field-label">Department</span>
+									<span class="field-label">{_L("casesPage.department")}</span>
 									<input class="form-input" bind:value={newCase.department} placeholder="Optional" />
 								</div>
 							</div>
 							<div class="field-group" style="margin-top:12px;">
-								<span class="field-label">Summary</span>
+								<span class="field-label">{_L("casesPage.summary")}</span>
 								<textarea rows="8" bind:value={newCase.summary} placeholder="Case summary and initial notes..." class="form-textarea"></textarea>
 							</div>
 						</div>
 					</div>
 					<div class="create-side">
 						<div class="section">
-							<div class="section-title">Checklist</div>
+							<div class="section-title">{_L("casesPage.checklist")}</div>
 							<ul class="checklist">
 								<li class:complete={checklist.primaryOfficer}>
 									<span class="checkmark"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
-									Assign primary officer
+									{_L("casesPage.assignPrimaryOfficer")}
 								</li>
 								<li class:complete={checklist.attachments}>
 									<span class="checkmark"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
-									Attach evidence
+									{_L("casesPage.attachEvidence")}
 								</li>
 								<li class:complete={checklist.reports}>
 									<span class="checkmark"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
-									Attach reports
+									{_L("casesPage.attachReports")}
 								</li>
 								<li class:complete={checklist.statusPriority}>
 									<span class="checkmark"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
-									Set priority and status
+									{_L("casesPage.setPriorityAndStatus")}
 								</li>
 							</ul>
 						</div>
 						<div class="section">
-							<div class="section-title">Next Actions</div>
-							<p class="muted-text">After creation, open the case to manage officers, evidence, attachments, and audit logs.</p>
+							<div class="section-title">{_L("casesPage.nextActions")}</div>
+							<p class="muted-text">{_L("casesPage.nextActionsDesc")}</p>
 							{#if checklist.primaryOfficer && checklist.attachments && checklist.reports && checklist.statusPriority}
-								<p class="muted-text">All checklist items complete.</p>
+								<p class="muted-text">{_L("casesPage.allChecklistItemsComplete")}</p>
 							{/if}
 						</div>
-						<button class="primary-btn create-btn" onclick={handleCreateCase} disabled={isCreateDisabled} type="button">Create Case</button>
+						<button class="primary-btn create-btn" onclick={handleCreateCase} disabled={isCreateDisabled} type="button">{_L("casesPage.createCase")}</button>
 					</div>
 				</div>
 			</div>
@@ -683,11 +676,11 @@
 			<div class="detail-scroll">
 				<!-- Info Section -->
 				<div class="section">
-					<div class="section-title">Case Information</div>
-					<p class="summary-text">{selectedCase.case.summary || "No summary"}</p>
+					<div class="section-title">{_L("casesPage.caseInformation")}</div>
+					<p class="summary-text">{selectedCase.case.summary || _L("casesPage.noSummary")}</p>
 					<div class="field-row">
 						<div class="field-group">
-							<span class="field-label">Status</span>
+							<span class="field-label">{_L("casesPage.status")}</span>
 							<select class="form-select" value={selectedCase.case.status} onchange={(event) => handleUpdateCase({ status: (event.target as HTMLSelectElement).value })}>
 								{#each statusOptions as option}
 									<option value={option}>{formatStatus(option)}</option>
@@ -695,7 +688,7 @@
 							</select>
 						</div>
 						<div class="field-group">
-							<span class="field-label">Priority</span>
+							<span class="field-label">{_L("casesPage.priority")}</span>
 							<select class="form-select" value={selectedCase.case.priority} onchange={(event) => handleUpdateCase({ priority: (event.target as HTMLSelectElement).value })}>
 								{#each priorityOptions as option}
 									<option value={option}>{formatStatus(option)}</option>
@@ -703,7 +696,7 @@
 							</select>
 						</div>
 						<div class="field-group">
-							<span class="field-label">Department</span>
+							<span class="field-label">{_L("casesPage.department")}</span>
 							<input class="form-input" value={selectedCase.case.assigned_department || ""} onchange={(event) => handleUpdateCase({ department: (event.target as HTMLInputElement).value })} />
 						</div>
 						<div class="field-group field-group-actions">
@@ -718,21 +711,21 @@
 				<!-- Officers Section -->
 				<div class="section">
 					<div class="section-header">
-						<div class="section-title" style="margin-bottom:0;">Officers</div>
+						<div class="section-title" style="margin-bottom:0;">{_L("casesPage.officers")}</div>
 						<div class="inline-controls">
 							<select bind:value={officerRole} class="form-select-sm">
-								<option value="primary">Primary</option>
-								<option value="assisting">Assisting</option>
-								<option value="supervisor">Supervisor</option>
+								<option value="primary">{_L("casesPage.primary")}</option>
+								<option value="assisting">{_L("casesPage.assisting")}</option>
+								<option value="supervisor">{_L("casesPage.supervisor")}</option>
 							</select>
 							<button class="action-btn" onclick={() => (showOfficerSearch = true)}>
 								<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-								Add Officer
+								{_L("casesPage.addOfficer")}
 							</button>
 						</div>
 					</div>
 					{#if selectedCase.officers.length === 0}
-						<p class="muted-text">No officers assigned.</p>
+						<p class="muted-text">{_L("casesPage.noOfficersAssigned")}</p>
 					{:else}
 						<div class="chip-list">
 							{#each selectedCase.officers as officer}
@@ -760,12 +753,12 @@
 				<!-- Linked Reports Section -->
 				<div class="section">
 					<div class="section-header">
-						<div class="section-title" style="margin-bottom:0;">Linked Reports</div>
+						<div class="section-title" style="margin-bottom:0;">{_L("casesPage.linkedReports")}</div>
 						<div class="inline-controls">
 							<input class="form-input-sm" placeholder="Report ID" bind:value={reportLinkId} />
 							<button class="action-btn" onclick={handleLinkReport}>
 								<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-								Link
+								{_L("casesPage.link")}
 							</button>
 						</div>
 					</div>
@@ -785,17 +778,17 @@
 							{/each}
 						</div>
 					{:else}
-						<p class="muted-text">No linked reports.</p>
+						<p class="muted-text">{_L("casesPage.noLinkedReports")}</p>
 					{/if}
 				</div>
 
 				<!-- Notes Section -->
 				<div class="section">
-					<div class="section-title">Notes</div>
+					<div class="section-title">{_L("casesPage.notes")}</div>
 					<div class="note-input-row">
 						<textarea class="form-textarea" placeholder="Add a note..." bind:value={noteContent} rows="2"></textarea>
 						<button class="action-btn" disabled={!noteContent.trim() || noteSubmitting} onclick={handleAddNote}>
-							{noteSubmitting ? "Saving..." : "Add Note"}
+							{noteSubmitting ? _L("casesPage.saving") : _L("casesPage.addNote")}
 						</button>
 					</div>
 					{#if selectedCase.notes && selectedCase.notes.length > 0}
@@ -814,22 +807,22 @@
 							{/each}
 						</div>
 					{:else}
-						<p class="muted-text">No notes yet.</p>
+						<p class="muted-text">{_L("casesPage.noNotes")}</p>
 					{/if}
 				</div>
 
 				<!-- Attachments Section -->
 				<div class="section">
-					<div class="section-title">Attachments</div>
+					<div class="section-title">{_L("casesPage.attachments")}</div>
 					<div class="attachment-form">
 						<select bind:value={attachmentDraft.type} class="form-select">
-							<option value="photo">Photo</option>
-							<option value="document">Document</option>
-							<option value="other">Other</option>
+							<option value="photo">{_L("casesPage.photo")}</option>
+							<option value="document">{_L("casesPage.document")}</option>
+							<option value="other">{_L("casesPage.other")}</option>
 						</select>
 						<input class="form-input" placeholder="URL" bind:value={attachmentDraft.url} />
 						<input class="form-input" placeholder="Label" bind:value={attachmentDraft.label} />
-						<button class="action-btn" onclick={handleAddAttachment}>Add</button>
+						<button class="action-btn" onclick={handleAddAttachment}>{_L("casesPage.add")}</button>
 					</div>
 					<div class="upload-row">
 						<input type="file" accept=".jpg,.jpeg,.png,.webp,.pdf" class="file-input" onchange={(event) => {
@@ -839,13 +832,13 @@
 						{#if attachmentFile}
 							<span class="muted-text">{attachmentFile.name} ({formatBytes(attachmentFile.size)})</span>
 						{/if}
-						<button class="primary-btn" onclick={handleUploadAttachment}>Upload</button>
+						<button class="primary-btn" onclick={handleUploadAttachment}>{_L("casesPage.upload")}</button>
 					</div>
 					{#if attachmentError}
 						<p class="error-text">{attachmentError}</p>
 					{/if}
 					{#if selectedCase.attachments.length === 0}
-						<p class="muted-text">No attachments yet.</p>
+						<p class="muted-text">{_L("casesPage.noAttachments")}</p>
 					{:else}
 						<div class="item-list">
 							{#each selectedCase.attachments as attachment}
@@ -865,45 +858,45 @@
 
 				<!-- Evidence Section -->
 				<div class="section">
-					<div class="section-title">Evidence</div>
+					<div class="section-title">{_L("casesPage.evidence")}</div>
 					<div class="evidence-form-grid">
 						<div class="field-group">
-							<span class="field-label">Title</span>
+							<span class="field-label">{_L("casesPage.title")}</span>
 							<input class="form-input" bind:value={evidenceDraft.title} />
 						</div>
 						<div class="field-group">
-							<span class="field-label">Type</span>
+							<span class="field-label">{_L("casesPage.type")}</span>
 							<input class="form-input" bind:value={evidenceDraft.type} />
 						</div>
 						<div class="field-group">
-							<span class="field-label">Serial</span>
+							<span class="field-label">{_L("casesPage.serial")}</span>
 							<input class="form-input" bind:value={evidenceDraft.serial} />
 						</div>
 						<div class="field-group">
-							<span class="field-label">Location</span>
+							<span class="field-label">{_L("casesPage.location")}</span>
 							<input class="form-input" bind:value={evidenceDraft.location} />
 						</div>
 						<div class="field-group">
-							<span class="field-label">Stash ID</span>
+							<span class="field-label">{_L("casesPage.stashId")}</span>
 							<input class="form-input" bind:value={evidenceDraft.stashId} />
 						</div>
 						<div class="field-group">
-							<span class="field-label">Notes</span>
+							<span class="field-label">{_L("casesPage.notes")}</span>
 							<textarea rows="2" class="form-textarea" bind:value={evidenceDraft.notes}></textarea>
 						</div>
 					</div>
 					<div class="evidence-actions-row">
 						<label class="checkbox-label">
 							<input type="checkbox" bind:checked={evidenceDraft.stored} />
-							Stored
+							{_L("casesPage.stored")}
 						</label>
-						<button class="primary-btn" onclick={handleAddEvidence}>Add Evidence</button>
+						<button class="primary-btn" onclick={handleAddEvidence}>{_L("casesPage.addEvidence")}</button>
 					</div>
 					{#if evidenceError}
 						<p class="error-text">{evidenceError}</p>
 					{/if}
 					{#if selectedCase.evidence.length === 0}
-						<p class="muted-text">No evidence logged.</p>
+						<p class="muted-text">{_L("casesPage.noEvidence")}</p>
 					{:else}
 						<div class="item-list">
 							{#each pagedEvidence as item}
@@ -914,14 +907,14 @@
 										<span>{item.serial || ""}</span>
 								</button>
 								<!-- svelte-ignore a11y_click_events_have_key_events -->
-								<span class="nav-link nav-link-sm" role="button" tabindex="-1" onclick={() => navigateTo("Evidence")}>View in Evidence</span>
+								<span class="nav-link nav-link-sm" role="button" tabindex="-1" onclick={() => navigateTo("Evidence")}>{_L("casesPage.viewInEvidence")}</span>
 									<div class="evidence-actions">
 										<button class="action-btn" onclick={() => handleUpdateEvidence(item.id, { stored: !item.stored })}>
 											{item.stored ? "Unstore" : "Store"}
 										</button>
 										<button class="remove-btn" onclick={() => handleDeleteEvidence(item.id)}>
 											<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-											Remove
+											{_L("casesPage.remove")}
 										</button>
 									</div>
 								</div>
@@ -937,8 +930,8 @@
 										evidenceTotal = response.data.total || 0;
 									}
 								}
-							}}>Prev</button>
-							<span class="page-info">Page {evidencePage} / {evidenceTotalPages()}</span>
+							}}>{_L("casesPage.prev")}</button>
+							<span class="page-info">{_L("casesPage.page")} {evidencePage} / {evidenceTotalPages()}</span>
 							<button class="page-btn" disabled={evidencePage >= evidenceTotalPages()} onclick={async () => {
 								evidencePage = Math.min(evidenceTotalPages(), evidencePage + 1);
 								if (selectedCase) {
@@ -948,7 +941,7 @@
 										evidenceTotal = response.data.total || 0;
 									}
 								}
-							}}>Next</button>
+							}}>{_L("casesPage.next")}</button>
 						</div>
 					{/if}
 				</div>
@@ -956,15 +949,15 @@
 				<!-- Evidence Custody (when evidence selected) -->
 				{#if selectedEvidenceId}
 					<div class="section">
-						<div class="section-title">Evidence Custody</div>
+						<div class="section-title">{_L("casesPage.evidenceCustody")}</div>
 						<div class="transfer-row">
-							<input class="form-input" placeholder="Transfer to Citizen ID" bind:value={transferCitizenId} />
-							<input class="form-input" placeholder="Transfer notes" bind:value={transferNotes} />
+							<input class="form-input" placeholder="{_L("casesPage.transferToCitizenId")}" bind:value={transferCitizenId} />
+							<input class="form-input" placeholder="{_L("casesPage.transferNotes")}" bind:value={transferNotes} />
 							<button class="action-btn" onclick={() => {
 								handleTransferEvidence(transferCitizenId, transferNotes);
 								transferCitizenId = "";
 								transferNotes = "";
-							}}>Transfer</button>
+							}}>{_L("casesPage.transfer")}</button>
 						</div>
 						<div class="upload-row">
 							<input type="file" accept=".jpg,.jpeg,.png,.webp" class="file-input" onchange={(event) => {
@@ -981,7 +974,7 @@
 										{#each item.images as image}
 											<div class="list-item">
 												<div class="list-item-info">
-													<strong>{image.label || "Evidence Image"}</strong>
+													<strong>{image.label || _L("casesPage.evidenceImage")}</strong>
 													<span>{image.url}</span>
 												</div>
 												<button class="remove-btn" onclick={() => handleRemoveEvidenceImage(image.id)}>
@@ -994,7 +987,7 @@
 							{/each}
 						{/if}
 						{#if evidenceCustody.length === 0}
-							<p class="muted-text">No custody updates yet.</p>
+							<p class="muted-text">{_L("casesPage.noCustodyUpdates")}</p>
 						{:else}
 							<div class="custody-list">
 								{#each evidenceCustody as entry}
@@ -1011,9 +1004,9 @@
 
 				<!-- Audit Log Section -->
 				<div class="section">
-					<div class="section-title">Audit Log</div>
+					<div class="section-title">{_L("casesPage.auditLog")}</div>
 					{#if auditLogs.length === 0}
-						<p class="muted-text">No audit entries found.</p>
+						<p class="muted-text">{_L("casesPage.noAuditEntries")}</p>
 					{:else}
 						<div class="audit-list">
 							{#each pagedAuditLogs as entry}
@@ -1058,8 +1051,8 @@
 
 		{:else}
 			<div class="section empty-detail">
-				<h3>Select a case to view details</h3>
-				<p>Use the list to open a case or create a new one.</p>
+				<h3>{_L("casesPage.selectCaseToViewDetails")}</h3>
+				<p>{_L("casesPage.useTheListToOpenACaseOrCreateANewOne")}</p>
 			</div>
 		{/if}
 
@@ -1068,16 +1061,16 @@
 		<div class="topbar">
 			<div class="search-box">
 				<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-				<input type="text" placeholder="Search cases..." bind:value={searchQuery} />
+				<input type="text" placeholder="{_L("casesPage.searchCases")}" bind:value={searchQuery} />
 			</div>
 			<select class="form-select-sm" bind:value={filters.status} onchange={loadCases}>
-				<option value="">All Status</option>
+				<option value="">{_L("casesPage.allStatus")}</option>
 				{#each statusOptions as option}
 					<option value={option}>{formatStatus(option)}</option>
 				{/each}
 			</select>
 			<select class="form-select-sm" bind:value={filters.priority} onchange={loadCases}>
-				<option value="">All Priority</option>
+				<option value="">{_L("casesPage.allPriority")}</option>
 				{#each priorityOptions as option}
 					<option value={option}>{formatStatus(option)}</option>
 				{/each}
@@ -1085,11 +1078,11 @@
 			<div style="flex:1;"></div>
 			<button class="action-btn" onclick={openCreatePanel}>
 				<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-				New Case
+				{_L("casesPage.newCase")}
 			</button>
 			<button class="back-btn" onclick={loadCases} disabled={isLoading}>
 				<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-				Refresh
+				{_L("casesPage.refresh")}
 			</button>
 		</div>
 
@@ -1097,28 +1090,28 @@
 			{#if isLoading && cases.length === 0}
 				<div class="center-state">
 					<div class="loading-spinner"></div>
-					<p>Loading cases...</p>
+					<p>{_L("casesPage.loadingCases")}</p>
 				</div>
 			{:else if filteredCaseList.length === 0}
 				<div class="center-state">
 					<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-					<h3>No Cases Found</h3>
+					<h3>{_L("casesPage.noCasesFound")}</h3>
 					<p>{searchQuery ? "No cases match your search criteria." : "No cases have been created yet."}</p>
 					{#if !searchQuery}
-						<button class="action-btn" onclick={openCreatePanel}>Create First Case</button>
+						<button class="action-btn" onclick={openCreatePanel}>{_L("casesPage.createFirstCase")}</button>
 					{/if}
 				</div>
 			{:else}
 				<!-- Table Header -->
 				<div class="table-header">
-					<span class="col-title">Title</span>
-					<span class="col-case">Case #</span>
-					<span class="col-status">Status</span>
-					<span class="col-priority">Priority</span>
-					<span class="col-dept">Department</span>
-					<span class="col-officer">Primary Officer</span>
-					<span class="col-date">Created</span>
-					<span class="col-date">Updated</span>
+					<span class="col-title">{_L("casesPage.title")}</span>
+					<span class="col-case">{_L("casesPage.caseNumber")}</span>
+					<span class="col-status">{_L("casesPage.status")}</span>
+					<span class="col-priority">{_L("casesPage.priority")}</span>
+					<span class="col-dept">{_L("casesPage.department")}</span>
+					<span class="col-officer">{_L("casesPage.primaryOfficer")}</span>
+					<span class="col-date">{_L("casesPage.created")}</span>
+					<span class="col-date">{_L("casesPage.updated")}</span>
 				</div>
 				<div class="table-body">
 					{#each filteredCaseList.slice().reverse() as item}
