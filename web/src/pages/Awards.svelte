@@ -5,6 +5,7 @@
 	import { NUI_EVENTS } from "../constants/nuiEvents";
 	import type { createTabService } from "../services/tabService.svelte";
 	import type { JobType } from "../interfaces/IUser";
+	import { _L } from "@/utils/localization";
 
 	interface Props {
 		tabService: ReturnType<typeof createTabService>;
@@ -147,10 +148,10 @@
 	<div class="awards-topbar">
 		<div class="tab-buttons">
 			<button class="tab-btn" class:active={view === "stats"} onclick={() => (view = "stats")}>
-				My Stats & Awards
+				{_L("awardsPage.myStatsAndAwards")}
 			</button>
 			<button class="tab-btn" class:active={view === "leaderboard"} onclick={() => (view = "leaderboard")}>
-				Leaderboard
+				{_L("awardsPage.leaderboard")}
 			</button>
 		</div>
 	</div>
@@ -158,7 +159,7 @@
 	{#if isLoading}
 		<div class="loading-state">
 			<div class="loading-spinner"></div>
-			<p>Loading...</p>
+			<p>{_L("awardsPage.loading")}</p>
 		</div>
 	{:else if view === "stats"}
 		<div class="stats-view">
@@ -166,49 +167,49 @@
 				<div class="stat-card">
 					<span class="material-icons stat-icon si-blue">description</span>
 					<span class="stat-value">{myStats.reports}</span>
-					<span class="stat-label">Reports</span>
+					<span class="stat-label">{_L("awardsPage.reports")}</span>
 				</div>
 				<div class="stat-card">
 					<span class="material-icons stat-icon si-red">local_police</span>
 					<span class="stat-value">{myStats.arrests}</span>
-					<span class="stat-label">Arrests</span>
+					<span class="stat-label">{_L("awardsPage.arrests")}</span>
 				</div>
 				<div class="stat-card">
 					<span class="material-icons stat-icon si-purple">folder</span>
 					<span class="stat-value">{myStats.cases}</span>
-					<span class="stat-label">Cases</span>
+					<span class="stat-label">{_L("awardsPage.cases")}</span>
 				</div>
 				<div class="stat-card">
 					<span class="material-icons stat-icon si-cyan">inventory_2</span>
 					<span class="stat-value">{myStats.evidence}</span>
-					<span class="stat-label">Evidence</span>
+					<span class="stat-label">{_L("awardsPage.evidence")}</span>
 				</div>
 				<div class="stat-card">
 					<span class="material-icons stat-icon si-orange">notification_important</span>
 					<span class="stat-value">{myStats.bolos}</span>
-					<span class="stat-label">BOLOs</span>
+					<span class="stat-label">{_L("awardsPage.bolos")}</span>
 				</div>
 				<div class="stat-card">
 					<span class="material-icons stat-icon si-amber">gavel</span>
 					<span class="stat-value">{myStats.warrants}</span>
-					<span class="stat-label">Warrants</span>
+					<span class="stat-label">{_L("awardsPage.warrants")}</span>
 				</div>
 				<div class="stat-card">
 					<span class="material-icons stat-icon si-green">payments</span>
 					<span class="stat-value">{formatMoney(myStats.totalFined)}</span>
-					<span class="stat-label">Fined</span>
+					<span class="stat-label">{_L("awardsPage.fined")}</span>
 				</div>
 				<div class="stat-card">
 					<span class="material-icons stat-icon si-pink">schedule</span>
 					<span class="stat-value">{myStats.totalMonths.toLocaleString()}</span>
-					<span class="stat-label">Months Sentenced</span>
+					<span class="stat-label">{_L("awardsPage.monthsSentenced")}</span>
 				</div>
 			</div>
 
 			{#if earnedAwards.length > 0}
 				<div class="awards-section">
 					<div class="section-header">
-						<span class="section-title">Earned ({earnedAwards.length})</span>
+						<span class="section-title">{_L("awardsPage.earned", ["earned", earnedAwards.length])}</span>
 					</div>
 					<div class="awards-list">
 						{#each earnedAwards as award (award.id)}
@@ -232,7 +233,7 @@
 			{#if inProgressAwards.length > 0}
 				<div class="awards-section">
 					<div class="section-header">
-						<span class="section-title">In Progress ({inProgressAwards.length})</span>
+						<span class="section-title">{_L("awardsPage.inProgress", ["inProgress", inProgressAwards.length])}</span>
 					</div>
 					<div class="awards-list">
 						{#each inProgressAwards as award (award.id)}
@@ -256,36 +257,36 @@
 			{/if}
 
 			{#if awards.length === 0}
-				<div class="empty-state">No awards configured. Ask an admin to set some up in Settings.</div>
+				<div class="empty-state">{_L("awardsPage.noAwardsConfigured")}</div>
 			{/if}
 		</div>
 
 	{:else if view === "leaderboard"}
 		<div class="leaderboard-view">
 			<div class="leaderboard-controls">
-				<span class="sort-label">Sort by</span>
+				<span class="sort-label">{_L("awardsPage.sortBy")}</span>
 				<select class="sort-select" bind:value={leaderboardSort}>
-					<option value="score">Overall</option>
-					<option value="reports">Reports</option>
-					<option value="arrests">Arrests</option>
-					<option value="warrants">Warrants</option>
-					<option value="totalFined">Fined</option>
-					<option value="totalMonths">Months</option>
+					<option value="score">{_L("awardsPage.overall")}</option>
+					<option value="reports">{_L("awardsPage.reports")}</option>
+					<option value="arrests">{_L("awardsPage.arrests")}</option>
+					<option value="warrants">{_L("awardsPage.warrants")}</option>
+					<option value="totalFined">{_L("awardsPage.fined")}</option>
+					<option value="totalMonths">{_L("awardsPage.monthsSentenced")}</option>
 				</select>
 			</div>
 
 			<div class="leaderboard-table">
 				<div class="table-header">
 					<span class="col-rank">#</span>
-					<span class="col-name">Officer</span>
-					<span class="col-dept">Dept</span>
-					<span class="col-stat">Reports</span>
-					<span class="col-stat">Arrests</span>
-					<span class="col-stat">Cases</span>
-					<span class="col-stat">Warrants</span>
-					<span class="col-stat">Fined</span>
-					<span class="col-stat">Months</span>
-					<span class="col-score">Score</span>
+					<span class="col-name">{_L("awardsPage.officer")}</span>
+					<span class="col-dept">{_L("awardsPage.department")}</span>
+					<span class="col-stat">{_L("awardsPage.reports")}</span>
+					<span class="col-stat">{_L("awardsPage.arrests")}</span>
+					<span class="col-stat">{_L("awardsPage.cases")}</span>
+					<span class="col-stat">{_L("awardsPage.warrants")}</span>
+					<span class="col-stat">{_L("awardsPage.fined")}</span>
+					<span class="col-stat">{_L("awardsPage.monthsSentenced")}</span>
+					<span class="col-score">{_L("awardsPage.score")}</span>
 				</div>
 				{#each sortedLeaderboard as entry, i (entry.name)}
 					<div class="table-row" class:current-user={entry.isCurrentUser}>
@@ -304,7 +305,7 @@
 						<span class="col-score">{entry.score.toLocaleString()}</span>
 					</div>
 				{:else}
-					<div class="empty-state">No leaderboard data.</div>
+					<div class="empty-state">{_L("awardsPage.noLeaderboardData")}</div>
 				{/each}
 			</div>
 		</div>
