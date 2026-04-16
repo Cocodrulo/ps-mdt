@@ -290,7 +290,7 @@
 					{#if selectedVehicle.boloactive}
 						<span class="pill pill-orange">{_L("vehicles.bolo")}</span>
 					{/if}
-					<span class="pill {getStatusClass(selectedVehicle.status || 'valid')}">{_L("vehicles." + selectedVehicle.status || 'Valid')}</span>
+					<span class="pill {getStatusClass(selectedVehicle.status || 'valid')}">{_L("vehicles." + (selectedVehicle.status || "valid"))}</span>
 				</div>
 			{/if}
 		</div>
