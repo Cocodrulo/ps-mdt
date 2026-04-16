@@ -6,6 +6,7 @@
 	import { globalNotifications } from "../../services/notificationService.svelte";
 	import type { createTabService } from "../../services/tabService.svelte";
 	import type { AuthService } from "../../services/authService.svelte";
+	import { _L } from "@/utils/localization";
 
 	interface Props {
 		tabService: ReturnType<typeof createTabService>;
@@ -390,40 +391,40 @@
 	<div class="modal-backdrop" onclick={() => (showCreateModal = false)} role="presentation">
 		<div class="modal" onclick={(e) => e.stopPropagation()} role="dialog">
 			<div class="modal-header">
-				<span class="modal-title">New Legal Document</span>
+				<span class="modal-title">{_L("legalDocument.newLegalDocument")}</span>
 				<button class="modal-close" onclick={() => (showCreateModal = false)}>
 					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
 				</button>
 			</div>
 			<div class="modal-body">
 				<div class="form-group">
-					<label class="form-label">Type</label>
+					<label class="form-label">{_L("legalDocument.type")}</label>
 					<select class="form-select" bind:value={newDoc.type}>
-						<option value="brief">Brief</option>
-						<option value="motion">Motion</option>
-						<option value="ruling">Ruling</option>
-						<option value="opinion">Opinion</option>
-						<option value="plea_deal">Plea Deal</option>
-						<option value="sentencing">Sentencing</option>
-						<option value="other">Other</option>
+						<option value="brief">{_L("legalDocument.brief")}</option>
+						<option value="motion">{_L("legalDocument.motion")}</option>
+						<option value="ruling">{_L("legalDocument.ruling")}</option>
+						<option value="opinion">{_L("legalDocument.opinion")}</option>
+						<option value="plea_deal">{_L("legalDocument.pleaDeal")}</option>
+						<option value="sentencing">{_L("legalDocument.sentencing")}</option>
+						<option value="other">{_L("legalDocument.other")}</option>
 					</select>
 				</div>
 				<div class="form-group">
-					<label class="form-label">Title</label>
-					<input type="text" class="form-input" placeholder="Document title..." bind:value={newDoc.title} />
+					<label class="form-label">{_L("legalDocument.title")}</label>
+					<input type="text" class="form-input" placeholder={_L("legalDocument.documentTitle")} bind:value={newDoc.title} />
 				</div>
 				<div class="form-group">
-					<label class="form-label">Link to Court Case (optional, ID)</label>
-					<input type="text" class="form-input" placeholder="Court case ID" bind:value={newDoc.linked_court_case_id} />
+					<label class="form-label">{_L("legalDocument.linkToCourtCase")}</label>
+					<input type="text" class="form-input" placeholder={_L("legalDocument.courtCaseId")} bind:value={newDoc.linked_court_case_id} />
 				</div>
 				<div class="form-group">
-					<label class="form-label">Content</label>
-					<textarea class="form-textarea" style="min-height: 120px;" placeholder="Document content..." bind:value={newDoc.content}></textarea>
+					<label class="form-label">{_L("legalDocument.content")}</label>
+					<textarea class="form-textarea" style="min-height: 120px;" placeholder={_L("legalDocument.documentContent")} bind:value={newDoc.content}></textarea>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="back-btn" onclick={() => (showCreateModal = false)}>Cancel</button>
-				<button class="primary-btn" disabled={!newDoc.title.trim()} onclick={handleCreateDocument}>Create Document</button>
+				<button class="back-btn" onclick={() => (showCreateModal = false)}>{_L("legalDocument.cancel")}</button>
+				<button class="primary-btn" disabled={!newDoc.title.trim()} onclick={handleCreateDocument}>{_L("legalDocument.createDocument")}</button>
 			</div>
 		</div>
 	</div>
