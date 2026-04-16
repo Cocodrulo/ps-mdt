@@ -9,6 +9,7 @@
 	import PersonSearchModal from "../components/report-editor/PersonSearchModal.svelte";
 	import type { createTabService } from "../services/tabService.svelte";
 	import type { AuthService } from "../services/authService.svelte";
+	import { _L, getLocalizedDate, getLocalizedTime } from "@/utils/localization";
 
 	let { tabService, authService }: { tabService?: ReturnType<typeof createTabService>; authService?: AuthService } = $props();
 
@@ -290,26 +291,14 @@
 		if (!value) return "-";
 		const date = new Date(value);
 		if (Number.isNaN(date.getTime())) return "-";
-		return date.toLocaleDateString("en-US", {
-			month: "2-digit",
-			day: "2-digit",
-			year: "numeric",
-		});
+		return getLocalizedDate(date);
 	}
 
 	function formatDateTimeValue(value: string | undefined): string {
 		if (!value) return "-";
 		const date = new Date(value);
 		if (Number.isNaN(date.getTime())) return "-";
-		return date.toLocaleDateString("en-US", {
-			month: "2-digit",
-			day: "2-digit",
-			year: "numeric",
-		}) + " " + date.toLocaleTimeString("en-US", {
-			hour: "2-digit",
-			minute: "2-digit",
-			hour12: false,
-		});
+		return getLocalizedDate(date) + " " + getLocalizedTime(date);
 	}
 
 	function getStatusPillClass(status: string): string {
@@ -371,7 +360,7 @@
 		<div class="topbar">
 			<button class="back-btn" onclick={goBack}>
 				<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-				Back to Complaints
+				{_L('ia.backToComplaints')}
 			</button>
 			<span class="topbar-case-number">{selectedComplaint.complaint.complaint_number}</span>
 			<span class="pill {getStatusPillClass(selectedComplaint.complaint.status)}">{formatLabel(selectedComplaint.complaint.status)}</span>
@@ -383,14 +372,14 @@
 				<div class="detail-main">
 					<div class="section">
 						<div class="section-header">
-							<div class="section-title" style="margin-bottom:0;">Complaint Information</div>
+							<div class="section-title" style="margin-bottom:0;">{_L('ia.complaintInformation')}</div>
 							{#if canManage}
 								<div class="inline-controls">
 									{#if editMode}
-										<button class="action-btn" onclick={handleSaveComplaintInfo}>Save</button>
-										<button class="action-btn" onclick={() => { editMode = false; }}>Cancel</button>
+										<button class="action-btn" onclick={handleSaveComplaintInfo}>{_L('ia.save')}</button>
+										<button class="action-btn" onclick={() => { editMode = false; }}>{_L('ia.cancel')}</button>
 									{:else}
-										<button class="action-btn" onclick={() => { editMode = true; }}>Edit</button>
+										<button class="action-btn" onclick={() => { editMode = true; }}>{_L('ia.edit')}</button>
 									{/if}
 								</div>
 							{/if}
@@ -398,41 +387,41 @@
 						{#if editMode && canManage}
 							<div class="field-row">
 								<div class="field-group">
-									<span class="field-label">Officer</span>
+									<span class="field-label">{_L('ia.officer')}</span>
 									<div class="inline-controls">
-										<input type="text" class="form-input" bind:value={editOfficerName} placeholder="Officer name" />
-										<button class="action-btn" onclick={() => (showOfficerSearchForEdit = true)}>Search</button>
+										<input type="text" class="form-input" bind:value={editOfficerName} placeholder="{_L('ia.officerName')}" />
+										<button class="action-btn" onclick={() => (showOfficerSearchForEdit = true)}>{_L('ia.search')}</button>
 									</div>
 								</div>
 								<div class="field-group">
-									<span class="field-label">Badge</span>
-									<input type="text" class="form-input" bind:value={editOfficerBadge} placeholder="Badge #" />
+									<span class="field-label">{_L('ia.badge')}</span>
+									<input type="text" class="form-input" bind:value={editOfficerBadge} placeholder="{_L('ia.badge')}" />
 								</div>
 								<div class="field-group">
-									<span class="field-label">Incident Date</span>
+									<span class="field-label">{_L('ia.incidentDate')}</span>
 									<input type="date" class="form-input" bind:value={editIncidentDate} />
 								</div>
 								<div class="field-group">
-									<span class="field-label">Location</span>
-									<input type="text" class="form-input" bind:value={editIncidentLocation} placeholder="Location" />
+									<span class="field-label">{_L('ia.location')}</span>
+									<input type="text" class="form-input" bind:value={editIncidentLocation} placeholder="{_L('ia.location')}" />
 								</div>
 							</div>
 						{:else}
 							<div class="field-row">
 								<div class="field-group">
-									<span class="field-label">Officer</span>
+									<span class="field-label">{_L('ia.officer')}</span>
 									<span class="field-value">{selectedComplaint.complaint.officer_name || '-'}{selectedComplaint.complaint.officer_badge ? ` (#${selectedComplaint.complaint.officer_badge})` : ''}</span>
 								</div>
 								<div class="field-group">
-									<span class="field-label">Category</span>
+									<span class="field-label">{_L('ia.category')}</span>
 									<span class="field-value">{formatLabel(selectedComplaint.complaint.category)}</span>
 								</div>
 								<div class="field-group">
-									<span class="field-label">Incident Date</span>
+									<span class="field-label">{_L('ia.incidentDate')}</span>
 									<span class="field-value">{selectedComplaint.complaint.incident_date || '-'}</span>
 								</div>
 								<div class="field-group">
-									<span class="field-label">Location</span>
+									<span class="field-label">{_L('ia.location')}</span>
 									<span class="field-value">{selectedComplaint.complaint.incident_location || '-'}</span>
 								</div>
 							</div>
@@ -440,13 +429,13 @@
 					</div>
 
 					<div class="section">
-						<div class="section-title">Description</div>
+						<div class="section-title">{_L('ia.description')}</div>
 						<p class="summary-text">{selectedComplaint.complaint.description || 'No description provided.'}</p>
 					</div>
 
 					{#if selectedComplaint.complaint.witnesses}
 						<div class="section">
-							<div class="section-title">Witnesses</div>
+							<div class="section-title">{_L('ia.witnesses')}</div>
 							<p class="summary-text">{selectedComplaint.complaint.witnesses}</p>
 						</div>
 					{/if}
@@ -455,12 +444,12 @@
 						{@const evidenceLinks = parseEvidence(selectedComplaint.complaint.evidence)}
 						{#if evidenceLinks.length > 0}
 							<div class="section">
-								<div class="section-title">Evidence</div>
+								<div class="section-title">{_L('ia.evidence')}</div>
 								<div class="evidence-links">
 									{#each evidenceLinks as link, i}
 										<a href={link} target="_blank" rel="noopener noreferrer" class="evidence-link">
 											<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-											Evidence #{i + 1}
+											{_L('ia.evidenceNumber', ["number", i + 1])}
 										</a>
 									{/each}
 								</div>
