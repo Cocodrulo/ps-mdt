@@ -70,10 +70,8 @@ export const _L = (key: string, ...replacements: [string, string | number][]) =>
 	return current as string;
 };
 
-export const setLocale = async (locale: string) => {
+export const setLocale = async (locale: string = DEFAULT_LOCALE) => {
 	const newConfig = await getTranslations(locale);
 	LocalizationConfig.config = newConfig.config;
 	LocalizationConfig.translations = newConfig.translations;
 };
-
-setLocale(DEFAULT_LOCALE);

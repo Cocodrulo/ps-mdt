@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { ComponentId } from "../constants";
-	import { COMPONENT_DISPLAY_NAMES } from "../constants";
+	import type { ComponentId } from "../constants/index.svelte";
+	import { getMDTTabs } from "../constants/index.svelte";
 
 	interface Props {
 		componentId: ComponentId;
@@ -13,7 +13,7 @@
 	 * Gets the display name for the component.
 	 */
 	function getDisplayName(): string {
-		return COMPONENT_DISPLAY_NAMES[componentId] || componentId;
+		return getMDTTabs().find((t) => t.name === componentId)?.label || componentId;
 	}
 </script>
 

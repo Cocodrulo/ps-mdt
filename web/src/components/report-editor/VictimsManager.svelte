@@ -2,7 +2,7 @@
 	import type { Victim } from "../../interfaces/IReportEditor";
 	import PersonnelSection from "./PersonnelSection.svelte";
 	import PersonnelCard from "./PersonnelCard.svelte";
-	import { VICTIM_TYPES } from "../../constants";
+	import { getVictimTypes } from "../../constants/index.svelte";
 	import { _L } from "@/utils/localization.svelte";
 
 	interface Props {
@@ -31,7 +31,7 @@
 			fullName={victim.fullName}
 			secondaryInfo={`ID: ${victim.citizenid}`}
 			type={victim.type}
-			typeOptions={VICTIM_TYPES}
+			typeOptions={getVictimTypes()}
 			{onRemove}
 			onUpdate={updateVictim}
 		/>

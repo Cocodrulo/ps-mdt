@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { _L } from "@/utils/localization.svelte";
-	import { EVIDENCE_TYPES } from "../constants";
+	import { EVIDENCE_TYPES } from "../constants/index.svelte";
 	import type { Report, Evidence } from "../interfaces/IReportEditor";
 
 	export let report: Report;

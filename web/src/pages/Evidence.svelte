@@ -4,7 +4,7 @@
 	import { formatBytes, compressImage } from "../services/uploadService";
 	import { isEnvBrowser } from "../utils/misc";
 	import type { createTabService } from "../services/tabService.svelte";
-	import type { MDTTab } from "../constants";
+	import type { MDTTab } from "../constants/index.svelte";
 	import Pagination from "../components/Pagination.svelte";
 	import { _L, getLocalizedDate, getLocalizedTime } from "@/utils/localization.svelte";
 

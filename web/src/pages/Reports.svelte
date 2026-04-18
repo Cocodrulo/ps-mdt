@@ -5,7 +5,7 @@
 	import { debugError } from "../utils/debug";
 	import { isEnvBrowser } from "../utils/misc";
 	import { NUI_EVENTS } from "../constants/nuiEvents";
-	import { REPORT_TYPES } from "../constants";
+	import { getReportTypes } from "../constants/index.svelte";
 	import ReportEditor from "./ReportEditor.svelte";
 	import type { createInstanceStateService } from "../services/instanceStateService.svelte";
 	import { createReportService } from "../services/reportService.svelte";
@@ -14,7 +14,7 @@
 		clearPendingReport,
 	} from "../stores/reportsStore";
 	import type { createTabService } from "../services/tabService.svelte";
-	import type { MDTTab } from "../constants";
+	import type { MDTTab } from "../constants/index.svelte";
 	import Pagination from "../components/Pagination.svelte";
 
 	import type { JobType } from "../interfaces/IUser";
@@ -282,7 +282,7 @@
 					aria-label="Filter report type"
 				>
 					<option value="">{_L("reportsPage.allTypes")}</option>
-					{#each REPORT_TYPES as type}
+					{#each getReportTypes() as type}
 						<option value={type}>{type}</option>
 					{/each}
 				</select>

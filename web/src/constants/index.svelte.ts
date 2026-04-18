@@ -1,7 +1,15 @@
+import { VictimType } from "@/enums/ReportTypes";
+import type { JobType } from "@/interfaces/IUser";
 import { _L } from "@/utils/localization.svelte";
 
+export interface MDTTab {
+	name: string;
+	icon: string;
+	label?: string;
+}
+
 /** MDT tab definitions */
-export const MDT_TABS = [
+export const getMDTTabs = (): MDTTab[] => [
 	{ name: "Dashboard", icon: "dashboard", label: _L("tabs.dashboard") },
 	{ name: "Citizens", icon: "people", label: _L("tabs.citizens") },
 	{ name: "Reports", icon: "description", label: _L("tabs.reports") },
@@ -27,10 +35,10 @@ export const MDT_TABS = [
 	{ name: "Legal Documents", icon: "article", label: _L("tabs.legal_documents") },
 	{ name: "Preferences", icon: "tune", label: _L("tabs.preferences") },
 	{ name: "Settings", icon: "admin_panel_settings", label: _L("tabs.settings") },
-] as const;
+];
 
 /** Tabs available for EMS job type */
-export const EMS_TABS: readonly (typeof MDT_TABS)[number]["name"][] = [
+export const EMS_TABS = [
 	"Dashboard",
 	"Citizens",
 	"Reports",
@@ -42,7 +50,7 @@ export const EMS_TABS: readonly (typeof MDT_TABS)[number]["name"][] = [
 ] as const;
 
 /** Get filtered tabs based on job type */
-export const DOJ_TABS: readonly string[] = [
+export const DOJ_TABS = [
 	"Dashboard",
 	"Reports",
 	"Court Cases",
@@ -57,13 +65,14 @@ export const DOJ_TABS: readonly string[] = [
 ] as const;
 
 export function getTabsForJob(jobType: 'leo' | 'ems' | 'doj') {
+	const allTabs = getMDTTabs();
 	if (jobType === 'ems') {
-		return MDT_TABS.filter(tab => (EMS_TABS as readonly string[]).includes(tab.name));
+		return allTabs.filter(tab => (EMS_TABS as readonly string[]).includes(tab.name));
 	}
 	if (jobType === 'doj') {
-		return MDT_TABS.filter(tab => (DOJ_TABS as readonly string[]).includes(tab.name));
+		return allTabs.filter(tab => (DOJ_TABS as readonly string[]).includes(tab.name));
 	}
-	return [...MDT_TABS];
+	return allTabs;
 }
 
 /** Sidebar navigation groups */
@@ -74,7 +83,7 @@ export interface NavGroup {
 	tabs: readonly string[];
 }
 
-export const NAV_GROUPS: NavGroup[] = [
+export const getNavGroups = (): NavGroup[] => [
 	{ id: "dashboard", tabs: ["Dashboard"] },
 	{ id: "operations", label: _L("tabs.operations"), icon: "assignment", tabs: ["Reports", "Cases", "Evidence", "BOLOs", "Warrants"] },
 	{ id: "records", label: _L("tabs.records"), icon: "folder_open", tabs: ["Citizens", "Vehicles", "Weapons", "Charges"] },
@@ -83,7 +92,7 @@ export const NAV_GROUPS: NavGroup[] = [
 	{ id: "bottom", tabs: ["Preferences", "Settings"] },
 ];
 
-export const DOJ_NAV_GROUPS: NavGroup[] = [
+export const getDojNavGroups = (): NavGroup[] => [
 	{ id: "dashboard", tabs: ["Dashboard"] },
 	{ id: "court", label: _L("tabs.court"), icon: "account_balance", tabs: ["Court Cases", "Warrant Review", "Court Orders"] },
 	{ id: "legal", label: _L("tabs.legal"), icon: "description", tabs: ["Legal Documents", "Charges"] },
@@ -91,7 +100,70 @@ export const DOJ_NAV_GROUPS: NavGroup[] = [
 	{ id: "bottom", tabs: ["Settings"] },
 ];
 
-/** Report types per job */
+/** App version and branding per job type */
+export const getAppInfo = (): Record<Exclude<JobType, "civilian">, { version: string; title: string; subtitle: string; footerSubtext: string; icon: string }> => ({
+	leo: {
+		version: "LSPD MDT System v2.0",
+		title: _L("app.leoTitle"),
+		subtitle: _L("app.leoSubtitle"),
+		footerSubtext: _L("app.leoFooter"),
+		icon: "local_police",
+	},
+	ems: {
+		version: "EMS MDT System v1.0",
+		title: _L("app.emsTitle"),
+		subtitle: _L("app.emsSubtitle"),
+		footerSubtext: _L("app.emsFooter"),
+		icon: "local_hospital",
+	},
+	doj: {
+		version: "DOJ Terminal v1.0",
+		title: _L("app.dojTitle"),
+		subtitle: _L("app.dojSubtitle"),
+		footerSubtext: _L("app.dojFooter"),
+		icon: "account_balance",
+	},
+});
+
+export const getReportTypes = () => [
+	_L("reportTypes.incidentReport"),
+	_L("reportTypes.trafficReport"),
+	_L("reportTypes.investigationReport"),
+	_L("reportTypes.arrestReport"),
+	_L("reportTypes.evidenceReport"),
+];
+
+export const getEvidenceTypes = () => [
+	_L("evidenceTypes.Physical"),
+	_L("evidenceTypes.Digital"),
+	_L("evidenceTypes.Document"),
+	_L("evidenceTypes.Weapon"),
+	_L("evidenceTypes.Drug"),
+	_L("evidenceTypes.Vehicle"),
+	_L("evidenceTypes.Other"),
+];
+
+export type VICTIM_TYPES = string;
+
+export const getVictimTypes = (): VICTIM_TYPES[] => [
+	_L("victimTypes.Primary"),
+	_L("victimTypes.Secondary"),
+	_L("victimTypes.Witness"),
+	_L("victimTypes.Complainant"),
+];
+
+export const PLACEHOLDER_COMPONENTS: readonly ComponentId[] = [] as const;
+
+export type OFFICER_TYPES = "PRIMARY" | "ASSISTING" | "SUPERVISOR" | "DETECTIVE";
+
+export const getOfficerTypes = (): Record<OFFICER_TYPES, string> => ({
+	PRIMARY: _L("officerTypes.Primary"),
+	ASSISTING: _L("officerTypes.Assisting"),
+	SUPERVISOR: _L("officerTypes.Supervisor"),
+	DETECTIVE: _L("officerTypes.Detective"),
+});
+
+// Non-reactive constants remain as they were
 export const LEO_REPORT_TYPES = [
 	"Incident Report",
 	"Traffic Report",
@@ -122,9 +194,6 @@ export function getReportTypesForJob(jobType: 'leo' | 'ems' | 'doj'): readonly s
 	return LEO_REPORT_TYPES;
 }
 
-export type MDTTab = (typeof MDT_TABS)[number]["name"];
-
-/** Component identifiers for tab routing */
 export type ComponentId =
 	| "dashboard"
 	| "citizens"
@@ -152,8 +221,7 @@ export type ComponentId =
 	| "management"
 	| "settings";
 
-/** Tab name to component ID mapping */
-export const TAB_TO_COMPONENT_MAP: Record<MDTTab, ComponentId> = {
+export const TAB_TO_COMPONENT_MAP: Record<string, ComponentId> = {
 	Dashboard: "dashboard",
 	Citizens: "citizens",
 	BOLOs: "bolos",
@@ -179,110 +247,17 @@ export const TAB_TO_COMPONENT_MAP: Record<MDTTab, ComponentId> = {
 	"Legal Documents": "legal_documents",
 	Settings: "management",
 	Preferences: "settings",
-} as const;
+};
 
 export const DEFAULT_TIME = "16:20";
 export const DEFAULT_DATE = "03.15.2024";
 
-/** App version and branding per job type */
-export const APP_INFO = {
-	leo: {
-		version: "LSPD MDT System v2.0",
-		title: _L("app.leoTitle"),
-		subtitle: _L("app.leoSubtitle"),
-		footerSubtext: _L("app.leoFooter"),
-		icon: "local_police",
-	},
-	ems: {
-		version: "EMS MDT System v1.0",
-		title: _L("app.emsTitle"),
-		subtitle: _L("app.emsSubtitle"),
-		footerSubtext: _L("app.emsFooter"),
-		icon: "local_hospital",
-	},
-	doj: {
-		version: "DOJ Terminal v1.0",
-		title: _L("app.dojTitle"),
-		subtitle: _L("app.dojSubtitle"),
-		footerSubtext: _L("app.dojFooter"),
-		icon: "account_balance",
-	},
-} as const;
-
-export * from "./date";
-
-/** UI timing constants (ms) */
 export const TIMING = {
 	timeUpdateInterval: 1000,
 	topBarOpacityDelay: 100,
 	offDutyLoadingDuration: 2000,
 } as const;
 
-/** Component ID to display name mapping */
-export const COMPONENT_DISPLAY_NAMES: Record<ComponentId, string> = {
-	dashboard: "Dashboard",
-	citizens: "Citizens",
-	bolos: "BOLOs",
-	vehicles: "Vehicles",
-	weapons: "Weapons",
-	cases: "Cases",
-	evidence: "Evidence",
-	reports: "Reports",
-	warrants: "Warrants",
-	charges: "Charges",
-	awards: "Awards",
-	roster: "Roster",
-	map: "Map",
-	cameras: "Cameras",
-	bodycams: "Bodycams",
-	ia: "Internal Affairs",
-	ppr: "Performance Reviews",
-	fto: "Field Training",
-	sop: "Standard Operating Procedures",
-	court_cases: "Court Cases",
-	warrant_review: "Warrant Review",
-	court_orders: "Court Orders",
-	legal_documents: "Legal Documents",
-	management: "Settings",
-	settings: "Preferences",
-} as const;
-
-/** Components that render placeholder content */
-export const PLACEHOLDER_COMPONENTS: readonly ComponentId[] = [] as const;
-
-export const REPORT_TYPES = [
-	_L("reportTypes.Incident Report"),
-	_L("reportTypes.Traffic Report"),
-	_L("reportTypes.Investigation Report"),
-	_L("reportTypes.Arrest Report"),
-	_L("reportTypes.Evidence Report"),
-] as const;
-
-export const EVIDENCE_TYPES = [
-	_L("evidenceTypes.Physical"),
-	_L("evidenceTypes.Digital"),
-	_L("evidenceTypes.Document"),
-	_L("evidenceTypes.Weapon"),
-	_L("evidenceTypes.Drug"),
-	_L("evidenceTypes.Vehicle"),
-	_L("evidenceTypes.Other"),
-] as const;
-
-export const VICTIM_TYPES = [
-	_L("victimTypes.Primary"),
-	_L("victimTypes.Secondary"),
-	_L("victimTypes.Witness"),
-	_L("victimTypes.Complainant"),
-] as const;
-
-export const OFFICER_TYPES = {
-	PRIMARY: _L("officerTypes.Primary"),
-	ASSISTING: _L("officerTypes.Assisting"),
-	SUPERVISOR: _L("officerTypes.Supervisor"),
-	DETECTIVE: _L("officerTypes.Detective"),
-} as const;
-
-/** Priority level color mapping */
 export const PRIORITY_COLORS: Record<string, string> = {
 	"1": "#ef4444",
 	Major: "#ef4444",
@@ -293,7 +268,4 @@ export const PRIORITY_COLORS: Record<string, string> = {
 	default: "#6b7280",
 } as const;
 
-export type ReportType = (typeof REPORT_TYPES)[number];
-export type EvidenceType = (typeof EVIDENCE_TYPES)[number];
-export type VictimType = (typeof VICTIM_TYPES)[number];
-export type OfficerType = (typeof OFFICER_TYPES)[keyof typeof OFFICER_TYPES];
+export * from "./date";

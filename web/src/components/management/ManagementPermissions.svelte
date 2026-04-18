@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import { createManagementService } from "@/services/managementService.svelte";
-	import { PERMISSION_CATEGORIES } from "@/constants/management";
+	import { getPermissionCategories } from "@/constants/management.svelte";
 	import type { JobType } from "@/interfaces/IUser";
 	import { _L } from "@/utils/localization.svelte";
 
@@ -16,7 +16,7 @@
 
 	let visibleCategories = $derived(
 		jobType === 'ems'
-			? PERMISSION_CATEGORIES
+			? getPermissionCategories()
 				.filter(c => !EMS_HIDDEN_CATEGORIES.includes(c.key))
 				.map(c => ({
 					...c,
@@ -24,14 +24,14 @@
 				}))
 				.filter(c => c.permissions.length > 0)
 			: jobType === 'doj'
-				? PERMISSION_CATEGORIES
+				? getPermissionCategories()
 					.filter(c => DOJ_VISIBLE_CATEGORIES.includes(c.key))
 					.map(c => ({
 						...c,
 						permissions: c.permissions.filter(p => !DOJ_HIDDEN_PERMISSIONS.includes(p.key))
 					}))
 					.filter(c => c.permissions.length > 0)
-				: PERMISSION_CATEGORIES
+				: getPermissionCategories()
 	);
 
 	const mgmt = createManagementService();
@@ -42,21 +42,21 @@
 
 	function categoryAllEnabled(catKey: string): boolean {
 		if (!currentRole) return false;
-		const cat = PERMISSION_CATEGORIES.find((c) => c.key === catKey);
+		const cat = getPermissionCategories().find((c) => c.key === catKey);
 		if (!cat) return false;
 		return cat.permissions.every((p) => mgmt.roleHasPermission(currentRole!.key, p.key));
 	}
 
 	function categoryNoneEnabled(catKey: string): boolean {
 		if (!currentRole) return true;
-		const cat = PERMISSION_CATEGORIES.find((c) => c.key === catKey);
+		const cat = getPermissionCategories().find((c) => c.key === catKey);
 		if (!cat) return true;
 		return cat.permissions.every((p) => !mgmt.roleHasPermission(currentRole!.key, p.key));
 	}
 
 	function toggleCategory(catKey: string) {
 		if (!currentRole || currentRole.isBoss) return;
-		const cat = PERMISSION_CATEGORIES.find((c) => c.key === catKey);
+		const cat = getPermissionCategories().find((c) => c.key === catKey);
 		if (!cat) return;
 		const keys = cat.permissions.map((p) => p.key);
 		if (categoryAllEnabled(catKey)) {
@@ -129,7 +129,7 @@
 								<div class="category-header">
 									<div class="category-label-row">
 										<span class="material-icons category-icon">{category.icon}</span>
-										<span class="category-label">{_L("categories." + category.key)}</span>
+										<span class="category-label">{category.label}</span>
 									</div>
 									{#if !currentRole.isBoss}
 										<div class="category-actions">
@@ -147,8 +147,8 @@
 									{#each category.permissions as perm}
 										<div class="permission-row">
 											<div class="permission-info">
-												<span class="permission-label">{_L("permissions." + perm.key + "_label")}</span>
-												<span class="permission-desc">{_L("permissions." + perm.key + "_desc")}</span>
+												<span class="permission-label">{perm.label}</span>
+												<span class="permission-desc">{perm.description}</span>
 											</div>
 											<label class="toggle">
 												<input

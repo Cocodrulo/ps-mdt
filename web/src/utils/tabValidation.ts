@@ -1,5 +1,5 @@
 import type { TabInstance } from "../interfaces/IMDT";
-import type { ComponentId, MDTTab } from "../constants";
+import type { ComponentId, MDTTab } from "../constants/index.svelte";
 import {
 	SECURITY_CONFIG,
 	SECURITY_MESSAGES,

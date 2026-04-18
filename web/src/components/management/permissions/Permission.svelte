@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { MANAGEMENT_PERMISSIONS } from "@/constants/management";
+	import { MANAGEMENT_PERMISSIONS } from "@/constants/management.svelte.svelte";
 	import { onMount } from "svelte";
 
 	let permissions = Object.values(MANAGEMENT_PERMISSIONS);

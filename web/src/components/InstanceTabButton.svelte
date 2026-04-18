@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { ComponentId, MDTTab } from "../constants";
-	import { MDT_TABS } from "../constants";
+	import type { ComponentId, MDTTab } from "../constants/index.svelte";
+	import { getMDTTabs } from "../constants/index.svelte";
 	import type { TabInstance } from "../services/tabService.svelte.ts";
 
 	interface Props {
@@ -14,7 +14,7 @@
 		$props();
 
 	let tabIcon = $derived(
-		MDT_TABS.find((t) => t.name === instance.currentTab)?.icon || "tab",
+		getMDTTabs().find((t) => t.name === instance.currentTab)?.icon || "tab",
 	);
 
 	function handleInstanceClick(): void {
@@ -37,7 +37,7 @@
 	}
 
 	function getTabLabel(tabName: MDTTab): string {
-		return MDT_TABS.find((t) => t.name === tabName)?.label || tabName;
+		return getMDTTabs().find((t) => t.name === tabName)?.label || tabName;
 	}
 </script>
 

@@ -3,7 +3,7 @@
 	import { fetchNui } from "../../utils/fetchNui";
 	import { isEnvBrowser } from "../../utils/misc";
 	import { NUI_EVENTS } from "../../constants/nuiEvents";
-	import { getReportTypesForJob } from "../../constants/index";
+	import { getReportTypesForJob } from "../../constants/index.svelte";
 	import type { JobType } from "../../interfaces/IUser";
 	import { _L } from "@/utils/localization.svelte";
 

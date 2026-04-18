@@ -1,7 +1,7 @@
 import { fetchNui } from "../utils/fetchNui";
 import { isEnvBrowser } from "../utils/misc";
 import { NUI_EVENTS } from "../constants/nuiEvents";
-import { ALL_PERMISSION_KEYS } from "../constants/management";
+import { getAllPermissionKeys } from "../constants/management.svelte";
 
 export interface PermissionRole {
 	key: string;
@@ -33,7 +33,7 @@ export function createManagementService() {
 
 	async function loadRoles() {
 		if (isEnvBrowser()) {
-			permissions = [...ALL_PERMISSION_KEYS];
+			permissions = [...getAllPermissionKeys()];
 			// Dev mock: roles with escalating permissions (labels match whatever the job grades are)
 			const basicPerms = ["citizens_search", "bolos_view", "vehicles_search", "weapons_search", "reports_view", "warrants_view", "charges_view"];
 			const midPerms = [...basicPerms, "reports_create", "cases_view", "evidence_view", "bolos_create", "dispatch_attach", "dispatch_route"];
@@ -44,7 +44,7 @@ export function createManagementService() {
 				{ key: "1", label: "Grade 1", permissions: midPerms, isBoss: false },
 				{ key: "2", label: "Grade 2", permissions: seniorPerms, isBoss: false },
 				{ key: "3", label: "Grade 3", permissions: commandPerms, isBoss: false },
-				{ key: "4", label: "Grade 4", permissions: [...ALL_PERMISSION_KEYS], isBoss: true },
+				{ key: "4", label: "Grade 4", permissions: [...getAllPermissionKeys()], isBoss: true },
 			];
 			return;
 		}

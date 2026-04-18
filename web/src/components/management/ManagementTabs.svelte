@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { MANAGEMENT_TABS } from "@/constants/management";
+	import { getManagementTabs } from "@/constants/management.svelte";
 
 	type View = "Activity" | "Bulletins" | "Permissions";
 
@@ -12,12 +12,12 @@
 </script>
 
 <div class="viewSelector">
-	{#each MANAGEMENT_TABS as tab}
+	{#each getManagementTabs() as tab}
 		<button
 			onclick={() => onViewChange(tab)}
 			class:selected={currentView === tab}
 		>
-			{tab}
+			{tab.label}
 		</button>
 	{/each}
 </div>

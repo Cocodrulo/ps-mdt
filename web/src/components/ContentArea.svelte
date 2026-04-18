@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { PLACEHOLDER_COMPONENTS, type ComponentId } from "../constants";
+	import { PLACEHOLDER_COMPONENTS, type ComponentId } from "../constants/index.svelte";
 	import type { AuthService } from "../services/authService.svelte";
 	import { fetchNui } from "../utils/fetchNui";
 	import { NUI_EVENTS } from "../constants/nuiEvents";

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { MDT_TABS, NAV_GROUPS, DOJ_NAV_GROUPS, getTabsForJob, type MDTTab, type ComponentId } from "../constants";
+	import { getMDTTabs, getNavGroups, getDojNavGroups, getTabsForJob, type MDTTab } from "../constants/index.svelte";
 	import type { createTabService } from "../services/tabService.svelte";
 	import type { JobType } from "../interfaces/IUser";
 	import type { AuthService } from "../services/authService.svelte";
@@ -43,11 +43,11 @@
 	}
 
 	function getTabData(tabName: string) {
-		return MDT_TABS.find(t => t.name === tabName);
+		return getMDTTabs().find(t => t.name === tabName);
 	}
 
 	// Compute visible groups: filter out groups with no visible tabs
-	let navGroups = $derived(jobType === 'doj' ? DOJ_NAV_GROUPS : NAV_GROUPS);
+	let navGroups = $derived(jobType === 'doj' ? getDojNavGroups() : getNavGroups());
 
 	let visibleGroups = $derived.by(() => {
 		return navGroups
@@ -66,7 +66,7 @@
 			if (inst) tabService.setInstanceTab(inst.id, "Dashboard");
 			return;
 		}
-		for (const group of navGroups) {
+		for (const group of (jobType === 'doj' ? getDojNavGroups() : getNavGroups())) {
 			if (group.label && group.tabs.includes(activeTab)) {
 				if (collapsedGroups[group.id]) {
 					collapsedGroups[group.id] = false;

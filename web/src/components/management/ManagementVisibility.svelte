@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import { createManagementService } from "@/services/managementService.svelte";
-	import { TAB_VISIBILITY_KEYS } from "@/constants/management";
-	import { NAV_GROUPS, getTabsForJob, MDT_TABS } from "@/constants";
+	import { getTabVisibilityKeys } from "@/constants/management.svelte";
+	import { getNavGroups, getTabsForJob, getMDTTabs } from "@/constants/index.svelte";
 	import type { JobType } from "@/interfaces/IUser";
 	import { _L } from "@/utils/localization.svelte";
 
@@ -12,7 +12,7 @@
 	let selectedRole = $state<string | null>(null);
 	let currentRole = $derived(mgmt.roles.find((r) => r.key === selectedRole));
 
-	const HIDEABLE_GROUPS = NAV_GROUPS.filter(g => g.id !== "dashboard" && g.id !== "bottom");
+	const HIDEABLE_GROUPS = getNavGroups().filter(g => g.id !== "dashboard" && g.id !== "bottom");
 
 	let jobTabs = $derived(new Set(getTabsForJob(jobType).map(t => t.name)));
 
@@ -24,16 +24,16 @@
 	);
 
 	function getTabIcon(tabName: string): string {
-		return MDT_TABS.find(t => t.name === tabName)?.icon || "tab";
+		return getMDTTabs().find(t => t.name === tabName)?.icon || "tab";
 	}
 
 	function getHiddenKey(tabName: string): string {
-		const entry = TAB_VISIBILITY_KEYS.find(t => t.tabName === tabName);
+		const entry = getTabVisibilityKeys().find(t => t.tabName === tabName);
 		return entry?.key || `tab_hidden_${tabName.toLowerCase()}`;
 	}
 
 	function getTabLabel(tabName: string): string {
-		const entry = TAB_VISIBILITY_KEYS.find(t => t.tabName === tabName);
+		const entry = getTabVisibilityKeys().find(t => t.tabName === tabName);
 		if (entry) {
 			// Try to find a localized version of the tabName (which usually corresponds to a category)
 			const localized = _L("categories." + tabName.toLowerCase());

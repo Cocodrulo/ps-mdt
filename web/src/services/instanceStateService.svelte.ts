@@ -1,4 +1,4 @@
-import type { MDTTab, ComponentId } from "@/constants";
+import type { MDTTab, ComponentId } from "@/constants/index.svelte";
 import type {
 	ReportPageData,
 	CitizensPageData,

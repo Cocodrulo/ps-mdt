@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ComponentId, MDTTab } from "../constants";
+	import type { ComponentId, MDTTab } from "../constants/index.svelte";
 	import InstanceTabButton from "./InstanceTabButton.svelte";
 	import type {
 		TabInstance,

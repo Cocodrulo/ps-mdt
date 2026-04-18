@@ -36,7 +36,7 @@
 	import CollabPresenceBar from "../components/report-editor/CollabPresenceBar.svelte";
 
 	import type { createTabService } from "../services/tabService.svelte";
-	import { getReportTypesForJob, type MDTTab } from "../constants";
+	import { getReportTypesForJob, type MDTTab } from "../constants/index.svelte";
 
 	import type { JobType } from "../interfaces/IUser";
 	import { _L } from "@/utils/localization.svelte";

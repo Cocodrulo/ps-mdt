@@ -7,7 +7,7 @@
 	import PersonSearchModal from "../components/report-editor/PersonSearchModal.svelte";
 	import Pagination from "../components/Pagination.svelte";
 	import type { createTabService } from "../services/tabService.svelte";
-	import type { MDTTab } from "../constants";
+	import type { MDTTab } from "../constants/index.svelte";
 	import type {
 		CaseAttachment,
 		CaseDetailResponse,

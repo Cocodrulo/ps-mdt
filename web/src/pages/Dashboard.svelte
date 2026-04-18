@@ -5,7 +5,7 @@
 	import type { createTabService } from "../services/tabService.svelte";
 	import { openReportInEditor } from "../stores/reportsStore";
 	import { mdtStore } from "../stores/mdtStore";
-	import { PRIORITY_COLORS } from "../constants";
+	import { PRIORITY_COLORS } from "../constants/index.svelte";
 	import { createDashboardService } from "../services/dashboardService.svelte";
 	import { createDispatchService } from "../services/dispatchService.svelte";
 	import ReportItem from "../components/dashboard/ReportItem.svelte";

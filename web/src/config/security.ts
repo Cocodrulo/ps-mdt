@@ -1,4 +1,4 @@
-import type { MDTTab } from "../constants";
+import type { MDTTab } from "../constants/index.svelte";
 
 /** Security limits and validation rules */
 export const SECURITY_CONFIG = {

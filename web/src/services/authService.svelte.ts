@@ -1,7 +1,7 @@
 import type { PlayerData } from "@/interfaces/IPlayerData";
 import { fetchNui } from "@/utils/fetchNui";
 import { debugError } from "@/utils/debug";
-import { TIMING } from "@/constants/index";
+import { TIMING } from "@/constants/index.svelte";
 import { NUI_EVENTS } from "@/constants/nuiEvents";
 import type { AuthUpdateData, JobType } from "@/interfaces/IUser";
 

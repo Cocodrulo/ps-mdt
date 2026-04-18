@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { OFFICER_TYPES, VICTIM_TYPES } from "../../constants";
+	import type { OFFICER_TYPES, VICTIM_TYPES } from "../../constants/index.svelte";
 	import type { Snippet } from "svelte";
 	interface Props {
 		id: string;
@@ -7,7 +7,7 @@
 		secondaryInfo: string;
 		notes?: string;
 		type?: string;
-		typeOptions?: typeof VICTIM_TYPES | typeof OFFICER_TYPES;
+		typeOptions?: VICTIM_TYPES[] | OFFICER_TYPES;
 		onRemove: (id: string) => void;
 		onUpdate: (id: string, field: string, value: any) => void;
 		actions?: Snippet;

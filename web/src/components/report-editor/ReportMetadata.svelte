@@ -7,7 +7,7 @@
 	}
 
 	import { untrack } from "svelte";
-	import { getReportTypesForJob } from "../../constants/index";
+	import { getReportTypesForJob } from "../../constants/index.svelte";
 	import type { JobType } from "../../interfaces/IUser";
 	import { getLocalizedDate, getLocalizedTime } from "@/utils/localization.svelte";
 

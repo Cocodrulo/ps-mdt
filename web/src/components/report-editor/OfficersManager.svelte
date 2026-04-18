@@ -2,7 +2,7 @@
 	import type { Officer } from "../../interfaces/IReportEditor";
 	import PersonnelSection from "./PersonnelSection.svelte";
 	import PersonnelCard from "./PersonnelCard.svelte";
-	import { OFFICER_TYPES } from "../../constants";
+	import { getOfficerTypes } from "../../constants/index.svelte";
 
 	interface Props {
 		officers: Officer[];
@@ -31,7 +31,7 @@
 			secondaryInfo={`Badge: ${officer.badgeId}`}
 			notes={officer.notes}
 			type={officer.type}
-			typeOptions={OFFICER_TYPES}
+			typeOptions={getOfficerTypes()}
 			{onRemove}
 			onUpdate={updateOfficer}
 		/>

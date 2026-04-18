@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { REPORT_TYPES } from "../constants";
+	import { getReportTypes } from "../constants/index.svelte";
 	import type { Report } from "../interfaces/IReportEditor";
 	import { _L } from "@/utils/localization.svelte";
 
@@ -28,7 +28,7 @@
 				class="type-select"
 				aria-label="Report type"
 			>
-				{#each REPORT_TYPES as type}
+				{#each getReportTypes() as type}
 					<option value={type}>{type}</option>
 				{/each}
 			</select>

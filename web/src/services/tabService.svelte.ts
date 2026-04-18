@@ -1,5 +1,5 @@
-import type { ComponentId, MDTTab } from "../constants";
-import { TAB_TO_COMPONENT_MAP } from "../constants";
+import type { ComponentId, MDTTab } from "../constants/index.svelte";
+import { TAB_TO_COMPONENT_MAP } from "../constants/index.svelte";
 import type { TabInstance } from "../interfaces/IMDT";
 import {
 	loadInstancesFromStorage,

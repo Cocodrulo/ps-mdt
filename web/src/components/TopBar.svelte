@@ -4,12 +4,12 @@
 		DEFAULT_TIME,
 		DEFAULT_DATE,
 		TIMING,
-		APP_INFO,
-	} from "../constants";
+		getAppInfo,
+	} from "../constants/index.svelte";
 
-	let info = $derived(APP_INFO[authService.jobType] || APP_INFO.leo);
 	import type { AuthService } from "../services/authService.svelte";
 	import { getLocalizedDate, getLocalizedTime } from "@/utils/localization.svelte";
+	import type { JobType } from "@/interfaces/IUser";
 
 	interface Props {
 		authService: AuthService;
@@ -17,6 +17,13 @@
 	}
 
 	let { authService, onOpacityStyleChange }: Props = $props();
+
+	const appInfo = getAppInfo();
+
+	let info = $derived(
+		appInfo[authService.jobType as Exclude<JobType, "civilian">] ||
+			appInfo.leo,
+	);
 
 	let currentTime = $state(DEFAULT_TIME);
 	let currentDate = $state(DEFAULT_DATE);

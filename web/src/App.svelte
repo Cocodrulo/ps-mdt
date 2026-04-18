@@ -17,6 +17,7 @@
 		if (import.meta.env && import.meta.env.DEV) {
 			cleanupInputDebug = setupInputDebug();
 		}
+		setLocale("es");
 
 		// Listen for complaint form trigger (outside VisibilityProvider so it works for civilians)
 		const handleMessage = (event: MessageEvent) => {
