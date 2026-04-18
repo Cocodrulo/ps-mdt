@@ -29,7 +29,7 @@
 			onclick={onSave}
 			disabled={isSaving || isLoading}
 			type="button"
-			aria-label={isSaving ? "Saving report..." : "Save report"}
+			aria-label={isSaving ? _L("reportHeader.saving") : _L("reportHeader.save")}
 		>
 			{isSaving ? _L("reportHeader.saving") : _L("reportHeader.save")}
 		</button>

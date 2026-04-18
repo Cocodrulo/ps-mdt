@@ -106,7 +106,7 @@
             "noEvidence": "No evidence added",
             "evidenceSearch": "Evidence search interface",
             "notes": "Notes: {{notes}}",
-            "type": "Type: {{type}}",
+            "type": "Type",
             "badgeId": "Badge: {{badgeId}}",
             "titleHelp": "Enter a descriptive title for the evidence",
             "typeHelp": "Select the type of evidence",
@@ -126,7 +126,18 @@
             "loading": "Loading evidence...",
             "location": "Location",
             "report": "Report",
-            "stored": "Stored"
+            "stored": "Stored",
+            "searchPlaceholder": "Search by title, serial, location, stash...",
+            "search": "Search",
+            "newEvidence": "New Evidence",
+            "physical": "Physical",
+            "digital": "Digital",
+            "document": "Document",
+            "weapon": "Weapon",
+            "drug": "Drug",
+            "vehicle": "Vehicle",
+            "other": "Other",
+            "inField": "In Field"
         },
         "contentArea": {
             "permissionDenied": "Permission Denied",
@@ -634,7 +645,8 @@
             "felonies": "Felonies",
             "misdemeanors": "Misdemeanors",
             "infractions": "Infractions",
-            "expires": "Expires"
+            "expires": "Expires",
+            "warrants": "Warrants"
         },
         "vehicles": {
             "back": "Back",
@@ -682,8 +694,7 @@
             "valid": "Valid",
             "vehicle": "Vehicle",
             "model": "Model",
-            "unknown": "Unknown",
-            "": "Valid"
+            "unknown": "Unknown"
         },
         "sop": {
             "title": "Standard Operating Procedures",
@@ -767,7 +778,8 @@
             "failedToLoadReports": "Failed to load reports",
             "createFirstReport": "Create First Report",
             "noReportsFoundCreated": "No reports have been created yet.",
-            "noReportsFoundSearch": "No reports match your search criteria."
+            "noReportsFoundSearch": "No reports match your search criteria.",
+            "searchPlaceholder": "Search by title, author, ID, type or tag..."
         },
         "reportEditor": {
             "loading": "Loading...",
@@ -890,7 +902,8 @@
             "enterTitle": "Enter title...",
             "enterDescription": "Enter description...",
             "enterLocation": "Enter location...",
-            "caseId": "Case ID"
+            "caseId": "Case ID",
+            "all": "All"
         },
         "map": {
             "tracking": "Tracking",
@@ -919,7 +932,61 @@
             "evidenceNumber": "Evidence #{number}",
             "description": "Description",
             "witnesses": "Witnesses",
-            "evidence": "Evidence"
+            "evidence": "Evidence",
+            "all": "All",
+            "open": "Open",
+            "under_review": "Under Review",
+            "investigated": "Investigated",
+            "sustained": "Sustained",
+            "exonerated": "Exonerated",
+            "unfounded": "Unfounded",
+            "closed": "Closed",
+            "excessive_force": "Excessive Force",
+            "misconduct": "Misconduct",
+            "corruption": "Corruption",
+            "complainant": "Complainant",
+            "name": "Name",
+            "phone": "Phone",
+            "statusManagement": "Status Management",
+            "investigator": "Investigator",
+            "noInvestigator": "No investigator assigned",
+            "assignInvestigator": "Assign Investigator",
+            "assign": "Assign",
+            "unassign": "Unassign",
+            "self": "Self",
+            "internalNotes": "Internal Notes",
+            "addNote": "Add Note",
+            "adding": "Adding...",
+            "noNotes": "No notes for this complaint",
+            "loadingNotes": "Loading notes...",
+            "viewingComplaint": "Viewing complaint",
+            "unknown": "Unknown",
+            "loading": "Loading...",
+            "refresh": "Refresh",
+            "noComplaintsFound": "No complaints found",
+            "noComplaintsMatchSearch": "No complaints match your search",
+            "failedToLoadComplaints": "Failed to load complaints",
+            "failedToLoadComplaint": "Failed to load complaint",
+            "failedToUpdateStatus": "Failed to update status",
+            "failedToAddNote": "Failed to add note",
+            "failedToDeleteNote": "Failed to delete note",
+            "failedToAssignInvestigator": "Failed to assign investigator",
+            "failedToUnassignInvestigator": "Failed to unassign investigator",
+            "statusUpdated": "Status updated",
+            "noteAdded": "Note added",
+            "noteDeleted": "Note deleted",
+            "investigatorAssigned": "Investigator assigned",
+            "investigatorUnassigned": "Investigator unassigned",
+            "searchPlaceholder": "Search complaints by officer, category, or status...",
+            "filterStatus": "Filter by status",
+            "assignedTo": "Assigned to",
+            "page": "Page",
+            "of": "of",
+            "status": "Status",
+            "date": "Date",
+            "searchOfficers": "Search officers",
+            "searchOfficer": "Search officer",
+            "unassigned": "Unassigned"
         },
         "evidences": {
             "physicalDescriptionPlaceholder": "What is it? (e.g. Knife, Clothing, Bag)",
@@ -1278,7 +1345,14 @@
             "updated": "Updated",
             "refresh": "Refresh",
             "searchCases": "Search cases...",
-            "upload": "Upload"
+            "upload": "Upload",
+            "unassigned": "Unassigned",
+            "open": "Open",
+            "in_progress": "In Progress",
+            "closed": "Closed",
+            "low": "Low",
+            "medium": "Medium",
+            "high": "High"
         },
         "camerasPage": {
             "searchCameras": "Search cameras...",
@@ -1320,7 +1394,12 @@
             "reportIdPlaceholder": "Link to report",
             "notesPlaceholder": "BOLO description and details...",
             "cancel": "Cancel",
-            "create": "Create"
+            "create": "Create",
+            "active": "Active",
+            "inactive": "Inactive",
+            "resolved": "Resolved",
+            "all": "All",
+            "unknown": "Unknown"
         },
         "bodycamsPage": {
             "searchPlaceholder": "Search by name, callsign or rank...",
@@ -1534,6 +1613,40 @@
             "refresh": "Refresh",
             "save": "Save",
             "searchCases": "Search cases..."
+        },
+        "tabs": {
+            "dashboard": "Dashboard",
+            "citizens": "Citizens",
+            "reports": "Reports",
+            "cases": "Cases",
+            "evidence": "Evidence",
+            "bolos": "BOLOs",
+            "warrants": "Warrants",
+            "vehicles": "Vehicles",
+            "weapons": "Weapons",
+            "charges": "Charges",
+            "awards": "Awards",
+            "roster": "Roster",
+            "map": "Map",
+            "cameras": "Cameras",
+            "bodycams": "Bodycams",
+            "ia": "IA",
+            "ppr": "PPR",
+            "fto": "FTO",
+            "sop": "SOP",
+            "court_cases": "Court Cases",
+            "warrant_review": "Warrant Review",
+            "court_orders": "Court Orders",
+            "legal_documents": "Legal Documents",
+            "preferences": "Preferences",
+            "settings": "Settings",
+            "collapse": "Collapse",
+            "operations": "Operations",
+            "records": "Records",
+            "personnel": "Personnel",
+            "surveillance": "Surveillance",
+            "court": "Court",
+            "legal": "Legal"
         }
     }
 }

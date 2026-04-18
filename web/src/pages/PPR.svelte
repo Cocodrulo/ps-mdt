@@ -9,7 +9,7 @@
 	import PersonSearchModal from "../components/report-editor/PersonSearchModal.svelte";
 	import type { createTabService } from "../services/tabService.svelte";
 	import type { AuthService } from "../services/authService.svelte";
-	import { _L } from "@/utils/localization";
+	import { _L, getLocalizedDate, getLocalizedTime } from "@/utils/localization";
 
 	let { tabService, authService }: { tabService?: ReturnType<typeof createTabService>; authService?: AuthService } = $props();
 
@@ -280,33 +280,21 @@
 	}
 
 	function formatLabel(value: string): string {
-		return value.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+		return _L(`ppr.${value}`);
 	}
 
 	function formatDateValue(value: string | undefined): string {
 		if (!value) return "-";
 		const date = new Date(value);
 		if (Number.isNaN(date.getTime())) return "-";
-		return date.toLocaleDateString("en-US", {
-			month: "2-digit",
-			day: "2-digit",
-			year: "numeric",
-		});
+		return getLocalizedDate(date);
 	}
 
 	function formatDateTimeValue(value: string | undefined): string {
 		if (!value) return "-";
 		const date = new Date(value);
 		if (Number.isNaN(date.getTime())) return "-";
-		return date.toLocaleDateString("en-US", {
-			month: "2-digit",
-			day: "2-digit",
-			year: "numeric",
-		}) + " " + date.toLocaleTimeString("en-US", {
-			hour: "2-digit",
-			minute: "2-digit",
-			hour12: false,
-		});
+		return getLocalizedDate(date) + " " + getLocalizedTime(date);
 	}
 
 	function getCategoryPillClass(category: string): string {

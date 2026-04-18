@@ -103,7 +103,7 @@
 							class="field-select"
 						>
 							{#each evidenceTypes as type}
-								<option value={type}>{type}</option>
+								<option value={type}>{_L("evidence." + type.toLowerCase())}</option>
 							{/each}
 						</select>
 						<input

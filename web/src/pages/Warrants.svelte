@@ -106,7 +106,7 @@
 			class="search-input"
 		/>
 		<div class="topbar-actions">
-			<span class="result-count">{filteredWarrants.length} warrant{filteredWarrants.length !== 1 ? "s" : ""}</span>
+			<span class="result-count">{filteredWarrants.length} {_L("warrants.warrants")}</span>
 			<button
 				class="btn-secondary"
 				onclick={loadWarrants}

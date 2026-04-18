@@ -163,6 +163,15 @@
 		}
 	}
 
+	function getStatusLabel(status?: string) {
+		switch (status) {
+			case "active": return _L("bolosPage.active");
+			case "inactive": return _L("bolosPage.inactive");
+			case "resolved": return _L("bolosPage.resolved");
+			default: return _L("bolosPage.unknown");
+		}
+	}
+
 	function getTypeLabel(type: string) {
 		switch (type) {
 			case "citizen": return _L("bolosPage.citizen");
@@ -221,7 +230,7 @@
 	<div class="topbar">
 		<div class="filters">
 			{#each ["active", "inactive", "resolved", "all"] as f}
-				<button class="filter-btn" class:active={statusFilter === f} onclick={() => (statusFilter = f)}>{f}</button>
+				<button class="filter-btn" class:active={statusFilter === f} onclick={() => (statusFilter = f)}>{_L("bolosPage."+f)}</button>
 			{/each}
 		</div>
 		<button class="new-btn" onclick={() => (showCreate = true)}>
@@ -242,7 +251,7 @@
 					<div class="bolo-main">
 						<div class="bolo-title-row">
 							<span class="bolo-name">{bolo.name}</span>
-							<span class="status-pill {getStatusClass(bolo.status)}">{bolo.status ?? "unknown"}</span>
+							<span class="status-pill {getStatusClass(bolo.status)}">{getStatusLabel(bolo.status)}</span>
 							<span class="type-pill {getTypeClass(bolo.type)}">{getTypeLabel(bolo.type)}</span>
 						</div>
 						<div class="bolo-meta">
@@ -283,7 +292,7 @@
 			<div class="modal-body">
 				<div class="modal-top">
 					<span class="modal-name">{selectedBolo.name}</span>
-					<span class="status-pill {getStatusClass(selectedBolo.status)}">{selectedBolo.status ?? "unknown"}</span>
+					<span class="status-pill {getStatusClass(selectedBolo.status)}">{getStatusLabel(selectedBolo.status)}</span>
 				</div>
 				<div class="modal-grid">
 					<div class="modal-field"><span class="field-label">{_L("bolosPage.type")}</span><span class="field-value">{getTypeLabel(selectedBolo.type)}</span></div>

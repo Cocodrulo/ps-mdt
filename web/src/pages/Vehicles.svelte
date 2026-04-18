@@ -425,7 +425,7 @@
 		<div class="topbar">
 			<div class="search-box">
 				<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-				<input type="text" bind:value={searchQuery} placeholder="Search vehicles by owner, plate, class..." />
+				<input type="text" bind:value={searchQuery} placeholder="{_L("vehicles.searchPlaceholder")}" />
 			</div>
 			<button class="refresh-btn" onclick={refreshVehicles} disabled={loading}>
 				{loading ? _L("vehicles.loading") : _L("vehicles.refresh")}

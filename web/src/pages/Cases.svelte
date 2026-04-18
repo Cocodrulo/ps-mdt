@@ -579,7 +579,7 @@
 	}
 
 	function formatStatus(status: string) {
-		return status.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+		return _L("casesPage." + status);
 	}
 </script>
 
@@ -1119,13 +1119,13 @@
 							<span class="col-title row-title">{item.title}</span>
 							<span class="col-case row-case">{item.case_number}</span>
 							<span class="col-status">
-								<span class="pill {item.status === 'open' ? 'pill-green' : item.status === 'in_progress' ? 'pill-blue' : 'pill-grey'}">{formatStatus(item.status)}</span>
+								<span class="pill {item.status === 'open' ? 'pill-green' : item.status === 'in_progress' ? 'pill-blue' : 'pill-grey'}">{_L("casesPage." + item.status)}</span>
 							</span>
 							<span class="col-priority">
-								<span class="pill {item.priority === 'high' ? 'pill-red' : item.priority === 'medium' ? 'pill-orange' : 'pill-green'}">{item.priority}</span>
+								<span class="pill {item.priority === 'high' ? 'pill-red' : item.priority === 'medium' ? 'pill-orange' : 'pill-green'}">{_L("casesPage." + item.priority)}</span>
 							</span>
 							<span class="col-dept">{item.assigned_department || "-"}</span>
-							<span class="col-officer">{item.primary_officer_callsign ? item.primary_officer_callsign + " " : ""}{item.primary_officer_name || "Unassigned"}</span>
+							<span class="col-officer">{item.primary_officer_callsign ? item.primary_officer_callsign + " " : ""}{item.primary_officer_name || _L("casesPage.unassigned")}</span>
 							<span class="col-date">{formatDateValue(item.created_at)}</span>
 							<span class="col-date">{formatDateValue(item.updated_at)}</span>
 						</button>

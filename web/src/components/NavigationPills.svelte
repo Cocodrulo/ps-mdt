@@ -3,6 +3,7 @@
 	import type { createTabService } from "../services/tabService.svelte";
 	import type { JobType } from "../interfaces/IUser";
 	import type { AuthService } from "../services/authService.svelte";
+	import { _L } from "@/utils/localization";
 
 	interface Props {
 		tabService: ReturnType<typeof createTabService>;
@@ -101,7 +102,7 @@
 									onclick={() => handleTabClick(tab)}
 								>
 									<span class="material-icons nav-icon">{tab.icon}</span>
-									<span>{tab.name}</span>
+									<span>{tab.label}</span>
 								</button>
 							{/if}
 						{/each}
@@ -119,7 +120,7 @@
 						onclick={() => handleTabClick(tab)}
 					>
 						<span class="material-icons nav-icon">{tab.icon}</span>
-						<span class:hide={collapsed}>{tab.name}</span>
+						<span class:hide={collapsed}>{tab.label}</span>
 					</button>
 				{/if}
 			{/each}
@@ -132,7 +133,7 @@
 				? "keyboard_double_arrow_right"
 				: "keyboard_double_arrow_left"}</span
 		>
-		{collapsed ? "" : "Collapse"}
+		{collapsed ? "" : _L("tabs.collapse")}
 	</button>
 </div>
 

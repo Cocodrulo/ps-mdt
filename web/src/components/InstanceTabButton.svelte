@@ -35,6 +35,10 @@
 			onInstanceClose(instance.id, syntheticEvent);
 		}
 	}
+
+	function getTabLabel(tabName: MDTTab): string {
+		return MDT_TABS.find((t) => t.name === tabName)?.label || tabName;
+	}
 </script>
 
 <div class="instance-tab-container">
@@ -45,7 +49,7 @@
 		aria-label="Switch to {instance.currentTab}"
 	>
 		<span class="tab-icon material-icons">{tabIcon}</span>
-		<span class="tab-name">{instance.currentTab}</span>
+		<span class="tab-name">{getTabLabel(instance.currentTab)}</span>
 		{#if showCloseButton}
 			<span
 				class="close-btn"

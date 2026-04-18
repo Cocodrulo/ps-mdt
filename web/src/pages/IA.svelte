@@ -284,7 +284,7 @@
 	}
 
 	function formatLabel(value: string): string {
-		return value.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+		return _L(`ia.${value}`);
 	}
 
 	function formatDateValue(value: string | undefined): string {
@@ -461,14 +461,14 @@
 				<!-- Right Column: Sidebar -->
 				<div class="detail-side">
 					<div class="section">
-						<div class="section-title">Complainant</div>
+						<div class="section-title">{_L('ia.complainant')}</div>
 						<div class="field-group">
-							<span class="field-label">Name</span>
+							<span class="field-label">{_L('ia.name')}</span>
 							<span class="field-value">{selectedComplaint.complaint.complainant_name}</span>
 						</div>
 						{#if selectedComplaint.complaint.complainant_phone}
 							<div class="field-group">
-								<span class="field-label">Phone</span>
+								<span class="field-label">{_L('ia.phone')}</span>
 								<span class="field-value">{selectedComplaint.complaint.complainant_phone}</span>
 							</div>
 						{/if}
@@ -476,7 +476,7 @@
 
 					{#if canManage}
 						<div class="section">
-							<div class="section-title">Status Management</div>
+							<div class="section-title">{_L('ia.statusManagement')}</div>
 							<div class="inline-controls">
 								<select class="form-select" bind:value={statusUpdateValue}>
 									{#each statusOptions.filter(s => s !== 'all') as opt}
@@ -488,24 +488,24 @@
 						</div>
 
 						<div class="section">
-							<div class="section-title">Investigator</div>
+							<div class="section-title">{_L('ia.investigator')}</div>
 							{#if selectedComplaint.complaint.assigned_to_name}
 								<p class="assigned-name">{selectedComplaint.complaint.assigned_to_name}</p>
 							{:else}
-								<p class="muted-text">No investigator assigned</p>
+								<p class="muted-text">{_L('ia.noInvestigator')}</p>
 							{/if}
 							<div class="inline-controls">
-								<button class="action-btn" onclick={() => (showInvestigatorSearch = true)}>Search</button>
-								<button class="action-btn" onclick={handleSelfAssign}>Self</button>
+								<button class="action-btn" onclick={() => (showInvestigatorSearch = true)}>{_L('ia.search')}</button>
+								<button class="action-btn" onclick={handleSelfAssign}>{_L('ia.self')}</button>
 								{#if selectedComplaint.complaint.assigned_to_name}
-									<button class="action-btn danger" onclick={handleUnassign}>Unassign</button>
+									<button class="action-btn danger" onclick={handleUnassign}>{_L('ia.unassign')}</button>
 								{/if}
 							</div>
 						</div>
 					{/if}
 
 					<div class="section">
-						<div class="section-title">Internal Notes</div>
+						<div class="section-title">{_L('ia.internalNotes')}</div>
 						<div class="note-input-row">
 							<textarea
 								class="form-textarea"
@@ -514,7 +514,7 @@
 								bind:value={noteContent}
 							></textarea>
 							<button class="action-btn" onclick={handleAddNote} disabled={noteSubmitting || !noteContent.trim()}>
-								{noteSubmitting ? 'Adding...' : 'Add Note'}
+								{noteSubmitting ? _L('ia.adding') : _L('ia.addNote')}
 							</button>
 						</div>
 						{#if selectedComplaint.notes.length > 0}
@@ -522,7 +522,7 @@
 								{#each selectedComplaint.notes as note}
 									<div class="note-item">
 										<div class="note-header">
-											<span class="note-author">{note.author_name || 'Unknown'}</span>
+											<span class="note-author">{note.author_name || _L('ia.unknown')}</span>
 											<span class="note-date">{formatDateTimeValue(note.created_at)}</span>
 											{#if canManage}
 												<button class="chip-remove" onclick={() => handleDeleteNote(note.id)}>
@@ -535,7 +535,7 @@
 								{/each}
 							</div>
 						{:else}
-							<p class="muted-text">No notes yet.</p>
+							<p class="muted-text">{_L('ia.noNotes')}</p>
 						{/if}
 					</div>
 				</div>
@@ -551,7 +551,7 @@
 						class:active={statusFilter === opt}
 						onclick={() => { statusFilter = opt; }}
 					>
-						{opt === 'all' ? 'All' : formatLabel(opt)}
+						{opt === 'all' ? _L('ia.all') : formatLabel(opt)}
 					</button>
 				{/each}
 			</div>
@@ -560,12 +560,12 @@
 		<div class="topbar">
 			<div class="search-box">
 				<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-				<input type="text" placeholder="Search complaints..." bind:value={searchQuery} />
+				<input type="text" placeholder={_L('ia.searchPlaceholder')} bind:value={searchQuery} />
 			</div>
 			<div style="flex:1;"></div>
 			<button class="back-btn" onclick={loadComplaints} disabled={loading}>
 				<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-				Refresh
+				{_L('ia.refresh')}
 			</button>
 		</div>
 
@@ -573,23 +573,23 @@
 			{#if loading && complaints.length === 0}
 				<div class="center-state">
 					<div class="loading-spinner"></div>
-					<p>Loading complaints...</p>
+					<p>{_L('ia.loading')}</p>
 				</div>
 			{:else if paginatedComplaints.length === 0}
 				<div class="center-state">
 					<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-					<h3>No Complaints Found</h3>
-					<p>{searchQuery ? "No complaints match your search criteria." : "No complaints have been filed yet."}</p>
+					<h3>{_L('ia.noComplaintsFound')}</h3>
+					<p>{searchQuery ? _L('ia.noComplaintsMatchSearch') : _L('ia.noComplaintsHaveBeenFiledYet')}</p>
 				</div>
 			{:else}
 				<div class="table-header">
 					<span>#</span>
-					<span>Status</span>
-					<span>Category</span>
-					<span>Officer</span>
-					<span>Complainant</span>
-					<span>Date</span>
-					<span>Assigned To</span>
+					<span>{_L('ia.status')}</span>
+					<span>{_L('ia.category')}</span>
+					<span>{_L('ia.officer')}</span>
+					<span>{_L('ia.complainant')}</span>
+					<span>{_L('ia.date')}</span>
+					<span>{_L('ia.assignedTo')}</span>
 				</div>
 				<div class="table-body">
 					{#each paginatedComplaints as item}
@@ -602,7 +602,7 @@
 							<span>{item.officer_name}</span>
 							<span>{item.complainant_name}</span>
 							<span>{formatDateValue(item.created_at)}</span>
-							<span>{item.assigned_to_name || 'Unassigned'}</span>
+							<span>{item.assigned_to_name || _L('ia.unassigned')}</span>
 						</button>
 					{/each}
 				</div>
@@ -620,7 +620,7 @@
 
 <PersonSearchModal
 	show={showInvestigatorSearch}
-	title="Search Officers"
+	title={_L('ia.searchOfficers')}
 	searchQuery={investigatorSearchQuery}
 	searchResults={searchService.state.results}
 	onClose={() => {
@@ -633,7 +633,7 @@
 
 <PersonSearchModal
 	show={showOfficerSearchForEdit}
-	title="Search Officer"
+	title={_L('ia.searchOfficer')}
 	searchQuery=""
 	searchResults={searchService.state.results}
 	onClose={() => {

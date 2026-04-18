@@ -382,7 +382,7 @@
 	}
 
 	function formatStored(value: boolean | number | undefined) {
-		return value ? "Stored" : "In Field";
+		return value ? _L("evidence.stored") : _L("evidence.inField");
 	}
 
 	onMount(async () => {
@@ -408,7 +408,7 @@
 			<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
 			<input
 				type="text"
-				placeholder="Search by title, serial, location, stash..."
+				placeholder={_L("evidence.searchPlaceholder")}
 				bind:value={searchQuery}
 				onkeydown={(event) => {
 					if (event.key === "Enter") loadEvidence(1);
@@ -416,7 +416,7 @@
 			/>
 		</div>
 		<button class="action-btn" onclick={() => loadEvidence(1)}>
-			Search
+			{_L("evidence.search")}
 		</button>
 		<button class="create-btn" onclick={() => {
 			resetCreateForm();
@@ -431,7 +431,7 @@
 			if (latestCaseId > 0) createForm.caseId = String(latestCaseId);
 			showCreate = true;
 		}}>
-			New Evidence
+			{_L("evidence.newEvidence")}
 		</button>
 	</div>
 
@@ -464,7 +464,7 @@
 				{#each items as item}
 					<button class="table-row" class:selected={selectedEvidenceId === item.id} onclick={() => selectEvidence(item)}>
 						<span class="col-title">{item.title}</span>
-						<span class="col-type"><span class="type-badge">{item.type}</span></span>
+						<span class="col-type"><span class="type-badge">{_L("evidence." + item.type.toLowerCase())}</span></span>
 						<span class="col-serial">{item.serial || "---"}</span>
 						<span class="col-case">
 							{#if item.case_id}

@@ -1,30 +1,32 @@
+import { _L } from "@/utils/localization";
+
 /** MDT tab definitions */
 export const MDT_TABS = [
-	{ name: "Dashboard", icon: "dashboard" },
-	{ name: "Citizens", icon: "people" },
-	{ name: "Reports", icon: "description" },
-	{ name: "Cases", icon: "folder" },
-	{ name: "Evidence", icon: "inventory_2" },
-	{ name: "BOLOs", icon: "notification_important" },
-	{ name: "Warrants", icon: "gavel" },
-	{ name: "Vehicles", icon: "directions_car" },
-	{ name: "Weapons", icon: "security" },
-	{ name: "Charges", icon: "balance" },
-	{ name: "Awards", icon: "emoji_events" },
-	{ name: "Roster", icon: "group" },
-	{ name: "Map", icon: "map" },
-	{ name: "Cameras", icon: "videocam" },
-	{ name: "Bodycams", icon: "video_camera_front" },
-	{ name: "IA", icon: "shield" },
-	{ name: "PPR", icon: "rate_review" },
-	{ name: "FTO", icon: "school" },
-	{ name: "SOP", icon: "menu_book" },
-	{ name: "Court Cases", icon: "gavel" },
-	{ name: "Warrant Review", icon: "policy" },
-	{ name: "Court Orders", icon: "assignment_late" },
-	{ name: "Legal Documents", icon: "article" },
-	{ name: "Preferences", icon: "tune" },
-	{ name: "Settings", icon: "admin_panel_settings" },
+	{ name: "Dashboard", icon: "dashboard", label: _L("tabs.dashboard") },
+	{ name: "Citizens", icon: "people", label: _L("tabs.citizens") },
+	{ name: "Reports", icon: "description", label: _L("tabs.reports") },
+	{ name: "Cases", icon: "folder", label: _L("tabs.cases") },
+	{ name: "Evidence", icon: "inventory_2", label: _L("tabs.evidence") },
+	{ name: "BOLOs", icon: "notification_important", label: _L("tabs.bolos") },
+	{ name: "Warrants", icon: "gavel", label: _L("tabs.warrants") },
+	{ name: "Vehicles", icon: "directions_car", label: _L("tabs.vehicles") },
+	{ name: "Weapons", icon: "security", label: _L("tabs.weapons") },
+	{ name: "Charges", icon: "balance", label: _L("tabs.charges") },
+	{ name: "Awards", icon: "emoji_events", label: _L("tabs.awards") },
+	{ name: "Roster", icon: "group", label: _L("tabs.roster") },
+	{ name: "Map", icon: "map", label: _L("tabs.map") },
+	{ name: "Cameras", icon: "videocam", label: _L("tabs.cameras") },
+	{ name: "Bodycams", icon: "video_camera_front", label: _L("tabs.bodycams") },
+	{ name: "IA", icon: "shield", label: _L("tabs.ia") },
+	{ name: "PPR", icon: "rate_review", label: _L("tabs.ppr") },
+	{ name: "FTO", icon: "school", label: _L("tabs.fto") },
+	{ name: "SOP", icon: "menu_book", label: _L("tabs.sop") },
+	{ name: "Court Cases", icon: "gavel", label: _L("tabs.court_cases") },
+	{ name: "Warrant Review", icon: "policy", label: _L("tabs.warrant_review") },
+	{ name: "Court Orders", icon: "assignment_late", label: _L("tabs.court_orders") },
+	{ name: "Legal Documents", icon: "article", label: _L("tabs.legal_documents") },
+	{ name: "Preferences", icon: "tune", label: _L("tabs.preferences") },
+	{ name: "Settings", icon: "admin_panel_settings", label: _L("tabs.settings") },
 ] as const;
 
 /** Tabs available for EMS job type */
@@ -74,18 +76,18 @@ export interface NavGroup {
 
 export const NAV_GROUPS: NavGroup[] = [
 	{ id: "dashboard", tabs: ["Dashboard"] },
-	{ id: "operations", label: "Operations", icon: "assignment", tabs: ["Reports", "Cases", "Evidence", "BOLOs", "Warrants"] },
-	{ id: "records", label: "Records", icon: "folder_open", tabs: ["Citizens", "Vehicles", "Weapons", "Charges"] },
-	{ id: "personnel", label: "Personnel", icon: "badge", tabs: ["Roster", "Awards", "IA", "PPR", "FTO", "SOP"] },
-	{ id: "surveillance", label: "Surveillance", icon: "visibility", tabs: ["Map", "Cameras", "Bodycams"] },
+	{ id: "operations", label: _L("tabs.operations"), icon: "assignment", tabs: ["Reports", "Cases", "Evidence", "BOLOs", "Warrants"] },
+	{ id: "records", label: _L("tabs.records"), icon: "folder_open", tabs: ["Citizens", "Vehicles", "Weapons", "Charges"] },
+	{ id: "personnel", label: _L("tabs.personnel"), icon: "badge", tabs: ["Roster", "Awards", "IA", "PPR", "FTO", "SOP"] },
+	{ id: "surveillance", label: _L("tabs.surveillance"), icon: "visibility", tabs: ["Map", "Cameras", "Bodycams"] },
 	{ id: "bottom", tabs: ["Preferences", "Settings"] },
 ];
 
 export const DOJ_NAV_GROUPS: NavGroup[] = [
 	{ id: "dashboard", tabs: ["Dashboard"] },
-	{ id: "court", label: "Court", icon: "account_balance", tabs: ["Court Cases", "Warrant Review", "Court Orders"] },
-	{ id: "legal", label: "Legal", icon: "description", tabs: ["Legal Documents", "Charges"] },
-	{ id: "records", label: "Records", icon: "folder_open", tabs: ["Reports", "Citizens", "Cases", "Evidence"] },
+	{ id: "court", label: _L("tabs.court"), icon: "account_balance", tabs: ["Court Cases", "Warrant Review", "Court Orders"] },
+	{ id: "legal", label: _L("tabs.legal"), icon: "description", tabs: ["Legal Documents", "Charges"] },
+	{ id: "records", label: _L("tabs.records"), icon: "folder_open", tabs: ["Reports", "Citizens", "Cases", "Evidence"] },
 	{ id: "bottom", tabs: ["Settings"] },
 ];
 
