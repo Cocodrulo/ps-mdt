@@ -4,7 +4,7 @@
 	import { isEnvBrowser } from "../../utils/misc";
 	import { NUI_EVENTS } from "../../constants/nuiEvents";
 	import Pagination from "../Pagination.svelte";
-	import { _L } from "@/utils/localization";
+	import { _L, getLocalizedDate, getLocalizedTime } from "@/utils/localization";
 
 	interface AuditLog {
 		id: number;
@@ -142,14 +142,14 @@
 		if (hours < 24) return _L("managementActivity.hoursAgo", ["hours", hours]);
 		const days = Math.floor(hours / 24);
 		if (days < 7) return _L("managementActivity.daysAgo", ["days", days]);
-		return date.toLocaleDateString() + " " + date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+		return getLocalizedDate(date) + " " + getLocalizedTime(date);
 	}
 
 	function formatFullTimestamp(value: string): string {
 		if (!value) return "";
 		const date = new Date(value);
 		if (Number.isNaN(date.getTime())) return value;
-		return date.toLocaleString();
+		return getLocalizedDate(date) + " " + getLocalizedTime(date);
 	}
 
 	async function loadActivity(page = 1) {

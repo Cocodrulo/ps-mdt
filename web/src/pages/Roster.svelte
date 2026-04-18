@@ -7,7 +7,7 @@
 	import { NUI_EVENTS } from "../constants/nuiEvents";
 	import { globalNotifications } from "../services/notificationService.svelte";
 	import type { AuthService } from "../services/authService.svelte";
-	import { _L } from "@/utils/localization";
+	import { _L, getLocalizedDate } from "@/utils/localization";
 
 	let { authService, tabService }: { authService?: AuthService; tabService?: any } = $props();
 
@@ -233,8 +233,7 @@
 				? response.activeUnits
 				: [];
 		} catch (error) {
-			globalNotifications.error("Failed to load roster");
-			officers = [];
+			globalNotifications.error(_L("roster.failedToLoadRoster"));
 		} finally {
 			isLoading = false;
 		}
@@ -353,17 +352,18 @@
 				if (idx !== -1) {
 					officers[idx].certifications = [...selectedCerts];
 				}
-				globalNotifications.success(`Updated certifications for ${selectedOfficer.firstName} ${selectedOfficer.lastName}`);
-				if (showBossPanel) {
-					// Stay on boss panel, just show success
-				} else {
-					closeCertModal();
+				globalNotifications.success(_L("roster.certificationsUpdated", ["name", `${selectedOfficer.firstName} ${selectedOfficer.lastName}`]));
+				closeBossPanel();
+				await loadRoster();
+				const officerId = selectedOfficer.citizenid;
+				if (officerId === $authService?.user?.citizenid) {
+					await authService.refreshUser();
 				}
 			} else {
-				globalNotifications.error(response?.message || "Failed to update certifications");
+				globalNotifications.error(response?.message || _L("roster.failedToUpdateCertifications"));
 			}
-		} catch {
-			globalNotifications.error("Failed to update certifications");
+		} catch (error) {
+			globalNotifications.error(_L("roster.failedToUpdateCertifications"));
 		} finally {
 			isSavingCerts = false;
 		}
@@ -387,12 +387,14 @@
 				if (idx !== -1) {
 					officers[idx].rank = gradeName;
 				}
-				globalNotifications.success(response.message || `Rank updated to ${gradeName}`);
+				globalNotifications.success(response.message || _L("roster.rankUpdated", ["rank", gradeName]));
+				closeBossPanel();
+				await loadRoster();
 			} else {
-				globalNotifications.error(response?.message || "Failed to update rank");
+				globalNotifications.error(response?.message || _L("roster.failedToUpdateRank"));
 			}
-		} catch {
-			globalNotifications.error("Failed to update rank");
+		} catch (error) {
+			globalNotifications.error(_L("roster.failedToUpdateRank"));
 		} finally {
 			isSavingBoss = false;
 		}
@@ -408,13 +410,14 @@
 			);
 			if (response?.success) {
 				officers = officers.filter((o) => o.citizenid !== selectedOfficer!.citizenid);
-				globalNotifications.success(response.message || "Officer has been terminated");
+				globalNotifications.success(response.message || _L("roster.officerTerminated"));
 				closeBossPanel();
+				await loadRoster();
 			} else {
-				globalNotifications.error(response?.message || "Failed to terminate officer");
+				globalNotifications.error(response?.message || _L("roster.failedToTerminateOfficer"));
 			}
-		} catch {
-			globalNotifications.error("Failed to terminate officer");
+		} catch (error) {
+			globalNotifications.error(_L("roster.failedToTerminateOfficer"));
 		} finally {
 			isSavingBoss = false;
 			showFireConfirm = false;
@@ -959,7 +962,7 @@
 										</div>
 										<div class="ia-history-meta">
 											<span>{formatIAStatus(complaint.category)}</span>
-											<span class="ia-history-date">{complaint.created_at ? new Date(complaint.created_at).toLocaleDateString() : '-'}</span>
+											<span class="ia-history-date">{complaint.created_at ? getLocalizedDate(new Date(complaint.created_at)) : '-'}</span>
 										</div>
 									</div>
 								{/each}

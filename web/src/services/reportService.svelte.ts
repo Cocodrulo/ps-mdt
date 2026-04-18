@@ -1,5 +1,6 @@
 import { fetchNui } from "../utils/fetchNui";
 import { NUI_EVENTS } from "../constants/nuiEvents";
+import { getLocalizedDate, getLocalizedTime } from "../utils/localization";
 import type {
 	Report,
 	Officer,
@@ -620,22 +621,14 @@ export function createReportService() {
 	 * Format a timestamp to date string
 	 */
 	function formatDate(timestamp: number): string {
-		return new Date(timestamp).toLocaleDateString("en-US", {
-			month: "2-digit",
-			day: "2-digit",
-			year: "numeric",
-		});
+		return getLocalizedDate(new Date(timestamp));
 	}
 
 	/**
 	 * Format a timestamp to time string
 	 */
 	function formatTime(timestamp: number): string {
-		return new Date(timestamp).toLocaleTimeString("en-US", {
-			hour: "2-digit",
-			minute: "2-digit",
-			hour12: false,
-		});
+		return getLocalizedTime(new Date(timestamp));
 	}
 
 	return {

@@ -3,7 +3,7 @@
 	import { fetchNui } from "../utils/fetchNui";
 	import { NUI_EVENTS } from "../constants/nuiEvents";
 	import type { AuthService } from "../services/authService.svelte";
-	import { _L, getLocalizedCurrency } from "@/utils/localization";
+	import { _L, getLocalizedCurrency, getLocalizedDate } from "@/utils/localization";
 
 	interface CivilianProfile {
 		citizenid: string;
@@ -208,7 +208,7 @@
 								{#each profile.activeWarrants as warrant}
 									<div class="list-item">
 										<span class="item-id">{_L("civilianView.report")} #{warrant.reportid}</span>
-										<span class="item-name">{_L("civilianView.expires")} {new Date(warrant.expirydate).toLocaleDateString()}</span>
+										<span class="item-name">{_L("civilianView.expires")} {getLocalizedDate(new Date(warrant.expirydate))}</span>
 									</div>
 								{/each}
 							</div>

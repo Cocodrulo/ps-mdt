@@ -450,6 +450,17 @@
             "cancel": "Cancelar",
             "save": "Guardar"
         },
+        "fto": {
+            "failedToLoadAssignments": "Error al cargar las asignaciones FTO",
+            "failedToLoadDetails": "Error al cargar los detalles de la asignación FTO",
+            "assignmentCreated": "Asignación FTO creada",
+            "failedToCreateAssignment": "Error al crear la asignación FTO",
+            "assignmentDeleted": "Asignación FTO eliminada",
+            "failedToDeleteAssignment": "Error al eliminar la asignación FTO",
+            "dorCreated": "Reporte de Observación Diaria creado",
+            "failedToCreateDOR": "Error al crear el ROD",
+            "failedToDeleteDOR": "Error al eliminar el ROD"
+        },
         "managementColors": {
             "colorsSaved": "Colores guardados - se aplican a todos los oficiales en la próxima apertura del MDT",
             "failedToSaveColors": "Error al guardar los colores",
@@ -618,7 +629,9 @@
             "refresh": "Actualizar",
             "searchPlaceholder": "Buscar por nombre, serie, propietario, clase, tinte o tipo...",
             "noWeaponsFound": "No se encontraron armas.",
-            "noWeaponsMatchSearch": "Ninguna arma coincide con tu búsqueda."
+            "noWeaponsMatchSearch": "Ninguna arma coincide con tu búsqueda.",
+            "failedToLoadWeaponHistory": "Error al cargar el historial del arma",
+            "failedToLoadWeapons": "Error al cargar las armas"
         },
         "warrants": {
             "back": "Volver",
@@ -646,7 +659,8 @@
             "misdemeanors": "Delitos menores",
             "infractions": "Infracciones",
             "expires": "Vence",
-            "warrants": "Órdenes de arresto"
+            "warrants": "Órdenes de arresto",
+            "failedToLoadWarrants": "Error al cargar las órdenes de arresto"
         },
         "vehicles": {
             "back": "Volver",
@@ -695,7 +709,7 @@
             "vehicle": "Vehículo",
             "model": "Modelo",
             "unknown": "Desconocido",
-            "": "Válido"
+            "failedToRefreshTracking": "Error al actualizar el seguimiento"
         },
         "sop": {
             "title": "Procedimientos Operativos Estándar",
@@ -735,6 +749,13 @@
         "roster": {
             "callsignUpdated": "Indicativo actualizado a {{callsign}}",
             "failedToUpdateCallsign": "Error al actualizar el indicativo",
+            "failedToLoadRoster": "Error al cargar la plantilla",
+            "failedToUpdateCertifications": "Error al actualizar las certificaciones",
+            "certificationsUpdated": "Certificaciones actualizadas para {{name}}",
+            "failedToUpdateRank": "Error al actualizar el rango",
+            "rankUpdated": "Rango actualizado a {{rank}}",
+            "officerTerminated": "El oficial ha sido dado de baja",
+            "failedToTerminateOfficer": "Error al dar de baja al oficial",
             "searchPlaceholder": "Buscar por indicativo, nombre o rango...",
             "loading": "Cargando...",
             "refresh": "Actualizar",
@@ -916,7 +937,8 @@
             "badges": "Insignias",
             "officer": "Oficial",
             "vehicle": "Vehículo",
-            "bodycam": "Cámara corporal"
+            "bodycam": "Cámara corporal",
+            "failedToRefreshTracking": "Error al actualizar el seguimiento"
         },
         "ia": {
             "backToComplaints": "Volver a las quejas",
@@ -1239,7 +1261,13 @@
             "noReports": "No hay informes",
             "noVehicles": "No hay vehículos",
             "noWeapons": "No hay armas",
-            "weapons": "Armas"
+            "weapons": "Armas",
+            "failedToFetchCitizens": "Error al obtener los ciudadanos",
+            "failedToFetchProfile": "Error al obtener el perfil del ciudadano",
+            "uploadingPhoto": "Subiendo foto...",
+            "failedToUploadPhoto": "Error al subir la foto",
+            "failedToCaptureMugshot": "Error al capturar la foto policial",
+            "couldNotDetermineCitizenId": "No se pudo determinar tu ID de ciudadano"
         },
         "chargesPage": {
             "searchCharges": "Buscar cargos...",
@@ -1614,6 +1642,71 @@
             "refresh": "Actualizar",
             "save": "Guardar",
             "searchCases": "Buscar casos..."
+        },
+        "ia": {
+            "backToComplaints": "Volver a Quejas",
+            "complaintInformation": "Información de la Queja",
+            "save": "Guardar",
+            "cancel": "Cancelar",
+            "edit": "Editar",
+            "officer": "Agente",
+            "officerName": "Nombre del Agente",
+            "search": "Buscar",
+            "badge": "Placa",
+            "incidentDate": "Fecha del Incidente",
+            "location": "Ubicación",
+            "category": "Categoría",
+            "description": "Descripción",
+            "witnesses": "Testigos",
+            "evidence": "Pruebas",
+            "evidenceNumber": "Prueba #{{number}}",
+            "complainant": "Denunciante",
+            "name": "Nombre",
+            "phone": "Teléfono",
+            "statusManagement": "Gestión de Estado",
+            "investigator": "Investigador",
+            "noInvestigator": "Ningún investigador asignado.",
+            "self": "Autoasignar",
+            "unassign": "Desasignar",
+            "internalNotes": "Notas Internas",
+            "adding": "Añadiendo...",
+            "addNote": "Añadir Nota",
+            "unknown": "Desconocido",
+            "noNotes": "Aún no hay notas internas.",
+            "all": "Todos",
+            "searchPlaceholder": "Buscar por número de queja, nombre, agente...",
+            "refresh": "Actualizar",
+            "loading": "Cargando quejas...",
+            "noComplaintsFound": "No Se Encontraron Quejas",
+            "noComplaintsMatchSearch": "No hay quejas que coincidan con tu búsqueda.",
+            "noComplaintsHaveBeenFiledYet": "Aún no se han presentado quejas de Asuntos Internos.",
+            "status": "Estado",
+            "date": "Fecha",
+            "assignedTo": "Asignado A",
+            "unassigned": "Sin Asignar",
+            "searchOfficers": "Buscar Investigadores",
+            "searchOfficer": "Buscar Agente",
+            "open": "Abierto",
+            "under_review": "En Revisión",
+            "investigated": "Investigado",
+            "sustained": "Sostenido",
+            "exonerated": "Exonerado",
+            "unfounded": "Infundado",
+            "closed": "Cerrado",
+            "failedToLoadComplaints": "Error al cargar quejas",
+            "failedToLoadDetails": "Error al cargar los detalles de la queja",
+            "failedToUpdateStatus": "Error al actualizar el estado",
+            "statusUpdated": "Estado actualizado",
+            "couldNotDetermineCitizenId": "No se pudo determinar tu ID de ciudadano",
+            "assignedToYou": "Asignado a ti",
+            "failedToAssignInvestigator": "Error al asignar investigador",
+            "investigatorUnassigned": "Investigador desasignado",
+            "failedToUnassignInvestigator": "Error al desasignar investigador",
+            "investigatorAssigned": "Investigador asignado",
+            "failedToAddNote": "Error al añadir nota",
+            "failedToDeleteNote": "Error al eliminar nota",
+            "infoUpdated": "Información de queja actualizada",
+            "failedToUpdateInfo": "Error al actualizar la información de queja"
         },
         "tabs": {
             "dashboard": "Inicio",

@@ -5,7 +5,7 @@
 	import { NUI_EVENTS } from "../constants/nuiEvents";
 	import type { createTabService } from "../services/tabService.svelte";
 	import type { JobType } from "../interfaces/IUser";
-	import { _L } from "@/utils/localization";
+	import { _L, getLocalizedDate } from "@/utils/localization";
 
 	interface Props {
 		tabService: ReturnType<typeof createTabService>;
@@ -221,7 +221,7 @@
 								</div>
 								<span class="award-category">{award.category}</span>
 								{#if award.earnedDate}
-									<span class="award-date">{new Date(award.earnedDate).toLocaleDateString()}</span>
+									<span class="award-date">{getLocalizedDate(new Date(award.earnedDate))}</span>
 								{/if}
 								<span class="award-check material-icons">check_circle</span>
 							</div>

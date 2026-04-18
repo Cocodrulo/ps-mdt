@@ -450,6 +450,17 @@
             "cancel": "Cancel",
             "save": "Save"
         },
+        "fto": {
+            "failedToLoadAssignments": "Failed to load FTO assignments",
+            "failedToLoadDetails": "Failed to load FTO assignment details",
+            "assignmentCreated": "FTO assignment created",
+            "failedToCreateAssignment": "Failed to create FTO assignment",
+            "assignmentDeleted": "FTO assignment deleted",
+            "failedToDeleteAssignment": "Failed to delete FTO assignment",
+            "dorCreated": "Daily Observation Report created",
+            "failedToCreateDOR": "Failed to create DOR",
+            "failedToDeleteDOR": "Failed to delete DOR"
+        },
         "managementColors": {
             "colorsSaved": "Colors saved - applies to all officers on next MDT open",
             "failedToSaveColors": "Failed to save colors",
@@ -618,7 +629,9 @@
             "refresh": "Refresh",
             "searchPlaceholder": "Search by name, serial, owner, class, tint or type...",
             "noWeaponsFound": "No weapons found.",
-            "noWeaponsMatchSearch": "No weapons match your search."
+            "noWeaponsMatchSearch": "No weapons match your search.",
+            "failedToLoadWeaponHistory": "Failed to load weapon history",
+            "failedToLoadWeapons": "Failed to load weapons"
         },
         "warrants": {
             "back": "Back",
@@ -646,10 +659,12 @@
             "misdemeanors": "Misdemeanors",
             "infractions": "Infractions",
             "expires": "Expires",
-            "warrants": "Warrants"
+            "warrants": "Warrants",
+            "failedToLoadWarrants": "Failed to load warrants"
         },
         "vehicles": {
             "back": "Back",
+            "failedToRefreshTracking": "Failed to refresh tracking",
             "plate": "Plate",
             "owner": "Owner",
             "class": "Class",
@@ -694,7 +709,8 @@
             "valid": "Valid",
             "vehicle": "Vehicle",
             "model": "Model",
-            "unknown": "Unknown"
+            "unknown": "Unknown",
+            "backBtn": "Back"
         },
         "sop": {
             "title": "Standard Operating Procedures",
@@ -734,6 +750,13 @@
         "roster": {
             "callsignUpdated": "Callsign updated to {{callsign}}",
             "failedToUpdateCallsign": "Failed to update callsign",
+            "failedToLoadRoster": "Failed to load roster",
+            "failedToUpdateCertifications": "Failed to update certifications",
+            "certificationsUpdated": "Certifications updated for {{name}}",
+            "failedToUpdateRank": "Failed to update rank",
+            "rankUpdated": "Rank updated to {{rank}}",
+            "officerTerminated": "Officer has been terminated",
+            "failedToTerminateOfficer": "Failed to terminate officer",
             "searchPlaceholder": "Search by callsign, name or rank...",
             "loading": "Loading...",
             "refresh": "Refresh",
@@ -915,7 +938,8 @@
             "badges": "Badges",
             "officer": "Officer",
             "vehicle": "Vehicle",
-            "bodycam": "Bodycam"
+            "bodycam": "Bodycam",
+            "failedToRefreshTracking": "Failed to refresh tracking"
         },
         "ia": {
             "backToComplaints": "Back to Complaints",
@@ -1238,7 +1262,13 @@
             "noReports": "No reports",
             "noVehicles": "No vehicles",
             "noWeapons": "No weapons",
-            "weapons": "Weapons"
+            "weapons": "Weapons",
+            "failedToFetchCitizens": "Failed to fetch citizens",
+            "failedToFetchProfile": "Failed to fetch citizen profile",
+            "uploadingPhoto": "Uploading photo...",
+            "failedToUploadPhoto": "Failed to upload photo",
+            "failedToCaptureMugshot": "Failed to capture mugshot",
+            "couldNotDetermineCitizenId": "Could not determine your citizen ID"
         },
         "chargesPage": {
             "searchCharges": "Search charges...",
@@ -1613,6 +1643,71 @@
             "refresh": "Refresh",
             "save": "Save",
             "searchCases": "Search cases..."
+        },
+        "ia": {
+            "backToComplaints": "Back to Complaints",
+            "complaintInformation": "Complaint Information",
+            "save": "Save",
+            "cancel": "Cancel",
+            "edit": "Edit",
+            "officer": "Officer",
+            "officerName": "Officer Name",
+            "search": "Search",
+            "badge": "Badge",
+            "incidentDate": "Incident Date",
+            "location": "Location",
+            "category": "Category",
+            "description": "Description",
+            "witnesses": "Witnesses",
+            "evidence": "Evidence",
+            "evidenceNumber": "Evidence #{{number}}",
+            "complainant": "Complainant",
+            "name": "Name",
+            "phone": "Phone",
+            "statusManagement": "Status Management",
+            "investigator": "Investigator",
+            "noInvestigator": "No investigator assigned.",
+            "self": "Self",
+            "unassign": "Unassign",
+            "internalNotes": "Internal Notes",
+            "adding": "Adding...",
+            "addNote": "Add Note",
+            "unknown": "Unknown",
+            "noNotes": "No internal notes yet.",
+            "all": "All",
+            "searchPlaceholder": "Search by complaint number, name, officer...",
+            "refresh": "Refresh",
+            "loading": "Loading complaints...",
+            "noComplaintsFound": "No Complaints Found",
+            "noComplaintsMatchSearch": "No complaints match your search criteria.",
+            "noComplaintsHaveBeenFiledYet": "No IA complaints have been filed yet.",
+            "status": "Status",
+            "date": "Date",
+            "assignedTo": "Assigned To",
+            "unassigned": "Unassigned",
+            "searchOfficers": "Search Investigators",
+            "searchOfficer": "Search Officer",
+            "open": "Open",
+            "under_review": "Under Review",
+            "investigated": "Investigated",
+            "sustained": "Sustained",
+            "exonerated": "Exonerated",
+            "unfounded": "Unfounded",
+            "closed": "Closed",
+            "failedToLoadComplaints": "Failed to load complaints",
+            "failedToLoadDetails": "Failed to load complaint details",
+            "failedToUpdateStatus": "Failed to update status",
+            "statusUpdated": "Status updated",
+            "couldNotDetermineCitizenId": "Could not determine your citizen ID",
+            "assignedToYou": "Assigned to you",
+            "failedToAssignInvestigator": "Failed to assign investigator",
+            "investigatorUnassigned": "Investigator unassigned",
+            "failedToUnassignInvestigator": "Failed to unassign investigator",
+            "investigatorAssigned": "Investigator assigned",
+            "failedToAddNote": "Failed to add note",
+            "failedToDeleteNote": "Failed to delete note",
+            "infoUpdated": "Complaint info updated",
+            "failedToUpdateInfo": "Failed to update complaint info"
         },
         "tabs": {
             "dashboard": "Dashboard",

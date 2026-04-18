@@ -98,7 +98,7 @@
 			complaints = data.complaints || [];
 		} catch (e) {
 			console.error('[IA] loadComplaints error:', e);
-			globalNotifications.error("Failed to load complaints");
+			globalNotifications.error(_L("ia.failedToLoadComplaints"));
 		}
 		loading = false;
 	}
@@ -122,7 +122,7 @@
 				editIncidentLocation = detail.complaint.incident_location || "";
 			}
 		} catch {
-			globalNotifications.error("Failed to load complaint details");
+			globalNotifications.error(_L("ia.failedToLoadDetails"));
 		}
 		loading = false;
 	}
@@ -145,18 +145,18 @@
 				{ success: true }
 			);
 			if (!result || result.success === false) {
-				globalNotifications.error(result?.error || "Failed to update status");
+				globalNotifications.error(result?.error || _L("ia.failedToUpdateStatus"));
 				return;
 			}
 			// Update local state immediately
 			selectedComplaint.complaint.status = newStatus;
 			const idx = complaints.findIndex(c => c.id === complaintId);
 			if (idx !== -1) complaints[idx].status = newStatus;
-			globalNotifications.success("Status updated");
+			globalNotifications.success(_L("ia.statusUpdated"));
 			// Refresh list in background
 			loadComplaints();
 		} catch {
-			globalNotifications.error("Failed to update status");
+			globalNotifications.error(_L("ia.failedToUpdateStatus"));
 		}
 	}
 
@@ -164,7 +164,7 @@
 		if (!selectedComplaint) return;
 		const cid = authService?.playerData?.citizenid;
 		if (!cid) {
-			globalNotifications.error("Could not determine your citizen ID");
+			globalNotifications.error(_L("ia.couldNotDetermineCitizenId"));
 			return;
 		}
 		try {
@@ -173,9 +173,9 @@
 				citizenid: cid,
 			});
 			await selectComplaint(selectedComplaint.complaint.id);
-			globalNotifications.success("Assigned to you");
+			globalNotifications.success(_L("ia.assignedToYou"));
 		} catch {
-			globalNotifications.error("Failed to assign investigator");
+			globalNotifications.error(_L("ia.failedToAssignInvestigator"));
 		}
 	}
 
@@ -187,9 +187,9 @@
 				citizenid: "__unassign__",
 			});
 			await selectComplaint(selectedComplaint.complaint.id);
-			globalNotifications.success("Investigator unassigned");
+			globalNotifications.success(_L("ia.investigatorUnassigned"));
 		} catch {
-			globalNotifications.error("Failed to unassign investigator");
+			globalNotifications.error(_L("ia.failedToUnassignInvestigator"));
 		}
 	}
 
@@ -215,9 +215,9 @@
 			searchService.clearResults();
 			investigatorSearchQuery = "";
 			await selectComplaint(selectedComplaint.complaint.id);
-			globalNotifications.success("Investigator assigned");
+			globalNotifications.success(_L("ia.investigatorAssigned"));
 		} catch {
-			globalNotifications.error("Failed to assign investigator");
+			globalNotifications.error(_L("ia.failedToAssignInvestigator"));
 		}
 	}
 
@@ -232,7 +232,7 @@
 			noteContent = "";
 			await selectComplaint(selectedComplaint.complaint.id);
 		} catch {
-			globalNotifications.error("Failed to add note");
+			globalNotifications.error(_L("ia.failedToAddNote"));
 		}
 		noteSubmitting = false;
 	}
@@ -246,7 +246,7 @@
 			});
 			await selectComplaint(selectedComplaint.complaint.id);
 		} catch {
-			globalNotifications.error("Failed to delete note");
+			globalNotifications.error(_L("ia.failedToDeleteNote"));
 		}
 	}
 
@@ -262,9 +262,9 @@
 			});
 			editMode = false;
 			await selectComplaint(selectedComplaint.complaint.id);
-			globalNotifications.success("Complaint info updated");
+			globalNotifications.success(_L("ia.infoUpdated"));
 		} catch {
-			globalNotifications.error("Failed to update complaint info");
+			globalNotifications.error(_L("ia.failedToUpdateInfo"));
 		}
 	}
 

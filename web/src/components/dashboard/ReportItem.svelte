@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { _L } from "@/utils/localization";
+	import { _L, getLocalizedDate } from "@/utils/localization";
 	import type { DashboardData } from "../../interfaces/IDashboard";
 
 	let {
@@ -24,7 +24,7 @@
 				<span class="dot"></span>
 				<span class="report-author">{report.author}</span>
 				<span class="dot"></span>
-				<span class="report-date">{new Date(report.datecreated).toLocaleDateString()}</span>
+				<span class="report-date">{getLocalizedDate(new Date(report.datecreated))}</span>
 			</div>
 		</div>
 		<div class="report-actions">

@@ -5,7 +5,7 @@
 	import { NUI_EVENTS } from "../constants/nuiEvents";
 	import { globalNotifications } from "../services/notificationService.svelte";
 	import Pagination from "../components/Pagination.svelte";
-	import { _L } from "@/utils/localization";
+	import { _L, getLocalizedDate } from "@/utils/localization";
 
 	interface Weapon {
 		id: number;
@@ -100,7 +100,7 @@
 			);
 			weaponHistory = Array.isArray(response) ? response : [];
 		} catch (error) {
-			globalNotifications.error("Failed to load weapon history");
+			globalNotifications.error(_L("weapons.failedToLoadHistory"));
 			weaponHistory = [];
 		} finally {
 			historyLoading = false;
@@ -128,7 +128,7 @@
 			const response = await fetchNui(NUI_EVENTS.WEAPON.GET_WEAPONS);
 			weapons = Array.isArray(response.weapons) ? response.weapons : [];
 		} catch (error) {
-			globalNotifications.error("Failed to load weapons");
+			globalNotifications.error(_L("weapons.failedToLoadWeapons"));
 			weapons = [];
 		}
 		loading = false;
@@ -141,7 +141,7 @@
 			const response = await fetchNui(NUI_EVENTS.WEAPON.GET_WEAPONS);
 			weapons = Array.isArray(response.weapons) ? response.weapons : [];
 		} catch (error) {
-			globalNotifications.error("Failed to load weapons");
+			globalNotifications.error(_L("weapons.failedToLoadWeapons"));
 			weapons = [];
 		}
 		loading = false;
@@ -232,7 +232,7 @@
 									</span>
 								</div>
 								<div class="history-item-side">
-									<span class="history-date">{new Date(entry.created_at).toLocaleDateString()}</span>
+									<span class="history-date">{getLocalizedDate(new Date(entry.created_at))}</span>
 									{#if entry.reason}
 										<span class="history-reason">{entry.reason}</span>
 									{/if}

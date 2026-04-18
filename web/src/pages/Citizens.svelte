@@ -93,7 +93,7 @@
 
 	import type { JobType } from "../interfaces/IUser";
 	import type { AuthService } from "../services/authService.svelte";
-	import { _L } from "@/utils/localization";
+	import { _L, getLocalizedDate } from "@/utils/localization";
 
 	let { tabService, jobType = 'leo', authService }: { tabService: ReturnType<typeof createTabService>; jobType?: JobType; authService?: AuthService } =
 		$props();
@@ -186,7 +186,7 @@
 			// Unix timestamp - if > 10 digits it's milliseconds
 			const ms = num > 9999999999 ? num : num * 1000;
 			const d = new Date(ms);
-			return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+			return getLocalizedDate(d);
 		}
 		return String(raw);
 	}

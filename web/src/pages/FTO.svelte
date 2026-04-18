@@ -9,6 +9,7 @@
 	import PersonSearchModal from "../components/report-editor/PersonSearchModal.svelte";
 	import type { createTabService } from "../services/tabService.svelte";
 	import type { AuthService } from "../services/authService.svelte";
+	import { _L, getLocalizedDate, getLocalizedTime } from "@/utils/localization";
 
 	let { tabService, authService }: { tabService?: ReturnType<typeof createTabService>; authService?: AuthService } = $props();
 
@@ -143,7 +144,7 @@
 			assignments = data.entries || [];
 		} catch (e) {
 			console.error('[FTO] loadAssignments error:', e);
-			globalNotifications.error("Failed to load FTO assignments");
+			globalNotifications.error(_L("fto.failedToLoadAssignments"));
 		}
 		loading = false;
 	}
@@ -163,7 +164,7 @@
 				dors: raw?.dors || [],
 			};
 		} catch {
-			globalNotifications.error("Failed to load FTO assignment details");
+			globalNotifications.error(_L("fto.failedToLoadDetails"));
 		}
 		loading = false;
 	}
@@ -205,16 +206,16 @@
 				{ success: true }
 			);
 			if (!result || result.success === false) {
-				globalNotifications.error(result?.error || "Failed to create FTO assignment");
+				globalNotifications.error(result?.error || _L("fto.failedToCreateAssignment"));
 				isSubmitting = false;
 				return;
 			}
-			globalNotifications.success("FTO assignment created");
+			globalNotifications.success(_L("fto.assignmentCreated"));
 			resetCreateForm();
 			showCreateForm = false;
 			if (!isEnvBrowser()) loadAssignments();
 		} catch {
-			globalNotifications.error("Failed to create FTO assignment");
+			globalNotifications.error(_L("fto.failedToCreateAssignment"));
 		}
 		isSubmitting = false;
 	}
@@ -223,10 +224,10 @@
 		if (!selectedDetail || !canManage) return;
 		try {
 			await fetchNui(NUI_EVENTS.FTO.DELETE_FTO_ASSIGNMENT, { id: selectedDetail.assignment.id }, { success: true });
-			globalNotifications.success("FTO assignment deleted");
+			globalNotifications.success(_L("fto.assignmentDeleted"));
 			goBack();
 		} catch {
-			globalNotifications.error("Failed to delete FTO assignment");
+			globalNotifications.error(_L("fto.failedToDeleteAssignment"));
 		}
 	}
 
@@ -259,18 +260,18 @@
 				{ success: true }
 			);
 			if (!result || result.success === false) {
-				globalNotifications.error(result?.error || "Failed to create DOR");
+				globalNotifications.error(result?.error || _L("fto.failedToCreateDOR"));
 				dorSubmitting = false;
 				return;
 			}
-			globalNotifications.success("Daily Observation Report created");
+			globalNotifications.success(_L("fto.dorCreated"));
 			showDorForm = false;
 			dorRatings = [];
 			dorNotes = "";
 			dorShiftDate = "";
 			await selectAssignment(selectedDetail.assignment.id);
 		} catch {
-			globalNotifications.error("Failed to create DOR");
+			globalNotifications.error(_L("fto.failedToCreateDOR"));
 		}
 		dorSubmitting = false;
 	}
@@ -284,7 +285,7 @@
 			}, { success: true });
 			await selectAssignment(selectedDetail.assignment.id);
 		} catch {
-			globalNotifications.error("Failed to delete DOR");
+			globalNotifications.error(_L("fto.failedToDeleteDOR"));
 		}
 	}
 
@@ -320,15 +321,14 @@
 		if (!value) return "-";
 		const date = new Date(value);
 		if (Number.isNaN(date.getTime())) return "-";
-		return date.toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" });
+		return getLocalizedDate(date);
 	}
 
 	function formatDateTimeValue(value: string | undefined): string {
 		if (!value) return "-";
 		const date = new Date(value);
 		if (Number.isNaN(date.getTime())) return "-";
-		return date.toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })
-			+ " " + date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false });
+		return getLocalizedDate(date) + " " + getLocalizedTime(date);
 	}
 
 	function getStatusPillClass(status: string): string {

@@ -797,7 +797,7 @@
 								<div class="note-item">
 									<div class="note-header">
 										<span class="note-author">{note.author_name || "Unknown"}</span>
-										<span class="note-date">{note.created_at ? new Date(note.created_at).toLocaleString() : ""}</span>
+										<span class="note-date">{note.created_at ? getLocalizedDate(new Date(note.created_at)) + " " + getLocalizedTime(new Date(note.created_at)) : ""}</span>
 										<button class="remove-btn" onclick={() => handleDeleteNote(note.id)}>
 											<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
 										</button>

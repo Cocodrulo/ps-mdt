@@ -6,7 +6,7 @@
 	import type { createTabService } from "../services/tabService.svelte";
 	import type { MDTTab } from "../constants";
 	import Pagination from "../components/Pagination.svelte";
-	import { _L, getLocalizedDate } from "@/utils/localization";
+	import { _L, getLocalizedDate, getLocalizedTime } from "@/utils/localization";
 
 	let { tabService }: { tabService?: ReturnType<typeof createTabService> } = $props();
 
@@ -545,7 +545,7 @@
 										{/if}
 									</span>
 									<span class="custody-time">
-										{entry.created_at ? new Date(entry.created_at).toLocaleString() : ""}
+										{entry.created_at ? getLocalizedDate(new Date(entry.created_at)) + " " + getLocalizedTime(new Date(entry.created_at)) : ""}
 									</span>
 									{#if entry.notes}
 										<span class="custody-notes">{entry.notes}</span>
