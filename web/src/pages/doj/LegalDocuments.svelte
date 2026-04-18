@@ -153,7 +153,7 @@
 			);
 			documents = data.documents || [];
 		} catch {
-			globalNotifications.error("Failed to load legal documents");
+			globalNotifications.error(_L("legalDocument.failedToLoadDocuments"));
 		}
 		isLoading = false;
 	}
@@ -169,7 +169,7 @@
 			selectedDocument = response?.data || documents.find((d) => d.id === id) || null;
 			editContent = selectedDocument?.content || "";
 		} catch {
-			globalNotifications.error("Failed to load document");
+			globalNotifications.error(_L("legalDocument.failedToLoadDocument"));
 		}
 		isLoading = false;
 	}
@@ -197,13 +197,13 @@
 			if (result.success) {
 				showCreateModal = false;
 				newDoc = { type: "brief", title: "", linked_court_case_id: "", content: "" };
-				globalNotifications.success("Legal document created");
+				globalNotifications.success(_L("legalDocument.documentCreated"));
 				await loadDocuments();
 			} else {
-				globalNotifications.error(result.error || "Failed to create document");
+				globalNotifications.error(result.error || _L("legalDocument.failedToCreateDocument"));
 			}
 		} catch {
-			globalNotifications.error("Failed to create document");
+			globalNotifications.error(_L("legalDocument.failedToCreateDocument"));
 		}
 		isLoading = false;
 	}
@@ -217,9 +217,9 @@
 				{ success: true },
 			);
 			selectedDocument.content = editContent;
-			globalNotifications.success("Document saved");
+			globalNotifications.success(_L("legalDocument.documentSaved"));
 		} catch {
-			globalNotifications.error("Failed to save document");
+			globalNotifications.error(_L("legalDocument.failedToSaveDocument"));
 		}
 	}
 
@@ -232,9 +232,9 @@
 				{ success: true },
 			);
 			selectedDocument.status = newStatus;
-			globalNotifications.success("Status updated");
+			globalNotifications.success(_L("legalDocument.statusUpdated"));
 		} catch {
-			globalNotifications.error("Failed to update status");
+			globalNotifications.error(_L("legalDocument.failedToUpdateStatus"));
 		}
 	}
 
@@ -247,14 +247,14 @@
 				{ success: true },
 			);
 			if (result.success) {
-				globalNotifications.success("Document deleted");
+				globalNotifications.success(_L("legalDocument.documentDeleted"));
 				goBack();
 				await loadDocuments();
 			} else {
-				globalNotifications.error(result.error || "Failed to delete document");
+				globalNotifications.error(result.error || _L("legalDocument.failedToDeleteDocument"));
 			}
 		} catch {
-			globalNotifications.error("Failed to delete document");
+			globalNotifications.error(_L("legalDocument.failedToDeleteDocument"));
 		}
 	}
 </script>

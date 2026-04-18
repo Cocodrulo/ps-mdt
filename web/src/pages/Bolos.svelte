@@ -55,7 +55,7 @@
 		try {
 			bolos = await fetchNui(NUI_EVENTS.CITIZEN.GET_BOLOS, { type: "all", status: "all" });
 		} catch (error) {
-			globalNotifications.error("Failed to fetch BOLOs");
+			globalNotifications.error(_L("bolosPage.failedToFetchBolos"));
 			bolos = [];
 		}
 		loading = false;
@@ -115,12 +115,12 @@
 				if (bolo) bolo.status = "resolved";
 				bolos = [...bolos];
 				if (selectedBolo?.id === boloId) selectedBolo.status = "resolved";
-				globalNotifications.success("BOLO marked as resolved");
+				globalNotifications.success(_L("bolosPage.boloResolved"));
 			} else {
 				globalNotifications.error(response?.message || "Failed to resolve BOLO");
 			}
 		} catch {
-			globalNotifications.error("Failed to resolve BOLO");
+			globalNotifications.error(_L("bolosPage.failedToResolveBolo"));
 		}
 	}
 
@@ -133,12 +133,12 @@
 			if (response?.success) {
 				bolos = bolos.filter((b) => b.id !== boloId);
 				selectedBolo = null;
-				globalNotifications.success("BOLO deleted");
+				globalNotifications.success(_L("bolosPage.boloDeleted"));
 			} else {
 				globalNotifications.error(response?.message || "Failed to delete BOLO");
 			}
 		} catch {
-			globalNotifications.error("Failed to delete BOLO");
+			globalNotifications.error(_L("bolosPage.failedToDeleteBolo"));
 		}
 	}
 

@@ -60,7 +60,7 @@
 		<div class="tab-buttons">
 			{#each tabs as tab}
 				{#if canSeeTab(tab)}
-					<button class="tab-btn" class:active={view === tab.key} onclick={() => (view = tab.key)}>{tab.label}</button>
+					<button class="tab-btn" class:active={view === tab.key} onclick={() => (view = tab.key)}>{_L("management.tabs." + tab.key)}</button>
 				{/if}
 			{/each}
 		</div>

@@ -129,7 +129,7 @@
 								<div class="category-header">
 									<div class="category-label-row">
 										<span class="material-icons category-icon">{category.icon}</span>
-										<span class="category-label">{category.label}</span>
+										<span class="category-label">{_L("categories." + category.key)}</span>
 									</div>
 									{#if !currentRole.isBoss}
 										<div class="category-actions">
@@ -138,7 +138,7 @@
 												class:all-on={categoryAllEnabled(category.key)}
 												onclick={() => toggleCategory(category.key)}
 											>
-												{categoryAllEnabled(category.key) ? "Disable All" : "Enable All"}
+												{categoryAllEnabled(category.key) ? _L("managementPermissions.disableAll") : _L("managementPermissions.enableAll")}
 											</button>
 										</div>
 									{/if}
@@ -147,8 +147,8 @@
 									{#each category.permissions as perm}
 										<div class="permission-row">
 											<div class="permission-info">
-												<span class="permission-label">{perm.label}</span>
-												<span class="permission-desc">{perm.description}</span>
+												<span class="permission-label">{_L("permissions." + perm.key + "_label")}</span>
+												<span class="permission-desc">{_L("permissions." + perm.key + "_desc")}</span>
 											</div>
 											<label class="toggle">
 												<input

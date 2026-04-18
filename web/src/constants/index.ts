@@ -188,23 +188,23 @@ export const DEFAULT_DATE = "03.15.2024";
 export const APP_INFO = {
 	leo: {
 		version: "LSPD MDT System v2.0",
-		title: "Los Santos Police Department",
-		subtitle: "Mobile Data Terminal",
-		footerSubtext: "Authorized Personnel Only",
+		title: _L("app.leoTitle"),
+		subtitle: _L("app.leoSubtitle"),
+		footerSubtext: _L("app.leoFooter"),
 		icon: "local_police",
 	},
 	ems: {
 		version: "EMS MDT System v1.0",
-		title: "Emergency Medical Services",
-		subtitle: "Medical Data Terminal",
-		footerSubtext: "Authorized Personnel Only",
+		title: _L("app.emsTitle"),
+		subtitle: _L("app.emsSubtitle"),
+		footerSubtext: _L("app.emsFooter"),
 		icon: "local_hospital",
 	},
 	doj: {
 		version: "DOJ Terminal v1.0",
-		title: "Department of Justice",
-		subtitle: "Court Management System",
-		footerSubtext: "Authorized Legal Personnel Only",
+		title: _L("app.dojTitle"),
+		subtitle: _L("app.dojSubtitle"),
+		footerSubtext: _L("app.dojFooter"),
 		icon: "account_balance",
 	},
 } as const;
@@ -261,35 +261,35 @@ export const COMPONENT_DISPLAY_NAMES: Record<ComponentId, string> = {
 export const PLACEHOLDER_COMPONENTS: readonly ComponentId[] = [] as const;
 
 export const REPORT_TYPES = [
-	"Incident Report",
-	"Traffic Report",
-	"Investigation Report",
-	"Arrest Report",
-	"Evidence Report",
+	_L("reportTypes.Incident Report"),
+	_L("reportTypes.Traffic Report"),
+	_L("reportTypes.Investigation Report"),
+	_L("reportTypes.Arrest Report"),
+	_L("reportTypes.Evidence Report"),
 ] as const;
 
 export const EVIDENCE_TYPES = [
-	"Physical",
-	"Digital",
-	"Document",
-	"Weapon",
-	"Drug",
-	"Vehicle",
-	"Other",
+	_L("evidenceTypes.Physical"),
+	_L("evidenceTypes.Digital"),
+	_L("evidenceTypes.Document"),
+	_L("evidenceTypes.Weapon"),
+	_L("evidenceTypes.Drug"),
+	_L("evidenceTypes.Vehicle"),
+	_L("evidenceTypes.Other"),
 ] as const;
 
 export const VICTIM_TYPES = [
-	"Primary",
-	"Secondary",
-	"Witness",
-	"Complainant",
+	_L("victimTypes.Primary"),
+	_L("victimTypes.Secondary"),
+	_L("victimTypes.Witness"),
+	_L("victimTypes.Complainant"),
 ] as const;
 
 export const OFFICER_TYPES = {
-	PRIMARY: "Primary",
-	ASSISTING: "Assisting",
-	SUPERVISOR: "Supervisor",
-	DETECTIVE: "Detective",
+	PRIMARY: _L("officerTypes.Primary"),
+	ASSISTING: _L("officerTypes.Assisting"),
+	SUPERVISOR: _L("officerTypes.Supervisor"),
+	DETECTIVE: _L("officerTypes.Detective"),
 } as const;
 
 /** Priority level color mapping */

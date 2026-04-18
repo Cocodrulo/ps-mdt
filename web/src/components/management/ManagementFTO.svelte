@@ -179,11 +179,11 @@
 				{ success: true }
 			);
 			if (result?.success) {
-				showStatus("Competencies saved");
+				showStatus(_L("managementFTO.competenciesSaved"));
 				await loadCompetencies();
 			}
 		} catch {
-			showStatus("Failed to save competencies");
+			showStatus(_L("managementFTO.failedToSaveCompetencies"));
 		}
 	}
 
@@ -234,7 +234,7 @@
 								<button class="btn-icon-sm" onclick={saveEditPhase} title="{_L("managementFTO.save")}">
 									<span class="material-icons">check</span>
 								</button>
-								<button class="btn-icon-sm cancel" onclick={() => editingPhaseId = null} title="Cancel">
+								<button class="btn-icon-sm cancel" onclick={() => editingPhaseId = null} title={_L("managementFTO.cancel")}>
 									<span class="material-icons">close</span>
 								</button>
 							</div>

@@ -140,7 +140,7 @@
 			const result = await fetchNui(NUI_EVENTS.CITIZEN.GET_CITIZENS);
 			citizens = Array.isArray(result) ? result : [];
 		} catch (error) {
-			globalNotifications.error("Failed to fetch citizens");
+			globalNotifications.error(_L("civilianPage.failedToFetchCitizens"));
 			citizens = [];
 		}
 		loading = false;
@@ -292,7 +292,7 @@
 				);
 			}
 		} catch (error) {
-			globalNotifications.error("Failed to fetch citizen profile");
+			globalNotifications.error(_L("civilianPage.failedToFetchProfile"));
 		}
 	}
 
@@ -372,12 +372,12 @@
 				citizens = citizens.map((c) =>
 					c.cid === selectedProfile!.citizenid ? { ...c, image: result.imageUrl || base64 } : c,
 				);
-				globalNotifications.success(result.message || "Photo uploaded");
+				globalNotifications.success(result.message || _L("civilianPage.photoUploaded"));
 			} else {
-				globalNotifications.error(result.message || "Failed to upload photo");
+				globalNotifications.error(result.message || _L("civilianPage.failedToUploadPhoto"));
 			}
 		} catch {
-			globalNotifications.error("Failed to upload photo");
+			globalNotifications.error(_L("civilianPage.failedToUploadPhoto"));
 		}
 		uploading = false;
 		input.value = "";
@@ -399,12 +399,12 @@
 						c.cid === selectedProfile!.citizenid ? { ...c, image: result.imageUrl! } : c,
 					);
 				}
-				globalNotifications.success(result.message || "Mugshot captured");
+				globalNotifications.success(result.message || _L("civilianPage.mugshotCaptured"));
 			} else {
-				globalNotifications.error(result.message || "Failed to capture mugshot");
+				globalNotifications.error(result.message || _L("civilianPage.failedToCaptureMugshot"));
 			}
 		} catch {
-			globalNotifications.error("Failed to capture mugshot");
+			globalNotifications.error(_L("civilianPage.failedToCaptureMugshot"));
 		}
 	}
 

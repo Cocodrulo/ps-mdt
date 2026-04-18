@@ -120,7 +120,7 @@
 				[];
 			groupedCameras = groupCamerasByType(filteredCameras);
 		} catch (error) {
-			globalNotifications.error("Failed to load cameras");
+			globalNotifications.error(_L("camerasPage.failedToLoadCameras"));
 			cameras = [];
 			groupedCameras = {};
 		} finally {

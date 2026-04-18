@@ -212,7 +212,7 @@
 				status: vehicleForm.status,
 			});
 			if (!response?.success) {
-				vehicleDetailError = response?.message || "Failed to update vehicle";
+				vehicleDetailError = response?.message || _L("vehicles.failedToUpdateVehicle");
 				return;
 			}
 			selectedVehicle = {

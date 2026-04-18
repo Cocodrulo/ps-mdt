@@ -234,10 +234,10 @@
 					<span class="row-category">{award.category}</span>
 					<span class="row-goal">{getGoalTypeLabel(award.goalType)}: {award.goalAmount.toLocaleString()}</span>
 					<div class="row-actions">
-						<button class="action-btn edit-btn" onclick={() => startEdit(award)} title="Edit">
+						<button class="action-btn edit-btn" onclick={() => startEdit(award)} title={_L("managementAwards.edit")}>
 							<span class="material-icons">edit</span>
 						</button>
-						<button class="action-btn delete-btn" onclick={() => handleDelete(award)} title="Delete">
+						<button class="action-btn delete-btn" onclick={() => handleDelete(award)} title={_L("managementAwards.delete")}>
 							<span class="material-icons">delete</span>
 						</button>
 					</div>

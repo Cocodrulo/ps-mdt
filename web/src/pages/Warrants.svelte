@@ -69,7 +69,7 @@
 			);
 			warrants = Array.isArray(response) ? response : [];
 		} catch (error) {
-			globalNotifications.error("Failed to load warrants");
+			globalNotifications.error(_L("warrants.failedToLoadWarrants"));
 			warrants = [];
 		} finally {
 			isLoading = false;

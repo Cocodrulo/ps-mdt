@@ -61,12 +61,12 @@
 			if (result.success) {
 				showNewDocModal = false;
 				newDocData = { title: "", type: "brief", content: "" };
-				globalNotifications.success("Legal document created");
+				globalNotifications.success(_L("warrantReviewPage.documentCreated"));
 			} else {
-				globalNotifications.error(result.error || "Failed to create document");
+				globalNotifications.error(result.error || _L("warrantReviewPage.failedToCreateDocument"));
 			}
 		} catch {
-			globalNotifications.error("Failed to create document");
+			globalNotifications.error(_L("warrantReviewPage.failedToCreateDocument"));
 		}
 	}
 
@@ -159,7 +159,7 @@
 				charges: typeof r.charges === 'string' ? (() => { try { return JSON.parse(r.charges); } catch { return []; } })() : (r.charges || []),
 			}));
 		} catch {
-			globalNotifications.error("Failed to load warrant requests");
+			globalNotifications.error(_L("warrantReviewPage.failedToLoadRequests"));
 		}
 		isLoading = false;
 	}
@@ -177,7 +177,7 @@
 
 	async function handleReview(action: "approved" | "denied") {
 		if (!selectedRequest || !reviewReason.trim()) {
-			globalNotifications.error("A reason is required for review");
+			globalNotifications.error(_L("warrantReviewPage.reasonRequired"));
 			return;
 		}
 		isLoading = true;
@@ -192,14 +192,14 @@
 				{ success: true },
 			);
 			if (result.success) {
-				globalNotifications.success(`Warrant request ${action}`);
+				globalNotifications.success(action === "approved" ? _L("warrantReviewPage.requestApproved") : _L("warrantReviewPage.requestDenied"));
 				goBack();
 				await loadRequests();
 			} else {
-				globalNotifications.error(result.error || "Failed to review warrant request");
+				globalNotifications.error(result.error || _L("warrantReviewPage.failedToReviewRequest"));
 			}
 		} catch {
-			globalNotifications.error("Failed to review warrant request");
+			globalNotifications.error(_L("warrantReviewPage.failedToReviewRequest"));
 		}
 		isLoading = false;
 	}

@@ -58,11 +58,11 @@
 
 	async function saveTemplate() {
 		if (!formName.trim()) {
-			showStatus("Template name is required", "error");
+			showStatus(_L("managementTemplates.nameRequired"), "error");
 			return;
 		}
 		if (!formContent.trim()) {
-			showStatus("Template content is required", "error");
+			showStatus(_L("managementTemplates.contentRequired"), "error");
 			return;
 		}
 
@@ -77,7 +77,7 @@
 				templates = [...templates, { id: Date.now(), name: formName.trim(), type: formType, content: formContent }];
 			}
 			cancelEdit();
-			showStatus("Template saved");
+			showStatus(_L("managementTemplates.templateSaved"));
 			return;
 		}
 
@@ -203,7 +203,7 @@
 				<div class="form-row">
 					<div class="form-group">
 						<label class="form-label" for="tmpl-name">{_L("managementTemplates.templateName")}</label>
-						<input id="tmpl-name" type="text" class="form-input" placeholder="e.g. Standard Incident" bind:value={formName} />
+						<input id="tmpl-name" type="text" class="form-input" placeholder={_L("managementTemplates.namePlaceholder")} bind:value={formName} />
 					</div>
 					<div class="form-group">
 						<label class="form-label" for="tmpl-type">{_L("managementTemplates.reportType")}</label>
@@ -217,7 +217,7 @@
 
 				<div class="form-group">
 					<label class="form-label" for="tmpl-content">{_L("managementTemplates.templateContent")} <span class="form-hint">(HTML)</span></label>
-					<textarea id="tmpl-content" class="form-textarea" placeholder="Enter HTML template content..." bind:value={formContent} rows={12}></textarea>
+					<textarea id="tmpl-content" class="form-textarea" placeholder={_L("managementTemplates.contentPlaceholder")} bind:value={formContent} rows={12}></textarea>
 				</div>
 
 				<div class="form-actions">
@@ -245,10 +245,10 @@
 									<span class="template-type">{template.type}</span>
 								</div>
 								<div class="template-row-actions">
-									<button class="row-btn edit-btn" onclick={() => startEdit(template)} aria-label="Edit">
+									<button class="row-btn edit-btn" onclick={() => startEdit(template)} aria-label={_L("managementTemplates.edit")}>
 										<span class="material-icons">edit</span>
 									</button>
-									<button class="row-btn delete-btn" onclick={() => deleteTemplate(template.id)} aria-label="Delete">
+									<button class="row-btn delete-btn" onclick={() => deleteTemplate(template.id)} aria-label={_L("managementTemplates.delete")}>
 										<span class="material-icons">delete</span>
 									</button>
 								</div>

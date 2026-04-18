@@ -554,7 +554,7 @@
 			if (response?.success) {
 				showStatus(`BOLO issued for ${suspect.fullName}`);
 			} else {
-				showStatus(response?.message || "Failed to issue BOLO", "error");
+				showStatus(response?.message || _L("reportsPage.failedToIssueBolo"), "error");
 			}
 		} catch {
 			showStatus("Failed to issue BOLO", "error");
@@ -599,7 +599,7 @@
 				showStatus(`Bench warrant request submitted for ${suspect.fullName}`);
 				benchWarrantModal = { open: false, suspect: null, reason: '', submitting: false };
 			} else {
-				showStatus(response?.error || "Failed to submit bench warrant request", "error");
+				showStatus(response?.error || _L("reportsPage.failedToSubmitWarrant"), "error");
 			}
 		} catch {
 			showStatus("Failed to submit bench warrant request", "error");
@@ -630,7 +630,7 @@
 			if (response?.success) {
 				showStatus(`Vehicle BOLO issued for ${vehicle.plate}`);
 			} else {
-				showStatus(response?.message || "Failed to issue vehicle BOLO", "error");
+				showStatus(response?.message || _L("reportsPage.failedToIssueVehicleBolo"), "error");
 			}
 		} catch {
 			showStatus("Failed to issue vehicle BOLO", "error");
@@ -660,7 +660,7 @@
 				}
 				showStatus(result.message || `Mugshot captured for ${suspect.fullName}`);
 			} else {
-				showStatus(result.message || "Failed to capture mugshot", "error");
+				showStatus(result.message || _L("reportsPage.failedToCaptureMugshot"), "error");
 			}
 		} catch {
 			showStatus("Failed to capture mugshot", "error");
@@ -692,7 +692,7 @@
 				// Scan was triggered on the suspect
 				showStatus(`Fingerprint scan initiated on ${suspect.fullName}`, "info");
 			} else {
-				showStatus(result.message || "Failed to get fingerprint", "error");
+				showStatus(result.message || _L("reportsPage.failedToGetFingerprint"), "error");
 			}
 		} catch {
 			showStatus("Failed to get fingerprint", "error");
@@ -740,9 +740,9 @@
 					};
 					report = { ...report };
 				}
-				showStatus(result.message || "Photo uploaded successfully");
+				showStatus(result.message || _L("reportsPage.photoUploaded"));
 			} else {
-				showStatus(result.message || "Failed to upload photo", "error");
+				showStatus(result.message || _L("reportsPage.failedToUploadPhoto"), "error");
 			}
 		} catch {
 			showStatus("Failed to upload photo", "error");
@@ -783,7 +783,7 @@
 			}
 			reportEditorUI.closeImageUpload();
 		} catch (error: any) {
-			showStatus(error?.message || "Failed to upload image", "error");
+			showStatus(error?.message || _L("reportsPage.failedToUploadImage"), "error");
 		} finally {
 			isUploadingEvidence = false;
 		}
@@ -867,7 +867,7 @@
 			// Close the editor (this will destroy the component)
 			onClose();
 		} catch (error: any) {
-			const msg = error?.message || "Failed to save report";
+			const msg = error?.message || _L("reportsPage.failedToSaveReport");
 			showStatus(msg, "error");
 			// Reset flags if save failed
 			isSaving = false;
@@ -894,7 +894,7 @@
 				isPersistenceEnabled = true;
 			}
 		} catch (error: any) {
-			showStatus(error?.message || "Failed to delete report", "error");
+			showStatus(error?.message || _L("reportsPage.failedToDeleteReport"), "error");
 			isSaving = false;
 			isPersistenceEnabled = true;
 		}

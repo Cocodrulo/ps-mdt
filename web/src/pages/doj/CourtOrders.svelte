@@ -172,7 +172,7 @@
 			);
 			orders = data.orders || [];
 		} catch {
-			globalNotifications.error("Failed to load court orders");
+			globalNotifications.error(_L("courtOrders.failedToLoadOrders"));
 		}
 		isLoading = false;
 	}
@@ -205,13 +205,13 @@
 			if (result.success) {
 				showCreateModal = false;
 				newOrder = { type: "restraining_order", title: "", target_citizenid: "", target_name: "", content: "", effective_date: "", expiry_date: "" };
-				globalNotifications.success("Court order created");
+				globalNotifications.success(_L("courtOrders.orderCreated"));
 				await loadOrders();
 			} else {
-				globalNotifications.error(result.error || "Failed to create court order");
+				globalNotifications.error(result.error || _L("courtOrders.failedToCreateOrder"));
 			}
 		} catch {
-			globalNotifications.error("Failed to create court order");
+			globalNotifications.error(_L("courtOrders.failedToCreateOrder"));
 		}
 		isLoading = false;
 	}
@@ -226,14 +226,14 @@
 				{ success: true },
 			);
 			if (result.success) {
-				globalNotifications.success("Court order revoked");
+				globalNotifications.success(_L("courtOrders.orderRevoked"));
 				goBack();
 				await loadOrders();
 			} else {
-				globalNotifications.error(result.error || "Failed to revoke court order");
+				globalNotifications.error(result.error || _L("courtOrders.failedToRevokeOrder"));
 			}
 		} catch {
-			globalNotifications.error("Failed to revoke court order");
+			globalNotifications.error(_L("courtOrders.failedToRevokeOrder"));
 		}
 		isLoading = false;
 	}

@@ -66,13 +66,13 @@
 		stash?: boolean; stored?: boolean;
 		plate?: boolean; quantity?: boolean;
 	}> = {
-		Physical:  { serial: true, description: true, descriptionPlaceholder: _L("evidences.physicalDescriptionPlaceholder"), stash: true, stored: true },
-		Digital:   { description: true, descriptionPlaceholder: _L("evidences.digitalDescriptionPlaceholder") },
-		Document:  { serial: true, serialLabel: _L("evidences.documentNumber"), serialPlaceholder: _L("evidences.documentReferenceNumber"), description: true, descriptionPlaceholder: _L("evidences.documentType") },
-		Weapon:    { serial: true, serialLabel: _L("evidences.weaponSerialNumber"), serialPlaceholder: _L("evidences.weaponSerialNumber"), stash: true, stored: true },
-		Drug:      { description: true, descriptionPlaceholder: _L("evidences.drugType"), quantity: true, stash: true, stored: true },
-		Vehicle:   { plate: true, description: true, descriptionPlaceholder: _L("evidences.vehicleDescription") },
-		Other:     { serial: true, description: true, descriptionPlaceholder: _L("evidences.otherDescriptionPlaceholder"), stash: true, stored: true },
+		Physical:  { serial: true, description: true, descriptionPlaceholder: _L("evidence.physicalDescriptionPlaceholder"), stash: true, stored: true },
+		Digital:   { description: true, descriptionPlaceholder: _L("evidence.digitalDescriptionPlaceholder") },
+		Document:  { serial: true, serialLabel: _L("evidence.documentNumber"), serialPlaceholder: _L("evidence.documentReferenceNumber"), description: true, descriptionPlaceholder: _L("evidence.documentType") },
+		Weapon:    { serial: true, serialLabel: _L("evidence.weaponSerialNumber"), serialPlaceholder: _L("evidence.weaponSerialNumber"), stash: true, stored: true },
+		Drug:      { description: true, descriptionPlaceholder: _L("evidence.drugType"), quantity: true, stash: true, stored: true },
+		Vehicle:   { plate: true, description: true, descriptionPlaceholder: _L("evidence.vehicleDescription") },
+		Other:     { serial: true, description: true, descriptionPlaceholder: _L("evidence.otherDescriptionPlaceholder"), stash: true, stored: true },
 	};
 
 	let typeConfig = $derived(TYPE_FIELDS[createForm.type] || TYPE_FIELDS.Other);
@@ -247,7 +247,7 @@
 				showStatus("Evidence linked to Case #" + linkCaseId.trim());
 				await loadEvidence(page);
 			} else {
-				showStatus((result as any)?.error || "Failed to link evidence", "error");
+				showStatus((result as any)?.error || _L("evidence.failedToLinkEvidence"), "error");
 			}
 		} catch {
 			showStatus("Failed to link evidence", "error");
@@ -273,7 +273,7 @@
 				showStatus("Evidence linked to Report #" + linkReportId.trim());
 				await loadEvidence(page);
 			} else {
-				showStatus((result as any)?.error || "Failed to link evidence to report", "error");
+				showStatus((result as any)?.error || _L("evidence.failedToLinkToReport"), "error");
 			}
 		} catch {
 			showStatus("Failed to link evidence to report", "error");
@@ -300,11 +300,11 @@
 				selectedEvidence?.report_id ? Number(selectedEvidence.report_id) : undefined,
 			);
 			if (response?.success) {
-				showStatus("Case #" + (response.caseId || "") + " created from evidence");
+				showStatus(_L("evidence.caseCreatedFromEvidence") + " #" + (response.caseId || ""));
 				linkCaseId = response.caseId ? String(response.caseId) : linkCaseId;
 				await loadEvidence(page);
 			} else {
-				showStatus((response as any)?.error || "Failed to create case", "error");
+				showStatus((response as any)?.error || _L("evidence.failedToCreateCase"), "error");
 			}
 		} catch {
 			showStatus("Failed to create case", "error");
@@ -503,33 +503,33 @@
 			{#if selectedEvidenceId}
 				<!-- Custody Log -->
 				<div class="section">
-					<div class="section-title">{_L("evidences.linkEvidence")}</div>
+					<div class="section-title">{_L("evidence.linkEvidence")}</div>
 					<div class="section-actions">
 						<input
 							class="form-input"
-							placeholder={_L("evidences.caseIdPlaceholder")}
+							placeholder={_L("evidence.caseIdPlaceholder")}
 							bind:value={linkCaseId}
 						/>
 						<button class="action-btn" onclick={handleLinkEvidenceCase}>
-							{_L("evidences.linkToCase")}
+							{_L("evidence.linkToCase")}
 						</button>
 						<button class="action-btn" onclick={handleCreateCaseFromEvidence}>
-							{_L("evidences.createCase")}
+							{_L("evidence.createCase")}
 						</button>
 					</div>
 					<div class="section-actions">
 						<input
 							class="form-input"
-							placeholder={_L("evidences.reportIdPlaceholder")}
+							placeholder={_L("evidence.reportIdPlaceholder")}
 							bind:value={linkReportId}
 						/>
 						<button class="action-btn" onclick={handleLinkEvidenceReport}>
-							{_L("evidences.linkToReport")}
+							{_L("evidence.linkToReport")}
 						</button>
 					</div>
-					<div class="section-title" style="margin-top: 8px;">{_L("evidences.custodyLog")}</div>
+					<div class="section-title" style="margin-top: 8px;">{_L("evidence.custodyLog")}</div>
 					{#if custodyEntries.length === 0}
-						<p class="muted-text">{_L("evidences.noCustodyUpdates")}</p>
+						<p class="muted-text">{_L("evidence.noCustodyUpdates")}</p>
 					{:else}
 						<div class="custody-list">
 							{#each custodyEntries as entry}
@@ -558,19 +558,19 @@
 
 				<!-- Transfer Evidence -->
 				<div class="section">
-					<div class="section-title">{_L("evidences.transferEvidence")}</div>
+					<div class="section-title">{_L("evidence.transferEvidence")}</div>
 					<div class="transfer-row">
-						<input class="form-input" placeholder={_L("evidences.citizenIdPlaceholder")} bind:value={transferCitizenId} />
-						<input class="form-input" placeholder={_L("evidences.transferNotesPlaceholder")} bind:value={transferNotes} />
+						<input class="form-input" placeholder={_L("evidence.citizenIdPlaceholder")} bind:value={transferCitizenId} />
+						<input class="form-input" placeholder={_L("evidence.transferNotesPlaceholder")} bind:value={transferNotes} />
 						<button class="action-btn" onclick={handleTransferEvidence}>
-							{_L("evidences.transfer")}
+							{_L("evidence.transfer")}
 						</button>
 					</div>
 				</div>
 
 				<!-- Upload Image -->
 				<div class="section">
-					<div class="section-title">{_L("evidences.uploadEvidenceImage")}</div>
+					<div class="section-title">{_L("evidence.uploadEvidenceImage")}</div>
 					<div class="upload-row">
 						<input
 							type="file"
@@ -581,13 +581,13 @@
 								evidenceImageFile = input.files && input.files[0] ? input.files[0] : null;
 							}}
 						/>
-						<input class="form-input" placeholder={_L("evidences.imageLabelPlaceholder")} bind:value={evidenceImageLabel} />
+						<input class="form-input" placeholder={_L("evidence.imageLabelPlaceholder")} bind:value={evidenceImageLabel} />
 						<button class="create-btn" disabled={isUploading} onclick={handleUploadEvidenceImage}>
-							{isUploading ? _L("evidences.uploading") : _L("evidences.upload")}
+							{isUploading ? _L("evidence.uploading") : _L("evidence.upload")}
 						</button>
 					</div>
 					{#if isUploading}
-						<p class="uploading-text">{_L("evidences.uploading")}</p>
+						<p class="uploading-text">{_L("evidence.uploading")}</p>
 					{:else if evidenceImageFile}
 						<p class="muted-text" style="margin-top:6px;">
 							{evidenceImageFile.name} ({formatBytes(evidenceImageFile.size)})
@@ -601,12 +601,12 @@
 				<!-- Open Stash -->
 				{#if selectedEvidence?.stash_id}
 					<div class="section">
-						<div class="section-title">{_L("evidences.evidenceStash")}</div>
+						<div class="section-title">{_L("evidence.evidenceStash")}</div>
 						<div class="stash-row">
 							<span class="stash-id">{selectedEvidence.stash_id}</span>
 							<button class="action-btn" onclick={() => openStash(selectedEvidence.stash_id)}>
 								<span class="material-icons" style="font-size:14px; margin-right:4px;">inventory_2</span>
-								{_L("evidences.openStash")}
+								{_L("evidence.openStash")}
 							</button>
 						</div>
 					</div>
@@ -615,7 +615,7 @@
 				<!-- Uploaded Images -->
 				{#if selectedEvidence?.images && selectedEvidence.images.length > 0}
 					<div class="section">
-						<div class="section-title">{_L("evidences.evidenceImages")}</div>
+						<div class="section-title">{_L("evidence.evidenceImages")}</div>
 						<div class="image-gallery">
 							{#each selectedEvidence.images as img}
 								<div class="image-item">
@@ -636,7 +636,7 @@
 			{:else}
 				<div class="empty-detail">
 					<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.25; margin-bottom:10px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-					<p>{_L("evidences.selectEvidence")}</p>
+					<p>{_L("evidence.selectEvidence")}</p>
 				</div>
 			{/if}
 		</div>
@@ -649,7 +649,7 @@
 		<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 		<div class="modal" role="dialog" aria-modal="true" onclick={(event) => event.stopPropagation()}>
 			<div class="modal-header">
-				<h3>{_L("evidences.newEvidence")}</h3>
+				<h3>{_L("evidence.newEvidence")}</h3>
 				<button class="close-btn" onclick={() => (showCreate = false)}>
 					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
 				</button>
@@ -658,27 +658,27 @@
 				<!-- Row 1: IDs + Title + Type -->
 				<div class="form-grid form-grid-4">
 					<div class="form-group">
-						<span class="form-label">{_L("evidences.caseId")}</span>
-						<input bind:value={createForm.caseId} placeholder={_L("evidences.caseIdPlaceholder")} class="form-input" />
+						<span class="form-label">{_L("evidence.caseId")}</span>
+						<input bind:value={createForm.caseId} placeholder={_L("evidence.caseIdPlaceholder")} class="form-input" />
 					</div>
 					<div class="form-group">
-						<span class="form-label">{_L("evidences.reportId")}</span>
-						<input bind:value={createForm.reportId} placeholder={_L("evidences.reportIdPlaceholder")} class="form-input" />
+						<span class="form-label">{_L("evidence.reportId")}</span>
+						<input bind:value={createForm.reportId} placeholder={_L("evidence.reportIdPlaceholder")} class="form-input" />
 					</div>
 					<div class="form-group">
-						<span class="form-label">{_L("evidences.title")}</span>
-						<input bind:value={createForm.title} placeholder={_L("evidences.titlePlaceholder")} class="form-input" />
+						<span class="form-label">{_L("evidence.title")}</span>
+						<input bind:value={createForm.title} placeholder={_L("evidence.titlePlaceholder")} class="form-input" />
 					</div>
 					<div class="form-group">
-						<span class="form-label">{_L("evidences.type")}</span>
+						<span class="form-label">{_L("evidence.type")}</span>
 						<select bind:value={createForm.type} class="form-input">
-							<option value="Physical">{_L("evidences.physical")}</option>
-							<option value="Digital">{_L("evidences.digital")}</option>
-							<option value="Document">{_L("evidences.document")}</option>
-							<option value="Weapon">{_L("evidences.weapon")}</option>
-							<option value="Drug">{_L("evidences.drug")}</option>
-							<option value="Vehicle">{_L("evidences.vehicle")}</option>
-							<option value="Other">{_L("evidences.other")}</option>
+							<option value="Physical">{_L("evidence.physical")}</option>
+							<option value="Digital">{_L("evidence.digital")}</option>
+							<option value="Document">{_L("evidence.document")}</option>
+							<option value="Weapon">{_L("evidence.weapon")}</option>
+							<option value="Drug">{_L("evidence.drug")}</option>
+							<option value="Vehicle">{_L("evidence.vehicle")}</option>
+							<option value="Other">{_L("evidence.other")}</option>
 						</select>
 					</div>
 				</div>
@@ -687,26 +687,26 @@
 				<div class="form-grid">
 					{#if typeConfig.description}
 						<div class="form-group" style="grid-column: span 2;">
-							<span class="form-label">{_L("evidences.description")}</span>
+							<span class="form-label">{_L("evidence.description")}</span>
 							<input bind:value={createForm.description} placeholder={typeConfig.descriptionPlaceholder || "Describe the evidence"} class="form-input" />
 						</div>
 					{/if}
 					{#if typeConfig.serial}
 						<div class="form-group">
-							<span class="form-label">{typeConfig.serialLabel || _L("evidences.serialNumber")}</span>
-							<input bind:value={createForm.serial} placeholder={typeConfig.serialPlaceholder || _L("evidences.serialNumberPlaceholder")} class="form-input" />
+							<span class="form-label">{typeConfig.serialLabel || _L("evidence.serialNumber")}</span>
+							<input bind:value={createForm.serial} placeholder={typeConfig.serialPlaceholder || _L("evidence.serialNumberPlaceholder")} class="form-input" />
 						</div>
 					{/if}
 					{#if typeConfig.plate}
 						<div class="form-group">
-							<span class="form-label">{_L("evidences.plateNumber")}</span>
-							<input bind:value={createForm.plateNumber} placeholder={_L("evidences.plateNumberPlaceholder")} class="form-input" />
+							<span class="form-label">{_L("evidence.plateNumber")}</span>
+							<input bind:value={createForm.plateNumber} placeholder={_L("evidence.plateNumberPlaceholder")} class="form-input" />
 						</div>
 					{/if}
 					{#if typeConfig.quantity}
 						<div class="form-group">
-							<span class="form-label">{_L("evidences.quantity")}</span>
-							<input bind:value={createForm.quantity} placeholder={_L("evidences.quantityPlaceholder")} class="form-input" />
+							<span class="form-label">{_L("evidence.quantity")}</span>
+							<input bind:value={createForm.quantity} placeholder={_L("evidence.quantityPlaceholder")} class="form-input" />
 						</div>
 					{/if}
 				</div>
@@ -714,12 +714,12 @@
 				<!-- Row 3: Location + conditional Stash -->
 				<div class="form-grid">
 					<div class="form-group" style={typeConfig.stash ? "" : "grid-column: span 3;"}>
-						<span class="form-label">{_L("evidences.location")}</span>
-						<input bind:value={createForm.location} placeholder={_L("evidences.locationPlaceholder")} class="form-input" />
+						<span class="form-label">{_L("evidence.location")}</span>
+						<input bind:value={createForm.location} placeholder={_L("evidence.locationPlaceholder")} class="form-input" />
 					</div>
 					{#if typeConfig.stash}
 						<div class="form-group">
-							<span class="form-label">{_L("evidences.stashId")}</span>
+							<span class="form-label">{_L("evidence.stashId")}</span>
 							<input bind:value={createForm.stashId} placeholder="LOCKER-001" class="form-input mono-input" />
 						</div>
 					{/if}
@@ -728,15 +728,15 @@
 				{#if typeConfig.stored}
 					<label class="checkbox-label">
 						<input type="checkbox" bind:checked={createForm.stored} />
-						<span>{_L("evidences.evidenceIsStored")}</span>
+						<span>{_L("evidence.evidenceIsStored")}</span>
 					</label>
 				{/if}
 				<div class="form-group">
-					<span class="form-label">{_L("evidences.notes")}</span>
-					<textarea rows="4" bind:value={createForm.notes} placeholder={_L("evidences.notesPlaceholder")} class="form-input"></textarea>
+					<span class="form-label">{_L("evidence.notes")}</span>
+					<textarea rows="4" bind:value={createForm.notes} placeholder={_L("evidence.notesPlaceholder")} class="form-input"></textarea>
 				</div>
 				<div class="form-group">
-					<span class="form-label">{_L("evidences.attachImages")}</span>
+					<span class="form-label">{_L("evidence.attachImages")}</span>
 					<input
 						type="file"
 						accept=".jpg,.jpeg,.png,.webp"
@@ -767,8 +767,8 @@
 				<p class="error-text">{evidenceError}</p>
 			{/if}
 			<div class="modal-footer">
-				<button class="cancel-btn" onclick={() => (showCreate = false)}>{_L("evidences.cancel")}</button>
-				<button class="save-btn" onclick={handleCreateEvidence}>{_L("evidences.createEvidence")}</button>
+				<button class="cancel-btn" onclick={() => (showCreate = false)}>{_L("evidence.cancel")}</button>
+				<button class="save-btn" onclick={handleCreateEvidence}>{_L("evidence.createEvidence")}</button>
 			</div>
 		</div>
 	</div>

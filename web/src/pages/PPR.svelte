@@ -110,7 +110,7 @@
 			entries = data.entries || [];
 		} catch (e) {
 			console.error('[PPR] loadEntries error:', e);
-			globalNotifications.error("Failed to load PPR entries");
+			globalNotifications.error(_L("ppr.failedToLoadEntries"));
 		}
 		loading = false;
 	}
@@ -133,7 +133,7 @@
 				editIncidentLocation = detail.entry.incident_location || "";
 			}
 		} catch {
-			globalNotifications.error("Failed to load PPR details");
+			globalNotifications.error(_L("ppr.failedToLoadDetails"));
 		}
 		loading = false;
 	}
@@ -177,16 +177,16 @@
 				{ success: true }
 			);
 			if (!result || result.success === false) {
-				globalNotifications.error(result?.error || "Failed to create PPR entry");
+				globalNotifications.error(result?.error || _L("ppr.failedToCreateEntry"));
 				isSubmitting = false;
 				return;
 			}
-			globalNotifications.success("PPR entry created");
+			globalNotifications.success(_L("ppr.entryCreated"));
 			resetCreateForm();
 			showCreateForm = false;
 			if (!isEnvBrowser()) loadEntries();
 		} catch {
-			globalNotifications.error("Failed to create PPR entry");
+			globalNotifications.error(_L("ppr.failedToCreateEntry"));
 		}
 		isSubmitting = false;
 	}
@@ -207,7 +207,7 @@
 				{ success: true }
 			);
 			if (!result || result.success === false) {
-				globalNotifications.error(result?.error || "Failed to update PPR entry");
+				globalNotifications.error(result?.error || _L("ppr.failedToUpdateEntry"));
 				return;
 			}
 			selectedEntry.entry.title = editTitle.trim();
@@ -216,9 +216,9 @@
 			selectedEntry.entry.incident_date = editIncidentDate;
 			selectedEntry.entry.incident_location = editIncidentLocation.trim();
 			editMode = false;
-			globalNotifications.success("PPR entry updated");
+			globalNotifications.success(_L("ppr.entryUpdated"));
 		} catch {
-			globalNotifications.error("Failed to update PPR entry");
+			globalNotifications.error(_L("ppr.failedToUpdateEntry"));
 		}
 	}
 
@@ -226,10 +226,10 @@
 		if (!selectedEntry || !canManage) return;
 		try {
 			await fetchNui(NUI_EVENTS.PPR.DELETE_PPR, { id: selectedEntry.entry.id }, { success: true });
-			globalNotifications.success("PPR entry deleted");
+			globalNotifications.success(_L("ppr.entryDeleted"));
 			goBack();
 		} catch {
-			globalNotifications.error("Failed to delete PPR entry");
+			globalNotifications.error(_L("ppr.failedToDeleteEntry"));
 		}
 	}
 
@@ -244,7 +244,7 @@
 			noteContent = "";
 			await selectEntry(selectedEntry.entry.id);
 		} catch {
-			globalNotifications.error("Failed to add note");
+			globalNotifications.error(_L("ppr.failedToAddNote"));
 		}
 		noteSubmitting = false;
 	}
@@ -258,7 +258,7 @@
 			});
 			await selectEntry(selectedEntry.entry.id);
 		} catch {
-			globalNotifications.error("Failed to delete note");
+			globalNotifications.error(_L("ppr.failedToDeleteNote"));
 		}
 	}
 

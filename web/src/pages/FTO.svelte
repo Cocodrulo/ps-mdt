@@ -389,7 +389,7 @@
 		<div class="topbar">
 			<button class="back-btn" onclick={goBack}>
 				<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-				Back to FTO List
+				{_L("fto.backToList")}
 			</button>
 			<span class="topbar-case-number">{selectedDetail.assignment.fto_number}</span>
 			<span class="pill {getStatusPillClass(selectedDetail.assignment.status)}">{formatLabel(selectedDetail.assignment.status)}</span>
@@ -401,40 +401,40 @@
 				<div class="detail-main">
 					<div class="section">
 						<div class="section-header">
-							<div class="section-title" style="margin-bottom:0;">Assignment Details</div>
+							<div class="section-title" style="margin-bottom:0;">{_L("fto.assignmentDetails")}</div>
 							{#if canManage}
 								<div class="inline-controls">
-									<button class="action-btn danger" onclick={handleDelete}>Delete</button>
+									<button class="action-btn danger" onclick={handleDelete}>{_L("fto.delete")}</button>
 								</div>
 							{/if}
 						</div>
 						<div class="field-row">
 							<div class="field-group">
-								<span class="field-label">Trainee</span>
+								<span class="field-label">{_L("fto.trainee")}</span>
 								<span class="field-value">{selectedDetail.assignment.trainee_name || '-'}</span>
 							</div>
 							<div class="field-group">
-								<span class="field-label">Trainer (FTO)</span>
+								<span class="field-label">{_L("fto.trainer")}</span>
 								<span class="field-value">{selectedDetail.assignment.trainer_name || '-'}</span>
 							</div>
 							<div class="field-group">
-								<span class="field-label">Status</span>
+								<span class="field-label">{_L("fto.status")}</span>
 								<span class="pill {getStatusPillClass(selectedDetail.assignment.status)}">{formatLabel(selectedDetail.assignment.status)}</span>
 							</div>
 							<div class="field-group">
-								<span class="field-label">Start Date</span>
+								<span class="field-label">{_L("fto.startDate")}</span>
 								<span class="field-value">{formatDateValue(selectedDetail.assignment.start_date)}</span>
 							</div>
 							{#if selectedDetail.assignment.end_date}
 								<div class="field-group">
-									<span class="field-label">End Date</span>
+									<span class="field-label">{_L("fto.endDate")}</span>
 									<span class="field-value">{formatDateValue(selectedDetail.assignment.end_date)}</span>
 								</div>
 							{/if}
 						</div>
 						{#if selectedDetail.assignment.notes}
 							<div class="field-group" style="margin-top:6px;">
-								<span class="field-label">Notes</span>
+								<span class="field-label">{_L("fto.notes")}</span>
 								<p class="summary-text">{selectedDetail.assignment.notes}</p>
 							</div>
 						{/if}
@@ -442,7 +442,7 @@
 
 					<!-- Phase Progress -->
 					<div class="section">
-						<div class="section-title">Phase Progress</div>
+						<div class="section-title">{_L("fto.phaseProgress")}</div>
 						<div class="phase-info">
 							<span class="phase-label">{selectedDetail.assignment.current_phase}</span>
 							<span class="phase-count">{phaseProgress.current} / {phaseProgress.total}</span>
@@ -455,11 +455,11 @@
 					<!-- DOR History -->
 					<div class="section">
 						<div class="section-header">
-							<div class="section-title" style="margin-bottom:0;">Daily Observation Reports ({selectedDetail.dors.length})</div>
+							<div class="section-title" style="margin-bottom:0;">{_L("fto.dorTitle", { count: selectedDetail.dors.length })}</div>
 							{#if canManage && !showDorForm}
 								<button class="action-btn" onclick={initDorForm}>
 									<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-									New DOR
+									{_L("fto.newDor")}
 								</button>
 							{/if}
 						</div>
@@ -467,7 +467,7 @@
 						{#if showDorForm}
 							<div class="dor-form">
 								<div class="form-group">
-									<span class="form-label">Shift Date</span>
+									<span class="form-label">{_L("fto.shiftDate")}</span>
 									<input type="date" class="form-input" bind:value={dorShiftDate} />
 								</div>
 
@@ -490,19 +490,19 @@
 								</div>
 
 								<div class="dor-overall">
-									<span class="field-label">Overall Rating (Auto)</span>
+									<span class="field-label">{_L("fto.overallRating")}</span>
 									<span class="dor-overall-value">{dorOverallRating}</span>
 								</div>
 
 								<div class="form-group">
 									<span class="form-label">Notes</span>
-									<textarea class="form-textarea" rows="3" bind:value={dorNotes} placeholder="Observation notes..."></textarea>
+									<textarea class="form-textarea" rows="3" bind:value={dorNotes} placeholder={_L("fto.observationNotesPlaceholder")}></textarea>
 								</div>
 
 								<div class="form-actions">
-									<button class="action-btn" onclick={() => { showDorForm = false; }}>Cancel</button>
+									<button class="action-btn" onclick={() => { showDorForm = false; }}>{_L("fto.cancel")}</button>
 									<button class="primary-btn" onclick={handleCreateDor} disabled={dorSubmitting || !dorShiftDate}>
-										{dorSubmitting ? 'Submitting...' : 'Submit DOR'}
+										{dorSubmitting ? _L("fto.submitting") : _L("fto.submitDor")}
 									</button>
 								</div>
 							</div>
@@ -512,7 +512,7 @@
 									<div class="dor-item">
 										<div class="dor-header">
 											<span class="dor-date">{formatDateValue(dor.shift_date)}</span>
-											<span class="dor-overall-badge">Rating: {dor.overall_rating}</span>
+											<span class="dor-overall-badge">{_L("fto.rating")}: {dor.overall_rating}</span>
 											{#if dor.author_name}
 												<span class="dor-author">{dor.author_name}</span>
 											{/if}
@@ -536,7 +536,7 @@
 								{/each}
 							</div>
 						{:else}
-							<p class="muted-text">No DORs recorded yet.</p>
+							<p class="muted-text">{_L("fto.noDorsRecorded")}</p>
 						{/if}
 					</div>
 				</div>
@@ -544,17 +544,17 @@
 				<!-- Right Column: Sidebar -->
 				<div class="detail-side">
 					<div class="section">
-						<div class="section-title">Summary</div>
+						<div class="section-title">{_L("fto.summary")}</div>
 						<div class="field-group">
-							<span class="field-label">DOR Count</span>
+							<span class="field-label">{_L("fto.dorCount")}</span>
 							<span class="field-value">{selectedDetail.assignment.dor_count}</span>
 						</div>
 						<div class="field-group">
-							<span class="field-label">Latest Rating</span>
+							<span class="field-label">{_L("fto.latestRating")}</span>
 							<span class="field-value">{selectedDetail.assignment.latest_rating ?? '-'}</span>
 						</div>
 						<div class="field-group">
-							<span class="field-label">Created</span>
+							<span class="field-label">{_L("fto.created")}</span>
 							<span class="field-value">{formatDateTimeValue(selectedDetail.assignment.created_at)}</span>
 						</div>
 					</div>
@@ -566,60 +566,60 @@
 		<div class="topbar">
 			<button class="back-btn" onclick={() => { showCreateForm = false; resetCreateForm(); }}>
 				<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-				Back to FTO List
+				{_L("fto.backToList")}
 			</button>
 		</div>
 
 		<div class="create-form">
-			<h3>New FTO Assignment</h3>
+			<h3>{_L("fto.newAssignmentTitle")}</h3>
 
 			<div class="form-group">
-				<span class="form-label">Trainee</span>
+				<span class="form-label">{_L("fto.trainee")}</span>
 				<button
 					class="officer-search-trigger"
 					class:placeholder={!newTraineeName}
 					onclick={() => (showTraineeSearch = true)}
 				>
-					{newTraineeName || 'Click to search for a trainee...'}
+					{newTraineeName || _L("fto.clickToSearchTrainee")}
 				</button>
 			</div>
 
 			<div class="form-group">
-				<span class="form-label">Trainer (FTO)</span>
+				<span class="form-label">{_L("fto.trainer")}</span>
 				<button
 					class="officer-search-trigger"
 					class:placeholder={!newTrainerName}
 					onclick={() => (showTrainerSearch = true)}
 				>
-					{newTrainerName || 'Click to search for a trainer...'}
+					{newTrainerName || _L("fto.clickToSearchTrainer")}
 				</button>
 			</div>
 
 			<div class="form-row">
 				<div class="form-group">
-					<span class="form-label">Starting Phase</span>
+					<span class="form-label">{_L("fto.startingPhase")}</span>
 					<select class="form-select" bind:value={newPhaseId}>
-						<option value={undefined}>-- Select Phase --</option>
+						<option value={undefined}>{_L("fto.selectPhase")}</option>
 						{#each phases as phase}
 							<option value={phase.id}>{phase.name}</option>
 						{/each}
 					</select>
 				</div>
 				<div class="form-group">
-					<span class="form-label">Start Date</span>
+					<span class="form-label">{_L("fto.startDate")}</span>
 					<input type="date" class="form-input" bind:value={newStartDate} />
 				</div>
 			</div>
 
 			<div class="form-group">
-				<span class="form-label">Notes</span>
-				<textarea class="form-textarea" rows="3" bind:value={newNotes} placeholder="Additional notes..."></textarea>
+				<span class="form-label">{_L("fto.notes")}</span>
+				<textarea class="form-textarea" rows="3" bind:value={newNotes} placeholder={_L("fto.additionalNotesPlaceholder")}></textarea>
 			</div>
 
 			<div class="form-actions">
-				<button class="action-btn" onclick={() => { showCreateForm = false; resetCreateForm(); }}>Cancel</button>
+				<button class="action-btn" onclick={() => { showCreateForm = false; resetCreateForm(); }}>{_L("fto.cancel")}</button>
 				<button class="primary-btn" onclick={handleCreate} disabled={isSubmitting || !newTraineeCitizenId || !newTrainerCitizenId}>
-					{isSubmitting ? 'Submitting...' : 'Create Assignment'}
+					{isSubmitting ? _L("fto.submitting") : _L("fto.createAssignment")}
 				</button>
 			</div>
 		</div>
@@ -633,7 +633,7 @@
 						class:active={statusFilter === opt}
 						onclick={() => { statusFilter = opt; }}
 					>
-						{opt === 'all' ? 'All' : formatLabel(opt)}
+						{opt === 'all' ? _L("fto.all") : formatLabel(opt)}
 					</button>
 				{/each}
 			</div>
@@ -642,18 +642,18 @@
 		<div class="topbar">
 			<div class="search-box">
 				<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-				<input type="text" placeholder="Search by trainee or trainer name..." bind:value={searchQuery} />
+				<input type="text" placeholder={_L("fto.searchPlaceholder")} bind:value={searchQuery} />
 			</div>
 			<div style="flex:1;"></div>
 			{#if canManage}
 				<button class="primary-btn" onclick={() => { showCreateForm = true; }}>
 					<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-					New Assignment
+					{_L("fto.newAssignment")}
 				</button>
 			{/if}
 			<button class="back-btn" onclick={loadAssignments} disabled={loading}>
 				<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-				Refresh
+				{_L("fto.refresh")}
 			</button>
 		</div>
 
@@ -661,24 +661,24 @@
 			{#if loading && assignments.length === 0}
 				<div class="center-state">
 					<div class="loading-spinner"></div>
-					<p>Loading FTO assignments...</p>
+					<p>{_L("fto.loading")}</p>
 				</div>
 			{:else if paginatedAssignments.length === 0}
 				<div class="center-state">
 					<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-					<h3>No FTO Assignments Found</h3>
-					<p>{searchQuery ? "No assignments match your search criteria." : "No FTO assignments have been created yet."}</p>
+					<h3>{_L("fto.noAssignmentsFound")}</h3>
+					<p>{searchQuery ? _L("fto.noAssignmentsMatch") : _L("fto.noAssignmentsCreated")}</p>
 				</div>
 			{:else}
 				<div class="table-header">
 					<span>#</span>
-					<span>Trainee</span>
-					<span>Trainer</span>
-					<span>Phase</span>
-					<span>Status</span>
-					<span>Start Date</span>
-					<span>DORs</span>
-					<span>Rating</span>
+					<span>{_L("fto.trainee")}</span>
+					<span>{_L("fto.trainer")}</span>
+					<span>{_L("fto.phase")}</span>
+					<span>{_L("fto.status")}</span>
+					<span>{_L("fto.startDate")}</span>
+					<span>{_L("fto.dorCount")}</span>
+					<span>{_L("fto.rating")}</span>
 				</div>
 				<div class="table-body">
 					{#each paginatedAssignments as item}
@@ -710,7 +710,7 @@
 
 <PersonSearchModal
 	show={showTraineeSearch}
-	title="Search Trainee"
+	title={_L("fto.searchTrainee")}
 	searchQuery={personSearchQuery}
 	searchResults={searchService.state.results}
 	onClose={() => {
@@ -723,7 +723,7 @@
 
 <PersonSearchModal
 	show={showTrainerSearch}
-	title="Search Trainer (FTO)"
+	title={_L("fto.searchTrainer")}
 	searchQuery={personSearchQuery}
 	searchResults={searchService.state.results}
 	onClose={() => {

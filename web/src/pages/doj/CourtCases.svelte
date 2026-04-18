@@ -146,12 +146,12 @@
 			if (result.success) {
 				showNewDocModal = false;
 				newDocData = { title: "", type: "brief", content: "" };
-				globalNotifications.success("Legal document created");
+				globalNotifications.success(_L("courtCases.documentCreated"));
 			} else {
-				globalNotifications.error(result.error || "Failed to create document");
+				globalNotifications.error(result.error || _L("courtCases.failedToCreateDocument"));
 			}
 		} catch {
-			globalNotifications.error("Failed to create document");
+			globalNotifications.error(_L("courtCases.failedToCreateDocument"));
 		}
 	}
 
@@ -247,7 +247,7 @@
 			);
 			cases = data.cases || [];
 		} catch {
-			globalNotifications.error("Failed to load court cases");
+			globalNotifications.error(_L("courtCases.failedToLoadCases"));
 		}
 		isLoading = false;
 	}
@@ -271,7 +271,7 @@
 				selectedCase = null;
 			}
 		} catch {
-			globalNotifications.error("Failed to load court case details");
+			globalNotifications.error(_L("courtCases.failedToLoadDetails"));
 		}
 		isLoading = false;
 	}
@@ -298,13 +298,13 @@
 			if (result.success) {
 				showCreateModal = false;
 				newCase = { title: "", case_type: "criminal", defendant_citizenid: "", defendant_name: "" };
-				globalNotifications.success("Court case created");
+				globalNotifications.success(_L("courtCases.caseCreated"));
 				await loadCases();
 			} else {
-				globalNotifications.error(result.error || "Failed to create court case");
+				globalNotifications.error(result.error || _L("courtCases.failedToCreateCase"));
 			}
 		} catch {
-			globalNotifications.error("Failed to create court case");
+			globalNotifications.error(_L("courtCases.failedToCreateCase"));
 		}
 		isLoading = false;
 	}
@@ -318,9 +318,9 @@
 				{ success: true },
 			);
 			await selectCase(selectedCase.court_case.id);
-			globalNotifications.success("Court case updated");
+			globalNotifications.success(_L("courtCases.caseUpdated"));
 		} catch {
-			globalNotifications.error("Failed to update court case");
+			globalNotifications.error(_L("courtCases.failedToUpdateCase"));
 		}
 	}
 </script>

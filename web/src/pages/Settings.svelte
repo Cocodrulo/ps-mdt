@@ -51,9 +51,9 @@
 				showBodycams,
 			};
 			localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-			showSaveStatus("Preferences saved");
+			showSaveStatus(_L("settings.preferencesSaved"));
 		} catch {
-			showSaveStatus("Failed to save");
+			showSaveStatus(_L("settings.failedToSave"));
 		}
 	}
 

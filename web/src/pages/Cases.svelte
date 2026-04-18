@@ -171,7 +171,7 @@
 			noteContent = "";
 			await selectCase(selectedCase.case.id);
 		} else {
-			globalNotifications.error("Failed to add note");
+			globalNotifications.error(_L("casesPage.failedToAddNote"));
 		}
 		noteSubmitting = false;
 	}
@@ -182,7 +182,7 @@
 		if (success) {
 			await selectCase(selectedCase.case.id);
 		} else {
-			globalNotifications.error("Failed to delete note");
+			globalNotifications.error(_L("casesPage.failedToDeleteNote"));
 		}
 	}
 

@@ -53,7 +53,7 @@
 				(Array.isArray(response) ? response : []) ??
 				[];
 		} catch (error) {
-			globalNotifications.error("Failed to load bodycams");
+			globalNotifications.error(_L("bodycamsPage.failedToLoadBodycams"));
 			bodycams = [];
 		} finally {
 			isLoading = false;

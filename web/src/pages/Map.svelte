@@ -122,7 +122,7 @@
 				}
 			}
 		} catch (error) {
-			globalNotifications.error("Failed to refresh tracking");
+			globalNotifications.error(_L("map.failedToRefreshTracking"));
 		}
 	}
 

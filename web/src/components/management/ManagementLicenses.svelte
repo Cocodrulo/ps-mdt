@@ -143,8 +143,8 @@
 			<input class="form-input desc-input" type="text" placeholder="{_L('managementLicenses.licenseDescPlaceholder')}" bind:value={formDesc} maxlength="150" />
 			<div class="form-actions">
 				{#if editingId}
-					<button class="btn-save" onclick={handleSave} disabled={isSubmitting}>Update</button>
-					<button class="btn-cancel" onclick={resetForm}>Cancel</button>
+					<button class="btn-save" onclick={handleSave} disabled={isSubmitting}>{_L("managementLicenses.update")}</button>
+					<button class="btn-cancel" onclick={resetForm}>{_L("managementLicenses.cancel")}</button>
 				{:else}
 					<button class="btn-create" onclick={handleSave} disabled={!formName.trim() || isSubmitting}>
 						{isSubmitting ? "..." : "+ "+_L("managementLicenses.addLicense")}
@@ -191,10 +191,10 @@
 					</div>
 					<span class="row-badge custom-badge">{_L("managementLicenses.customBadge")}</span>
 					<div class="row-actions">
-						<button class="action-btn edit-btn" onclick={() => startEdit(license)} title="Edit">
+						<button class="action-btn edit-btn" onclick={() => startEdit(license)} title={_L("managementLicenses.edit")}>
 							<span class="material-icons">edit</span>
 						</button>
-						<button class="action-btn delete-btn" onclick={() => handleDelete(license)} title="Delete">
+						<button class="action-btn delete-btn" onclick={() => handleDelete(license)} title={_L("managementLicenses.delete")}>
 							<span class="material-icons">delete</span>
 						</button>
 					</div>

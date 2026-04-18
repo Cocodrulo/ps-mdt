@@ -34,7 +34,13 @@
 
 	function getTabLabel(tabName: string): string {
 		const entry = TAB_VISIBILITY_KEYS.find(t => t.tabName === tabName);
-		return entry?.label || tabName;
+		if (entry) {
+			// Try to find a localized version of the tabName (which usually corresponds to a category)
+			const localized = _L("categories." + tabName.toLowerCase());
+			if (localized !== "categories." + tabName.toLowerCase()) return localized;
+			return entry.label;
+		}
+		return tabName;
 	}
 
 	function isTabVisible(tabName: string): boolean {
@@ -134,7 +140,7 @@
 								<div class="group-header">
 									<div class="group-label-row">
 										<span class="material-icons group-icon">{group.icon}</span>
-										<span class="group-label">{group.label}</span>
+										<span class="group-label">{_L("categories." + group.id)}</span>
 									</div>
 									{#if !currentRole.isBoss}
 										<button
