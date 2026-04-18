@@ -9,7 +9,7 @@ export const LocalizationConfig = $state({
 });
 
 async function getTranslations(locale: string) {
-	return fetch(`/translations/${locale}.json`).then((res) => {
+	return fetch(`./translations/${locale}.json`).then((res) => {
 		return res.json() as Promise<{config: IConfig, translations: ITranslations}>;
 	});
 }

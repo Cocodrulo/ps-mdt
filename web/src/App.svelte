@@ -24,7 +24,7 @@
 				showComplaintForm = true;
 			}
 			if (event.data?.action === 'setLocale') {
-				setLocale(event.data.locale);
+				setLocale(event.data.data.locale);
 			}
 		};
 		window.addEventListener('message', handleMessage);
