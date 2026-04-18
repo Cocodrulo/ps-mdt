@@ -3,7 +3,7 @@
 	import { fetchNui } from "../../utils/fetchNui";
 	import { NUI_EVENTS } from "../../constants/nuiEvents";
 	import type { JobType } from "../../interfaces/IUser";
-	import { _L } from "@/utils/localization";
+	import { _L } from "@/utils/localization.svelte";
 
 	interface FTOPhase {
 		id: number;

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { REPORT_TYPES } from "../constants";
 	import type { Report } from "../interfaces/IReportEditor";
-	import { _L } from "@/utils/localization";
+	import { _L } from "@/utils/localization.svelte";
 
 	export let report: Report;
 	export let formatDate: (timestamp: number) => string;

@@ -18,7 +18,7 @@
 		CasePriority,
 	} from "../interfaces/ICase";
 	import { globalNotifications } from "../services/notificationService.svelte";
-	import { _L, getLocalizedDate, getLocalizedTime } from "@/utils/localization";
+	import { _L, getLocalizedDate, getLocalizedTime } from "@/utils/localization.svelte";
 
 	let { tabService }: { tabService?: ReturnType<typeof createTabService> } = $props();
 

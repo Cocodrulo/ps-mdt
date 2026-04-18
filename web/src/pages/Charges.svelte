@@ -10,7 +10,7 @@
 	import ChargeType from "../components/ChargeType.svelte";
 
 	import type { Charge, GroupedCharges } from "./../interfaces/ICharges";
-	import { _L } from "@/utils/localization";
+	import { _L } from "@/utils/localization.svelte";
 
 	let { authService }: { authService?: AuthService } = $props();
 

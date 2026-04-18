@@ -8,7 +8,7 @@
 	import type { AuthService } from "../../services/authService.svelte";
 	import type { SearchResult } from "../../interfaces/IReportEditor";
 	import PersonSearchModal from "../../components/report-editor/PersonSearchModal.svelte";
-	import { _L, getLocalizedDate } from "@/utils/localization";
+	import { _L, getLocalizedDate } from "@/utils/localization.svelte";
 
 	interface Props {
 		tabService: ReturnType<typeof createTabService>;

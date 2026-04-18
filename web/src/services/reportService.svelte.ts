@@ -1,6 +1,6 @@
 import { fetchNui } from "../utils/fetchNui";
 import { NUI_EVENTS } from "../constants/nuiEvents";
-import { getLocalizedDate, getLocalizedTime } from "../utils/localization";
+import { getLocalizedDate, getLocalizedTime } from "../utils/localization.svelte";
 import type {
 	Report,
 	Officer,

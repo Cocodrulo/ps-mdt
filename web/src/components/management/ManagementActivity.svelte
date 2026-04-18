@@ -4,7 +4,7 @@
 	import { isEnvBrowser } from "../../utils/misc";
 	import { NUI_EVENTS } from "../../constants/nuiEvents";
 	import Pagination from "../Pagination.svelte";
-	import { _L, getLocalizedDate, getLocalizedTime } from "@/utils/localization";
+	import { _L, getLocalizedDate, getLocalizedTime } from "@/utils/localization.svelte";
 
 	interface AuditLog {
 		id: number;

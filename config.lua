@@ -4,6 +4,7 @@ ps = exports.ps_lib:init()
 -- Basic Settings
 Config.Debug = false -- Enable/disable debug mode (boolean)
 Config.OnlyShowOnDuty = true -- Only allow the MDT to be opened when on duty (boolean)
+Config.Locale = "en"
 
 -- Civilian Access Settings
 Config.CivilianAccess = {

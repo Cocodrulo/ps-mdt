@@ -3,7 +3,7 @@
 	import { createManagementService } from "@/services/managementService.svelte";
 	import { PERMISSION_CATEGORIES } from "@/constants/management";
 	import type { JobType } from "@/interfaces/IUser";
-	import { _L } from "@/utils/localization";
+	import { _L } from "@/utils/localization.svelte";
 
 	let { jobType = 'leo' }: { jobType?: JobType } = $props();
 

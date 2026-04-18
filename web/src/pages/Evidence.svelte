@@ -6,7 +6,7 @@
 	import type { createTabService } from "../services/tabService.svelte";
 	import type { MDTTab } from "../constants";
 	import Pagination from "../components/Pagination.svelte";
-	import { _L, getLocalizedDate, getLocalizedTime } from "@/utils/localization";
+	import { _L, getLocalizedDate, getLocalizedTime } from "@/utils/localization.svelte";
 
 	let { tabService }: { tabService?: ReturnType<typeof createTabService> } = $props();
 

@@ -19,7 +19,7 @@
 	}
 
 	import type { JobType } from "../interfaces/IUser";
-	import { _L, getLocalizedDate } from "@/utils/localization";
+	import { _L, getLocalizedDate } from "@/utils/localization.svelte";
 
 	let {
 		signOut,

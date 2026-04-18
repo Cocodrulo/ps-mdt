@@ -3,7 +3,7 @@
 	import { fetchNui } from "../utils/fetchNui";
 	import { NUI_EVENTS } from "../constants/nuiEvents";
 	import type { AuthService } from "../services/authService.svelte";
-	import { _L } from "@/utils/localization";
+	import { _L } from "@/utils/localization.svelte";
 
 	interface SOPSection {
 		id: number;

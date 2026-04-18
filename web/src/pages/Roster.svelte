@@ -7,7 +7,7 @@
 	import { NUI_EVENTS } from "../constants/nuiEvents";
 	import { globalNotifications } from "../services/notificationService.svelte";
 	import type { AuthService } from "../services/authService.svelte";
-	import { _L, getLocalizedDate } from "@/utils/localization";
+	import { _L, getLocalizedDate } from "@/utils/localization.svelte";
 
 	let { authService, tabService }: { authService?: AuthService; tabService?: any } = $props();
 

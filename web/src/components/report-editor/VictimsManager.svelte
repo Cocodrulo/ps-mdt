@@ -3,7 +3,7 @@
 	import PersonnelSection from "./PersonnelSection.svelte";
 	import PersonnelCard from "./PersonnelCard.svelte";
 	import { VICTIM_TYPES } from "../../constants";
-	import { _L } from "@/utils/localization";
+	import { _L } from "@/utils/localization.svelte";
 
 	interface Props {
 		victims: Victim[];

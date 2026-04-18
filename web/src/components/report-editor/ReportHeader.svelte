@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { _L } from "@/utils/localization";
+	import { _L } from "@/utils/localization.svelte";
 
 	export let isEditing: boolean;
 	export let isSaving: boolean;

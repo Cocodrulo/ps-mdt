@@ -7,7 +7,7 @@
 	import { openReportInEditor } from "../stores/reportsStore";
 	import type { createTabService } from "../services/tabService.svelte";
 	import Pagination from "../components/Pagination.svelte";
-	import { _L } from "@/utils/localization";
+	import { _L } from "@/utils/localization.svelte";
 
 	let { tabService }: { tabService: ReturnType<typeof createTabService> } = $props();
 

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { APP_INFO } from "../constants";
 	import type { AuthService } from "../services/authService.svelte";
-	import { _L } from "@/utils/localization";
+	import { _L } from "@/utils/localization.svelte";
 
 	interface Props {
 		authService: AuthService;

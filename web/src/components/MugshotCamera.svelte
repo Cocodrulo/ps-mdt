@@ -2,7 +2,7 @@
 	import { onMount, onDestroy } from "svelte";
 	import { isEnvBrowser } from "../utils/misc";
 	import { GetParentResourceName } from "../utils/fivem";
-	import { _L } from "@/utils/localization";
+	import { _L } from "@/utils/localization.svelte";
 
 	let visible = $state(false);
 	let zoomLevel = $state(1.0);

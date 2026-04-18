@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { ReportCharge, Suspect } from "../../interfaces/IReportEditor";
 	import type { Charge } from "../../interfaces/ICharges";
-	import { _L, getLocalizedCurrency } from "@/utils/localization";
+	import { _L, getLocalizedCurrency } from "@/utils/localization.svelte";
 
 	interface Props {
 		charges: ReportCharge[];

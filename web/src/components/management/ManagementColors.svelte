@@ -4,7 +4,7 @@
 	import { isEnvBrowser } from "@/utils/misc";
 	import { NUI_EVENTS } from "@/constants/nuiEvents";
 	import { settingsService } from "@/services/settingsService.svelte";
-	import { _L } from "@/utils/localization";
+	import { _L } from "@/utils/localization.svelte";
 
 	interface ColorConfig {
 		accent: string;

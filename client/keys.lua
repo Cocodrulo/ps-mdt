@@ -146,6 +146,7 @@ function OpenMDT()
 
     MDTOpen = true
 
+    SendNUI('setLocale', { locale = Config.Locale })
     SendNUI('setVisible', { visible = true, debugMode = Config.Debug })
 
     if isCivilian then

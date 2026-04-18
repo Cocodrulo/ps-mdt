@@ -39,7 +39,7 @@
 	import { getReportTypesForJob, type MDTTab } from "../constants";
 
 	import type { JobType } from "../interfaces/IUser";
-	import { _L } from "@/utils/localization";
+	import { _L } from "@/utils/localization.svelte";
 
 	const {
 		reportId,

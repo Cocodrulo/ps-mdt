@@ -10,7 +10,7 @@
 	import { pendingBoloId, clearPendingBolo } from "../stores/navigationStore";
 	import { get } from "svelte/store";
 	import Pagination from "../components/Pagination.svelte";
-	import { _L } from "@/utils/localization";
+	import { _L } from "@/utils/localization.svelte";
 
 	interface Bolo {
 		id: number;

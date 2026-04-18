@@ -4,7 +4,7 @@
 	import { TAB_VISIBILITY_KEYS } from "@/constants/management";
 	import { NAV_GROUPS, getTabsForJob, MDT_TABS } from "@/constants";
 	import type { JobType } from "@/interfaces/IUser";
-	import { _L } from "@/utils/localization";
+	import { _L } from "@/utils/localization.svelte";
 
 	let { jobType = 'leo' }: { jobType?: JobType } = $props();
 

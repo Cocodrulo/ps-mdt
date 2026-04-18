@@ -8,6 +8,7 @@
 	import { queryClient } from "./utils/query-client";
 	import { onMount } from "svelte";
 	import { setupInputDebug } from "./utils/debugInputBlocker";
+	import { setLocale } from "./utils/localization.svelte";
 
 	let cleanupInputDebug: (() => void) | undefined;
 	let showComplaintForm = $state(false);
@@ -21,6 +22,9 @@
 		const handleMessage = (event: MessageEvent) => {
 			if (event.data?.action === 'showComplaintForm') {
 				showComplaintForm = true;
+			}
+			if (event.data?.action === 'setLocale') {
+				setLocale(event.data.locale);
 			}
 		};
 		window.addEventListener('message', handleMessage);

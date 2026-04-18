@@ -5,7 +5,7 @@
 	import { NUI_EVENTS } from "../constants/nuiEvents";
 	import type { createTabService } from "../services/tabService.svelte";
 	import type { JobType } from "../interfaces/IUser";
-	import { _L, getLocalizedDate } from "@/utils/localization";
+	import { _L, getLocalizedDate } from "@/utils/localization.svelte";
 
 	interface Props {
 		tabService: ReturnType<typeof createTabService>;

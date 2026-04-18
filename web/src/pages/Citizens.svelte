@@ -93,7 +93,7 @@
 
 	import type { JobType } from "../interfaces/IUser";
 	import type { AuthService } from "../services/authService.svelte";
-	import { _L, getLocalizedDate } from "@/utils/localization";
+	import { _L, getLocalizedDate } from "@/utils/localization.svelte";
 
 	let { tabService, jobType = 'leo', authService }: { tabService: ReturnType<typeof createTabService>; jobType?: JobType; authService?: AuthService } =
 		$props();

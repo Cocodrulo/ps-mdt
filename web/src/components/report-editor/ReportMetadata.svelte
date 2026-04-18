@@ -9,7 +9,7 @@
 	import { untrack } from "svelte";
 	import { getReportTypesForJob } from "../../constants/index";
 	import type { JobType } from "../../interfaces/IUser";
-	import { getLocalizedDate, getLocalizedTime } from "@/utils/localization";
+	import { getLocalizedDate, getLocalizedTime } from "@/utils/localization.svelte";
 
 	interface Props {
 		title: string;

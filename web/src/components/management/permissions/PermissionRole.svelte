@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PermissionRole as Role } from "@/services/managementService.svelte";
-	import { _L } from "@/utils/localization";
+	import { _L } from "@/utils/localization.svelte";
 
 	let {
 		role,

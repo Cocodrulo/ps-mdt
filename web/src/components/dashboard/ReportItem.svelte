@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { _L, getLocalizedDate } from "@/utils/localization";
+	import { _L, getLocalizedDate } from "@/utils/localization.svelte";
 	import type { DashboardData } from "../../interfaces/IDashboard";
 
 	let {

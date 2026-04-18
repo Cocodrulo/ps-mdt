@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { _L } from "@/utils/localization";
+	import { _L } from "@/utils/localization.svelte";
     import { GetParentResourceName } from "../utils/fivem";
 
     let { show = false, onClose = () => {} }: { show: boolean; onClose: () => void } = $props();

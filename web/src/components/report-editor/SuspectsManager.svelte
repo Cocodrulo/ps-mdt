@@ -2,7 +2,7 @@
 	import type { Suspect } from "../../interfaces/IReportEditor";
 	import PersonnelSection from "./PersonnelSection.svelte";
 	import PersonnelCard from "./PersonnelCard.svelte";
-	import { _L } from "@/utils/localization";
+	import { _L } from "@/utils/localization.svelte";
 
 	interface Props {
 		suspects: Suspect[];

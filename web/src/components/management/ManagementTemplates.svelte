@@ -5,7 +5,7 @@
 	import { NUI_EVENTS } from "../../constants/nuiEvents";
 	import { getReportTypesForJob } from "../../constants/index";
 	import type { JobType } from "../../interfaces/IUser";
-	import { _L } from "@/utils/localization";
+	import { _L } from "@/utils/localization.svelte";
 
 	interface ReportTemplate {
 		id: number;

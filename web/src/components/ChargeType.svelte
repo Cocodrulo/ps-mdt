@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { _L, getLocalizedCurrency } from "@/utils/localization";
+	import { _L, getLocalizedCurrency } from "@/utils/localization.svelte";
 	import type { Charge } from "./../interfaces/ICharges";
 
 	interface Props {

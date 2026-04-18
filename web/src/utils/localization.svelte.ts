@@ -1,9 +1,12 @@
-import { DATE_FORMAT_OPTIONS, TIME_FORMAT_OPTIONS } from "@/constants";
+import { DATE_FORMAT_OPTIONS, TIME_FORMAT_OPTIONS } from "@/constants/date";
 import type { ITranslations, IConfig } from "@/interfaces/ITranslations";
 
-const DEFAULT_LOCALE = "es";
+const DEFAULT_LOCALE = "en";
 
-const {config, translations}: {config: IConfig, translations: ITranslations} = await getTranslations(DEFAULT_LOCALE);
+export const LocalizationConfig = $state({
+	config: {} as IConfig,
+	translations: {} as ITranslations,
+});
 
 async function getTranslations(locale: string) {
 	return fetch(`/translations/${locale}.json`).then((res) => {
@@ -12,29 +15,29 @@ async function getTranslations(locale: string) {
 }
 
 export const getLocalizedDate = (date: Date, options?: Intl.DateTimeFormatOptions) => {
-	return new Date(date).toLocaleDateString(config.dateLocale, {
+	return new Date(date).toLocaleDateString(LocalizationConfig.config.dateLocale, {
 		...DATE_FORMAT_OPTIONS,
 		...options,
 	});
 };
 
 export const getLocalizedTime = (date: Date, options?: Intl.DateTimeFormatOptions) => {
-	return new Date(date).toLocaleTimeString(config.timeLocale, {
+	return new Date(date).toLocaleTimeString(LocalizationConfig.config.timeLocale, {
 		...TIME_FORMAT_OPTIONS,
 		...options,
 	});
 };
 
 export const getLocalizedCurrency = (value: number) => {
-	return new Intl.NumberFormat(config.locale, {
+	return new Intl.NumberFormat(LocalizationConfig.config.locale, {
 		style: "currency",
-		currency: (config as IConfig & { currency?: string }).currency ?? "USD",
+		currency: (LocalizationConfig.config as IConfig & { currency?: string }).currency ?? "USD",
 	}).format(value);
 };
 
 export const _L = (key: string, ...replacements: [string, string | number][]) => {
 	const steps = key.split(".");
-	let current: ITranslations | string = translations;
+	let current: ITranslations | string = LocalizationConfig.translations;
 
 	for (const step of steps) {
 		if (typeof current !== "object" || current === null) {
@@ -66,3 +69,11 @@ export const _L = (key: string, ...replacements: [string, string | number][]) =>
 
 	return current as string;
 };
+
+export const setLocale = async (locale: string) => {
+	const newConfig = await getTranslations(locale);
+	LocalizationConfig.config = newConfig.config;
+	LocalizationConfig.translations = newConfig.translations;
+};
+
+setLocale(DEFAULT_LOCALE);

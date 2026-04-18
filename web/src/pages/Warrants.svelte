@@ -7,7 +7,7 @@
 	import { openReportInEditor } from "../stores/reportsStore";
 	import type { createTabService } from "../services/tabService.svelte";
 	import { globalNotifications } from "../services/notificationService.svelte";
-	import { _L, getLocalizedDate } from "@/utils/localization";
+	import { _L, getLocalizedDate } from "@/utils/localization.svelte";
 
 	let { tabService }: { tabService: ReturnType<typeof createTabService> } = $props();
 

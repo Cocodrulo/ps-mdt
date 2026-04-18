@@ -9,7 +9,7 @@
 
 	let info = $derived(APP_INFO[authService.jobType] || APP_INFO.leo);
 	import type { AuthService } from "../services/authService.svelte";
-	import { getLocalizedDate, getLocalizedTime } from "@/utils/localization";
+	import { getLocalizedDate, getLocalizedTime } from "@/utils/localization.svelte";
 
 	interface Props {
 		authService: AuthService;

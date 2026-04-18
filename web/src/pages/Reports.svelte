@@ -18,7 +18,7 @@
 	import Pagination from "../components/Pagination.svelte";
 
 	import type { JobType } from "../interfaces/IUser";
-	import { _L, getLocalizedDate, getLocalizedTime } from "@/utils/localization";
+	import { _L, getLocalizedDate, getLocalizedTime } from "@/utils/localization.svelte";
 
 	interface Props {
 		instanceStateService: ReturnType<typeof createInstanceStateService>;

@@ -35,7 +35,7 @@
 	import LegalDocuments from "../pages/doj/LegalDocuments.svelte";
 	import type { createInstanceStateService } from "../services/instanceStateService.svelte";
 	import type { createTabService } from "../services/tabService.svelte";
-	import { _L } from "@/utils/localization";
+	import { _L } from "@/utils/localization.svelte";
 
 	interface Props {
 		authService: AuthService;

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { _L } from "@/utils/localization";
+	import { _L } from "@/utils/localization.svelte";
 	import type { TagInfo } from "../../services/tagService.svelte";
 
 	interface Props {
