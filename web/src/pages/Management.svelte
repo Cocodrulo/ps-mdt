@@ -13,6 +13,7 @@
 	import ManagementVisibility from "../components/management/ManagementVisibility.svelte";
 	import ManagementFTO from "../components/management/ManagementFTO.svelte";
 	import type { AuthService } from "../services/authService.svelte";
+	import { _L } from "@/utils/localization.svelte";
 
 	let { authService }: { authService?: AuthService } = $props();
 
@@ -22,19 +23,19 @@
 	const DOJ_HIDDEN_TABS: View[] = ["bulletins", "activity", "jailfines", "tracking", "licenses", "awards", "colors", "sop", "visibility", "fto", "tags", "templates"];
 
 	const allTabs: { key: View; label: string; permission?: string }[] = [
-		{ key: "bulletins", label: "Bulletins", permission: "management_bulletins" },
-		{ key: "activity", label: "Activity", permission: "management_activity" },
-		{ key: "permissions", label: "Permissions", permission: "management_permissions" },
-		{ key: "tags", label: "Tags", permission: "management_tags" },
-		{ key: "jailfines", label: "Jail / Fines", permission: "management_settings" },
-		{ key: "tracking", label: "Tracking", permission: "management_tracking" },
-		{ key: "templates", label: "Templates", permission: "management_settings" },
-		{ key: "licenses", label: "Licenses", permission: "management_settings" },
-		{ key: "awards", label: "Awards", permission: "management_settings" },
-		{ key: "colors", label: "Colors", permission: "management_settings" },
-		{ key: "sop", label: "SOP", permission: "sop_manage" },
-		{ key: "fto", label: "FTO", permission: "fto_manage" },
-		{ key: "visibility", label: "Visibility", permission: "management_permissions" },
+		{ key: "bulletins", label: _L("management.tabs.bulletins"), permission: "management_bulletins" },
+		{ key: "activity", label: _L("management.tabs.activity"), permission: "management_activity" },
+		{ key: "permissions", label: _L("management.tabs.permissions"), permission: "management_permissions" },
+		{ key: "tags", label: _L("management.tabs.tags"), permission: "management_tags" },
+		{ key: "jailfines", label: _L("management.tabs.jailfines"), permission: "management_settings" },
+		{ key: "tracking", label: _L("management.tabs.tracking"), permission: "management_tracking" },
+		{ key: "templates", label: _L("management.tabs.templates"), permission: "management_settings" },
+		{ key: "licenses", label: _L("management.tabs.licenses"), permission: "management_settings" },
+		{ key: "awards", label: _L("management.tabs.awards"), permission: "management_settings" },
+		{ key: "colors", label: _L("management.tabs.colors"), permission: "management_settings" },
+		{ key: "sop", label: _L("management.tabs.sop"), permission: "sop_manage" },
+		{ key: "fto", label: _L("management.tabs.fto"), permission: "fto_manage" },
+		{ key: "visibility", label: _L("management.tabs.visibility"), permission: "management_permissions" },
 	];
 
 	let tabs = $derived(
