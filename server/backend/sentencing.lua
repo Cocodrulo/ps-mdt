@@ -68,32 +68,42 @@ ps.registerCallback(resourceName .. ':server:giveCitation', function(source, pay
         return { success = false, message = 'Invalid fine amount' }
     end
 
-    local Player = ps.getPlayerByIdentifier(citizenId)
-    if not Player then
-        return { success = false, message = 'Player must be online to issue a fine' }
-    end
+    -- local Player = ps.getPlayerByIdentifier(citizenId)
+    -- if not Player then
+    --     return { success = false, message = 'Player must be online to issue a fine' }
+    -- end
 
-    local playerSrc = Player.source or (Player.PlayerData and Player.PlayerData.source)
-    if not playerSrc then
-        return { success = false, message = 'Could not resolve player source' }
-    end
+    -- local playerSrc = Player.source or (Player.PlayerData and Player.PlayerData.source)
+    -- if not playerSrc then
+    --     return { success = false, message = 'Could not resolve player source' }
+    -- end
 
-    local removed = ps.removeMoney(playerSrc, 'bank', fine, 'mdt-fine')
-    if not removed then
-        return { success = false, message = 'Could not deduct fine (insufficient funds)' }
-    end
+    -- local removed = ps.removeMoney(playerSrc, 'bank', fine, 'mdt-fine')
+    -- if not removed then
+    --     return { success = false, message = 'Could not deduct fine (insufficient funds)' }
+    -- end
 
-    ps.notify(playerSrc, '$' .. fine .. ' fine deducted from your bank account', 'error')
-    ps.notify(src, '$' .. fine .. ' fine issued successfully', 'success')
+    -- ps.notify(playerSrc, '$' .. fine .. ' fine deducted from your bank account', 'error')
+    -- ps.notify(src, '$' .. fine .. ' fine issued successfully', 'success')
 
-    if ps.auditLog then
-        local officerName = ps.getPlayerName(src) or 'Unknown Officer'
-        ps.auditLog(src, 'fine_issued', 'citizen', citizenId, {
-            fine = fine,
-            reportId = reportId,
-            officerName = officerName,
-        })
-    end
+    -- if ps.auditLog then
+    --     local officerName = ps.getPlayerName(src) or 'Unknown Officer'
+    --     ps.auditLog(src, 'fine_issued', 'citizen', citizenId, {
+    --         fine = fine,
+    --         reportId = reportId,
+    --         officerName = officerName,
+    --     })
+    -- end
+
+    exports['skys_tablet']:CreateInvoice({
+        society = 'society_' .. ps.getJobName(src),
+        amount = fine,
+        concept = 'Multa del Incidente #' .. reportId,
+        receiverCitizenId = citizenId,
+        receiverName = ps.getPlayerNameByIdentifier(citizenId),
+        issuerCitizenId = ps.getPlayerCitizenId(src),
+        issuerName = ps.getJob(src).label,
+    })
 
     return { success = true, message = '$' .. fine .. ' fine issued' }
 end)
