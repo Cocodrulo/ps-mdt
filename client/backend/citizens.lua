@@ -28,12 +28,13 @@ RegisterNUICallback('searchCitizens', function(data, cb)
         cb({})
         return
     end
+    local page = data.page or 1 -- Default to page 1 if not provided
     local query = tostring(data.query)
     if #query < 2 then
         cb({})
         return
     end
-    local result = ps.callback(resourceName..':server:searchCitizens', query)
+    local result = ps.callback(resourceName..':server:searchCitizens', query, page)
     cb(result)
 end)
 

@@ -109,11 +109,13 @@
 	let copyTimeout: ReturnType<typeof setTimeout> | null = null;
 
 	let citizenPage = $state(1);
-	let citizenPerPage = $state(25);
+	let citizenPerPage = $state(20);
+	let citizenTotalPages = $state(1); // how many pages exist
 
-	let allFilteredCitizens = $derived.by(() => {
+	let filteredCitizens = $derived.by(() => {
 		const query = searchQuery.trim().toLowerCase();
 		if (!query) return citizens;
+
 		return citizens.filter(({ firstName, lastName, cid, phone }) =>
 			[firstName, lastName, cid, phone].some((val) =>
 				val?.toLowerCase().includes(query),
@@ -121,27 +123,69 @@
 		);
 	});
 
-	let citizenTotalPages = $derived(Math.max(1, Math.ceil(allFilteredCitizens.length / citizenPerPage)));
+	// let citizenTotalPages = $derived(Math.max(1, Math.ceil(allFilteredCitizens.length / citizenPerPage)));
 
-	let filteredCitizens = $derived.by(() => {
-		const start = (citizenPage - 1) * citizenPerPage;
-		return allFilteredCitizens.slice(start, start + citizenPerPage);
+	$effect(() => {
+		citizenPage;
+		if (!isEnvBrowser()) {
+			fetchCitizens();
+		}
 	});
+
+	// let filteredCitizens = $derived.by(() => {
+	// 	const start = (citizenPage - 1) * citizenPerPage;
+	// 	return allFilteredCitizens.slice(start, start + citizenPerPage);
+	// });
 
 	// Reset to page 1 when search changes
 	$effect(() => {
 		searchQuery;
-		citizenPage = 1;
+		devounceFetch();
 	});
+
+	let devounceTimeout: ReturnType<typeof setTimeout> | null = null;
+
+	function devounceFetch() {
+		if (devounceTimeout) {
+			clearTimeout(devounceTimeout);
+		}
+		devounceTimeout = setTimeout(() => {
+			fetchQueryCitizens(searchQuery);
+			citizenPage = 1;
+		}, 500);
+	}
+
+	async function fetchQueryCitizens(query: string) {
+		loading = true;
+		try {
+			console.log(NUI_EVENTS.CITIZEN.SEARCH_CITIZENS)
+			const result = await fetchNui(NUI_EVENTS.CITIZEN.SEARCH_CITIZENS, {
+				query: query,
+				page: citizenPage
+			}) as {data: Citizen[], total: number, totalPages: number, page: number, limit: number};
+			citizens = result ? result.data : [];
+			citizenTotalPages = Number(result?.totalPages) || 1;
+		} catch (error) {
+			globalNotifications.error(_L("civilianPage.failedToFetchCitizens"));
+			citizens = [];
+			citizenTotalPages = 1;
+		}
+		loading = false;
+	}
 
 	async function fetchCitizens() {
 		loading = true;
 		try {
-			const result = await fetchNui(NUI_EVENTS.CITIZEN.GET_CITIZENS);
-			citizens = Array.isArray(result) ? result : [];
+			console.log(NUI_EVENTS.CITIZEN.GET_CITIZENS)
+			const result = await fetchNui(NUI_EVENTS.CITIZEN.GET_CITIZENS, {
+				page: citizenPage
+			}) as {data: Citizen[], total: number, totalPages: number, page: number, limit: number};
+			citizens = result ? result.data : [];
+			citizenTotalPages = Number(result?.totalPages) || 1;
 		} catch (error) {
 			globalNotifications.error(_L("civilianPage.failedToFetchCitizens"));
 			citizens = [];
+			citizenTotalPages = 1;
 		}
 		loading = false;
 	}
@@ -1078,7 +1122,7 @@
 				{/if}
 				<Pagination
 					currentPage={citizenPage}
-					totalItems={allFilteredCitizens.length}
+					totalItems={citizenTotalPages}
 					perPage={citizenPerPage}
 					onPageChange={(p) => { citizenPage = p; }}
 					onPerPageChange={(pp) => { citizenPerPage = pp; citizenPage = 1; }}

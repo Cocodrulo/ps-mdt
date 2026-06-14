@@ -87,11 +87,16 @@ end
 -- getCitizens - pulls citizens from database with pagination support
 ps.registerCallback(resourceName .. ':server:getCitizens', function(source, page)
     local src = source
-    if not CheckAuth(src) then return {} end
+    if not CheckAuth(src) then
+        return { data = {}, total = 0, totalPages = 1, page = 1, limit = 20 }
+    end
     local startTime = os.clock()
-    page = page or 1 -- Default to page 1 if not provided
+    page = tonumber(page) or 1
     local limit = Config.Pagination and Config.Pagination.Citizens or 20
     local offset = (page - 1) * limit
+
+    local total = MySQL.scalar.await('SELECT COUNT(*) FROM players') or 0
+    local totalPages = math.max(1, math.ceil(total / limit))
 
     -- Main query with pagination
     local query = [[
@@ -104,10 +109,20 @@ ps.registerCallback(resourceName .. ':server:getCitizens', function(source, page
         FROM players AS p
         LEFT JOIN mdt_profiles AS mp
         ON CONVERT(p.citizenid USING utf8mb4) COLLATE utf8mb4_general_ci = CONVERT(mp.citizenid USING utf8mb4) COLLATE utf8mb4_general_ci
+        ORDER BY JSON_UNQUOTE(JSON_EXTRACT(p.charinfo, '$.lastname')) ASC,
+                 JSON_UNQUOTE(JSON_EXTRACT(p.charinfo, '$.firstname')) ASC
         LIMIT ? OFFSET ?
     ]]
     local result = safeQuery(query, { limit, offset })
-    if not result or #result == 0 then return {} end
+    if not result or #result == 0 then
+        return { --same shit different row
+            data = {},
+            total = total,
+            totalPages = totalPages,
+            page = page,
+            limit = limit
+        }
+    end
 
     local citizenids = {}
     for _, v in ipairs(result) do
@@ -167,8 +182,8 @@ ps.registerCallback(resourceName .. ':server:getCitizens', function(source, page
         end
     end
 
-    for _, v in ipairs(result) do
-        v.id = _
+    for i, v in ipairs(result) do
+        v.id = i
         v.cid = v.citizenid
         v.firstName = v.firstname
         v.lastName = v.lastname
@@ -190,18 +205,24 @@ ps.registerCallback(resourceName .. ':server:getCitizens', function(source, page
         ps.debug('[getCitizens] Sample citizen data structure:', result[1])
     end
 
-    return result
+    return {
+        data = result,
+        total = total,
+        totalPages = totalPages,
+        page = page,
+        limit = limit
+    }
 end)
 
 -- searchPlayers - searches the database for citizens by provided query (first/last name, citizenid, phone number, occupation)
 -- Returns the same data structure as getCitizens but filtered by search query
-ps.registerCallback(resourceName .. ':server:searchCitizens', function(source, query)
+ps.registerCallback(resourceName .. ':server:searchCitizens', function(source, query, page)
     local src = source
-    if not CheckAuth(src) then return {} end
+    if not CheckAuth(src) then return { data = {}, total = 0, totalPages = 1, page = 1, limit = 2000 } end
     local startTime = os.clock()
 
     if not query or string.len(query) < 2 then
-        return {}
+        return { data = {}, total = 0, totalPages = 1, page = 1, limit = 2000 }
     end
 
     if ps.auditLog then
@@ -236,11 +257,12 @@ ps.registerCallback(resourceName .. ':server:searchCitizens', function(source, q
         LIMIT ?
     ]]
 
-    local searchLimit = Config.Pagination and Config.Pagination.CitizenSearch or 20
+    local searchLimit = 2000 or Config.Pagination and Config.Pagination.CitizenSearch or 20
     local result = safeQuery(sqlQuery, {
         searchTerm, searchTerm, searchTerm, searchTerm, searchTerm, searchTerm, searchLimit
     })
-    if not result or #result == 0 then return {} end
+
+    if not result or #result == 0 then return { data = {}, total = 0, totalPages = 1, page = 1, limit = 2000 } end
 
     -- Process results to match getCitizens format exactly
     local citizenids = {}
@@ -324,7 +346,7 @@ ps.registerCallback(resourceName .. ':server:searchCitizens', function(source, q
         ps.debug('[searchCitizens] Sample citizen data structure:', result[1])
     end
 
-    return result
+    return { data = result, total = #result, totalPages = 1, page = 1, limit = 2000 }
 end)
 
 -- getCitizenBOLOs - gets active BOLOs by type, probably have a table of active bolos load on script start and use that then save it to db periodically or on resource stop
